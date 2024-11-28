@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {Modal} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import CloseButton from '../../common/CloseButton';
 import CreateButton from './CreateButton';
 

@@ -2,15 +2,13 @@ import styled from 'styled-components';
 import {View} from 'react-native';
 
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import NewCreateModal from './components/modal/newCreateModal/NewCreateModal';
 import MainPage from './pages/MainPage';
-import FolderCreatePage from './pages/FolderCreatePage';
+import IconPickerModal from './components/modal/iconPickerModal/IconPickerModal';
 function App(): React.JSX.Element {
   return (
     <BaseLayout>
-      <NewCreateModal />
-      {/* <MainPage /> */}
-      {/* <FolderCreatePage /> */}
+      <MainPage />
+      <IconPickerModal />
     </BaseLayout>
   );
 }

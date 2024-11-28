@@ -1,8 +1,11 @@
 import {useState} from 'react';
 import {Modal} from 'react-native';
+import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
-import BackButtom from '../../common/BackButtom';
 import IconGrid from './IconGrid';
+import CustomText from '../../CustomText';
+import CloseButton from '../../common/CloseButton';
+
 const IconPickerModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
@@ -16,58 +19,55 @@ const IconPickerModal = () => {
 
   return (
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
-      <Container>
+      <ModalContainer>
         <ModalView>
-          <Title>
-            <StyledbackButton />
-            <TitleText>아이콘</TitleText>
-          </Title>
-          <IconView>
+          <TitletContainer>
+            <TitleText>아이콘 선택</TitleText>
+            <StyledCloseButton />
+          </TitletContainer>
+          <IconWrapper>
             <IconGrid />
-          </IconView>
+          </IconWrapper>
         </ModalView>
-      </Container>
+      </ModalContainer>
     </Modal>
   );
 };
 
-const Container = styled.View`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-
-const ModalView = styled.View`
-  border-radius: 10px;
-  width: 80%;
-  height: 70%;
-  padding: 10px 10px 30px 10px;
-  justify-content: center;
-  align-items: center;
+const ModalContainer = styled.View`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top-left-radius: ${scale(10)}px;
+  border-top-right-radius: ${scale(10)}px;
+  height: 40%;
   background-color: white;
 `;
 
-const Title = styled.View`
-  align-items: center;
-  justify-content: center;
-  padding: 15px 0;
-  /* background-color: aliceblue; */
+const ModalView = styled.View`
+  border-radius: ${scale(10)}px;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
-const TitleText = styled.Text`
-  text-align: center;
-  font-size: 15px;
-  font-weight: 500;
+const TitletContainer = styled.View`
+  justify-content: center;
+  width: 100%;
+  margin: ${scale(25)}px 0;
 `;
 
-const StyledbackButton = styled(BackButtom)`
+const TitleText = styled(CustomText)`
+  margin-left: ${scale(40)}px;
+  font-size: ${scale(18)}px;
+`;
+
+const StyledCloseButton = styled(CloseButton)`
   position: absolute;
-  left: -20px;
+  right: 0;
 `;
 
-const IconView = styled.ScrollView``;
+const IconWrapper = styled.ScrollView``;
 
 export default IconPickerModal;
