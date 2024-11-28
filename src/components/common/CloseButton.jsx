@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {scale} from 'react-native-size-matters';
 
 const CloseButton = ({style}) => {
   const close = () => {
@@ -9,7 +10,7 @@ const CloseButton = ({style}) => {
   return (
     <Container style={style}>
       <Button onPress={close}>
-        <Icon name="close" size={18} color="gray" />
+        <Icon name="close" size={scale(20)} color="gray" />
       </Button>
     </Container>
   );

@@ -20,6 +20,7 @@ const CustomText: React.FC<CustomTextProps> = ({
   ...rest
 }) => {
   // 굵기별 폰트 매핑
+  console.log(weight);
   const fontWeightMap: Record<CustomTextProps['weight'], string> = {
     black: 'Pretendard-Black',
     bold: 'Pretendard-Bold',
@@ -30,8 +31,9 @@ const CustomText: React.FC<CustomTextProps> = ({
     regular: 'Pretendard-Regular',
     'semi-bold': 'Pretendard-SemiBold',
     thin: 'Pretendard-Thin',
+    test: 'Pretendard-bold',
   };
-
+  console.log(fontWeightMap[weight]);
   const customStyle: TextStyle = {
     fontFamily: fontWeightMap[weight], // weight에 따라 폰트 설정
     color: '#000000',

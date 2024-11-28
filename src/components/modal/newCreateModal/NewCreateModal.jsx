@@ -1,67 +1,63 @@
 import {useState} from 'react';
 import {Modal} from 'react-native';
+import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CloseButton from '../../common/CloseButton';
 import CreateButton from './CreateButton';
+
+import folderIcon from '../../../assets/images/NewCreateModal/folderIcon.png';
+import timerIcon from '../../../assets/images/NewCreateModal/timerIcon.png';
 
 const NewCreateModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   return (
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
-      <ModalView>
-        <Title>
-          <StyledCloseButton />
+      <ModalContainer>
+        <TitletContainer>
           <TitleText>새로 만들기</TitleText>
-        </Title>
-        <Buttons>
-          <CreateButton
-            text="폴더"
-            icon={<Icon name="folder" size={25} color="gray" />}
-          />
-          <CreateButton
-            text="타이머"
-            icon={<Icon name="timer" size={25} color="gray" />}
-          />
-        </Buttons>
-      </ModalView>
+          <StyledCloseButton />
+        </TitletContainer>
+        <ButtonsContainer>
+          <CreateButton text="폴더" icon={folderIcon} />
+          <CreateButton text="타이머" icon={timerIcon} />
+        </ButtonsContainer>
+      </ModalContainer>
     </Modal>
   );
 };
 
-const ModalView = styled.View`
+const ModalContainer = styled.View`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  border-top-left-radius: ${scale(10)}px;
+  border-top-right-radius: ${scale(10)}px;
   background-color: white;
 `;
 
-const Title = styled.View`
-  align-items: center;
+const TitletContainer = styled.View`
   justify-content: center;
-  border-bottom-width: 1px;
-  border-color: gray;
-  padding: 15px 0;
+  margin: ${scale(25)}px 0;
 `;
 
 const TitleText = styled.Text`
-  text-align: center;
-  font-size: 18px;
+  margin-left: ${scale(40)}px;
+  font-size: ${scale(18)}px;
   font-weight: 500;
 `;
 
 const StyledCloseButton = styled(CloseButton)`
   position: absolute;
-  left: -10px;
+  right: 0;
 `;
 
-const Buttons = styled.View`
+const ButtonsContainer = styled.View`
   justify-content: center;
-  flex-direction: row;
-  margin: 20px 0 40px;
-  gap: 20px;
+  margin: 0 0 ${scale(40)}px;
+  gap: ${scale(5)}px;
 `;
 
 export default NewCreateModal;
