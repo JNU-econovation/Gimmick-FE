@@ -2,16 +2,15 @@ import styled from 'styled-components';
 import {View} from 'react-native';
 
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import CreateSelectModal from './components/modal/createSelectModal/CreateSelectModal';
+import NewCreateModal from './components/modal/newCreateModal/NewCreateModal';
 import MainPage from './pages/MainPage';
 import FolderCreatePage from './pages/FolderCreatePage';
 function App(): React.JSX.Element {
   return (
     <BaseLayout>
-      {/* <CreateSelectModal /> */}
-
+      <NewCreateModal />
       {/* <MainPage /> */}
-      <FolderCreatePage />
+      {/* <FolderCreatePage /> */}
     </BaseLayout>
   );
 }

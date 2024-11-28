@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import CloseButton from '../../common/CloseButton';
 import CreateButton from './CreateButton';
 
-const CreateSelectModal = () => {
+const NewCreateModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   return (
@@ -64,4 +64,4 @@ const Buttons = styled.View`
   gap: 20px;
 `;
 
-export default CreateSelectModal;
+export default NewCreateModal;
