@@ -4,11 +4,13 @@ import {View} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import MainPage from './pages/MainPage';
 import IconPickerModal from './components/modal/iconPickerModal/IconPickerModal';
+import TimerCreatePage from './pages/TimerCreatePage';
 function App(): React.JSX.Element {
   return (
     <BaseLayout>
-      <MainPage />
-      <IconPickerModal />
+      <TimerCreatePage />
+      {/* <MainPage />
+      <IconPickerModal /> */}
     </BaseLayout>
   );
 }
