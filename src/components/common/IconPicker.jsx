@@ -1,5 +1,7 @@
 import {useState} from 'react';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 
 const IconPicker = () => {
   const [icon, setIcon] = useState('🌮'); // 기본 이모티콘 설정
@@ -15,7 +17,9 @@ const IconPicker = () => {
       <IconContainer>
         <IconText>{icon}</IconText>
         <PlusIcon>
-          <PlusText>+</PlusText>
+          <PlusText>
+            <Icon name="plus" color="white" size={scale(9)} />
+          </PlusText>
         </PlusIcon>
       </IconContainer>
     </Container>
@@ -28,39 +32,33 @@ const Container = styled.View`
 
 const IconContainer = styled.View`
   position: relative;
-  width: 45px;
-  height: 45px;
+  width: ${scale(90)}px;
+  height: ${scale(90)}px;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
-  border-radius: 50px;
-  shadow-color: #000;
-  shadow-opacity: 0.1;
-  shadow-radius: 10px;
-  elevation: 5;
+  background-color: #efefef;
+  border-radius: ${scale(50)}px;
 `;
 
 const IconText = styled.Text`
-  font-size: 35px;
+  font-size: ${scale(60)}px;
 `;
 
 const PlusIcon = styled.View`
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 12px;
-  background-color: white;
+  bottom: ${scale(5)}px;
+  right: ${scale(5)}px;
+  width: ${scale(20)}px;
+  height: ${scale(20)}px;
+  border-radius: ${scale(20)}px;
+  background-color: #868686;
   justify-content: center;
   align-items: center;
-  border-width: 1px;
-  border-color: #b9b9b9;
 `;
 
-const PlusText = styled.Text`
-  font-size: 15px;
-  color: #888;
+const PlusText = styled.View`
+  justify-content: center;
+  align-items: center;
 `;
 
 export default IconPicker;

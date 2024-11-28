@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 const InputComponent = ({style}) => {
@@ -10,12 +11,7 @@ const InputComponent = ({style}) => {
 
   return (
     <Container style={style}>
-      <Input
-        value={text}
-        onChangeText={onChangeText}
-        placeholder="폴더명을 입력해주세요."
-        placeholderTextColor="#808080"
-      />
+      <Input value={text} onChangeText={onChangeText} />
     </Container>
   );
 };
@@ -27,14 +23,13 @@ const Container = styled.View`
 `;
 
 const Input = styled.TextInput`
-  height: 36px;
+  height: ${scale(38)}px;
+  margin: -${scale(18)}px 0;
+  background-color: #f4f6f8;
   width: 100%;
-  border-radius: 10px;
-  border-color: #808080;
-  border-width: 1px;
+  border-radius: ${scale(5)}px;
   text-align: left;
-  padding: 0 10px;
-  font-size: 12px;
+  font-size: ${scale(12)}px;
 `;
 
 export default InputComponent;

@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {scale} from 'react-native-size-matters';
 
 const colors = ['#d4e9c1', '#d3d3f8', '#c5e5fa', '#f7e485', '#f4b5b5'];
 
@@ -15,7 +16,7 @@ const ColorPicker = () => {
           onPress={() => setSelectedColor(color)}
           style={{backgroundColor: color}}>
           {selectedColor === color && (
-            <Icon name="check" size={15} color="white" />
+            <Icon name="check" size={scale(15)} color="white" />
           )}
         </ColorCircle>
       ))}
@@ -30,10 +31,10 @@ const Container = styled.View`
 `;
 
 const ColorCircle = styled.Pressable`
-  width: 24px;
-  height: 24px;
-  border-radius: 25px;
-  margin: 0 4px;
+  width: ${scale(35)}px;
+  height: ${scale(35)}px;
+  border-radius: ${scale(25)}px;
+  margin: 0 ${scale(15)}px;
   justify-content: center;
   align-items: center;
 `;
