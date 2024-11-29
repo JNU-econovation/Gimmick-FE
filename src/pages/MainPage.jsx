@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import Header from '../components/common/Header';
 import CountdownTimer from '../components/timer/CountdownTimer';

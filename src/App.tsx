@@ -1,14 +1,15 @@
+import React from 'react';
 import styled from 'styled-components';
-import {View} from 'react-native';
-
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import MainPage from './pages/MainPage';
 import IconPickerModal from './components/modal/iconPickerModal/IconPickerModal';
+import DetailPage from './pages/DetailPage';
 function App(): React.JSX.Element {
   return (
     <BaseLayout>
       <MainPage />
       <IconPickerModal />
+      <DetailPage />
     </BaseLayout>
   );
 }

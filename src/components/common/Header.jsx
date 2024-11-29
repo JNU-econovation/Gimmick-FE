@@ -1,8 +1,45 @@
+import React from 'react';
 import styled from 'styled-components/native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {TouchableOpacity, Image, Text} from 'react-native';
 
-// Styled Components for Header
+const Header = ({type}) => {
+  if (type === 'main') {
+    return (
+      <HeaderContainer>
+        <Logo source={require('../../assets/images/header/logo.png')} />
+        <IconContainer>
+          <IconButton
+            onPress={() => {
+              //TODO: 생성 버튼
+            }}>
+            <StyledIcon
+              source={require('../../assets/images/header/plus.png')}
+            />
+          </IconButton>
+        </IconContainer>
+      </HeaderContainer>
+    );
+  } else if (type === 'detail') {
+    return (
+      <HeaderContainer>
+        <IconButton
+          onPress={() => {
+            //TODO: 뒤로가기 버튼
+          }}>
+          <BackButtonIcon
+            source={require('../../assets/images/header/back-icon.png')}
+          />
+        </IconButton>
+        <TitleText>타이머 제목</TitleText>
+        <RightText>편집</RightText>
+      </HeaderContainer>
+    );
+  }
+};
+
+export default Header;
+
 const HeaderContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -38,64 +75,8 @@ const TitleText = styled(Text)`
   font-weight: bold;
 `;
 
-const Header = ({type}) => {
-  if (type === 'main') {
-    return (
-      <HeaderContainer>
-        <Logo source={require('../../assets/images/header/logo.png')} />
-        <IconContainer>
-          <IconButton
-            onPress={() => {
-              //TODO: 즐겨찾기 버튼
-            }}>
-            <StyledIcon
-              source={require('../../assets/images/header/heart-icon.png')}
-            />
-          </IconButton>
-          <IconButton
-            applyMargin={true}
-            onPress={() => {
-              //TODO: 새로 만들기 버튼
-            }}>
-            <StyledIcon
-              source={require('../../assets/images/header/pencil-icon.png')}
-            />
-          </IconButton>
-          <IconButton
-            applyMargin={true}
-            onPress={() => {
-              //TODO: 설정 버튼
-            }}>
-            <StyledIcon
-              source={require('../../assets/images/header/settings-icon.png')}
-            />
-          </IconButton>
-        </IconContainer>
-      </HeaderContainer>
-    );
-  } else if (type === 'detail') {
-    return (
-      <HeaderContainer>
-        <IconButton
-          onPress={() => {
-            //TODO: 뒤로가기 버튼
-          }}>
-          <BackButtonIcon
-            source={require('../../assets/images/header/back-icon.png')}
-          />
-        </IconButton>
-        <TitleText>타이머 제목</TitleText>
-        <IconButton
-          onPress={() => {
-            //TODO: 즐겨찾기 버튼
-          }}>
-          <StyledIcon
-            source={require('../../assets/images/header/heart-icon.png')}
-          />
-        </IconButton>
-      </HeaderContainer>
-    );
-  }
-};
-
-export default Header;
+const RightText = styled(Text)`
+  font-size: ${moderateScale(15)}px;
+  margin-top: ${moderateScale(5)}px;
+  color: #777777;
+`;
