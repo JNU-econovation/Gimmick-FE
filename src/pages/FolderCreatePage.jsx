@@ -37,9 +37,7 @@ const FolderCreateContainer = styled.View`
   position: relative;
 `;
 
-const InsertContainer = styled.View`
-  margin: ${scale(20)}px 0;
-`;
+const InsertContainer = styled.View``;
 
 const InputWrapper = styled(InputComponent)`
   margin: ${scale(20)}px 0;

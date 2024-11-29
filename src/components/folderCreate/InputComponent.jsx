@@ -24,7 +24,6 @@ const Container = styled.View`
 
 const Input = styled.TextInput`
   height: ${scale(38)}px;
-  margin: -${scale(18)}px 0;
   background-color: #f4f6f8;
   width: 100%;
   border-radius: ${scale(5)}px;

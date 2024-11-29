@@ -46,9 +46,7 @@ const InsertContainer = styled.View`
   margin: ${scale(20)}px 0;
 `;
 
-const InputWrapper = styled(InputComponent)`
-  margin: ${scale(20)}px 0;
-`;
+const InputWrapper = styled(InputComponent)``;
 
 const TimerCreateText = styled(CustomText)`
   margin: ${scale(13)}px 0;
