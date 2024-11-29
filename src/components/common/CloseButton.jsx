@@ -19,8 +19,6 @@ const CloseButton = ({style}) => {
 const Container = styled.View``;
 
 const Button = styled.TouchableOpacity`
-  height: 30px;
-  padding: 0 30px;
   justify-content: center;
   align-items: flex-start;
 `;

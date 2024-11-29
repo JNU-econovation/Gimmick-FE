@@ -65,7 +65,7 @@ const TitleText = styled(CustomText)`
 
 const StyledCloseButton = styled(CloseButton)`
   position: absolute;
-  right: 0;
+  right: ${scale(22)}px;
 `;
 
 const IconWrapper = styled.ScrollView``;

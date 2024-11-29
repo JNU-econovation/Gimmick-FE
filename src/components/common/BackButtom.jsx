@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {scale} from 'react-native-size-matters';
 
 const BackButtom = ({style}) => {
   const back = () => {
@@ -9,7 +10,7 @@ const BackButtom = ({style}) => {
   return (
     <Container style={style}>
       <Button onPress={back}>
-        <Icon name="chevron-back-outline" size={24} color="gray" />
+        <Icon name="chevron-back-outline" size={20} color="gray" />
       </Button>
     </Container>
   );
@@ -18,8 +19,7 @@ const BackButtom = ({style}) => {
 const Container = styled.View``;
 
 const Button = styled.TouchableOpacity`
-  height: 30px;
-  padding: 0 30px;
+  height: ${scale(30)}px;
   justify-content: center;
   align-items: flex-start;
 `;

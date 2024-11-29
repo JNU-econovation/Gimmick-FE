@@ -50,7 +50,7 @@ const TitleText = styled.Text`
 
 const StyledCloseButton = styled(CloseButton)`
   position: absolute;
-  right: 0;
+  right: ${scale(22)}px;
 `;
 
 const ButtonsContainer = styled.View`
