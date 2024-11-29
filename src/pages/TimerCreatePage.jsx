@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import ColorPicker from '../components/common/ColorPicker';
 import InputComponent from '../components/folderCreate/InputComponent';
 import IconPicker from '../components/common/IconPicker';
-
+import DetailTimer from '../components/timerCreate/DetailTimer';
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
@@ -21,11 +21,12 @@ const TimerCreatePage = () => {
     <TimerCreateContainer>
       <IconPicker />
       <InsertContainer>
-        <FolderCreateText>타이머 이름</FolderCreateText>
+        <TimerCreateText>타이머 이름</TimerCreateText>
         <InputWrapper />
-        <FolderCreateText weight="black">타이머 색상</FolderCreateText>
+        <TimerCreateText weight="black">타이머 색상</TimerCreateText>
         <ColorPicker />
       </InsertContainer>
+      <DetailTimer />
     </TimerCreateContainer>
   );
 };
@@ -45,7 +46,7 @@ const InputWrapper = styled(InputComponent)`
   margin: ${scale(20)}px 0;
 `;
 
-const FolderCreateText = styled(CustomText)`
+const TimerCreateText = styled(CustomText)`
   margin: ${scale(13)}px 0;
   font-size: ${scale(16)}px;
 `;
