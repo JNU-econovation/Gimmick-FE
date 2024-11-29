@@ -6,6 +6,7 @@ import ColorPicker from '../components/common/ColorPicker';
 import InputComponent from '../components/folderCreate/InputComponent';
 import IconPicker from '../components/common/IconPicker';
 import DetailTimer from '../components/timerCreate/DetailTimer';
+import PlusButton from '../components/timerCreate/PlusButton';
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
@@ -27,6 +28,9 @@ const TimerCreatePage = () => {
         <ColorPicker />
       </InsertContainer>
       <DetailTimer />
+      <PlusButtonWrapper>
+        <PlusButton />
+      </PlusButtonWrapper>
     </TimerCreateContainer>
   );
 };
@@ -49,6 +53,10 @@ const InputWrapper = styled(InputComponent)`
 const TimerCreateText = styled(CustomText)`
   margin: ${scale(13)}px 0;
   font-size: ${scale(16)}px;
+`;
+
+const PlusButtonWrapper = styled.View`
+  margin: ${scale(20)}px 0;
 `;
 
 export default TimerCreatePage;
