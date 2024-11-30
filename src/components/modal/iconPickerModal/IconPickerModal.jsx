@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Modal} from 'react-native';
 import {scale} from 'react-native-size-matters';
+import CustomModal from '../CustomModal';
 import styled from 'styled-components/native';
 import IconGrid from './IconGrid';
 import CustomText from '../../CustomText';
@@ -18,11 +19,11 @@ const IconPickerModal = () => {
   };
 
   return (
-    <Modal animationType="slide" visible={isModalVisible} transparent={true}>
+    <CustomModal visible={isModalVisible} onClose={onPressModalClose}>
       <ModalContainer>
         <ModalView>
           <TitletContainer>
-            <TitleText>아이콘 선택</TitleText>
+            <TitleText weight="semi-bold">아이콘 선택</TitleText>
             <StyledCloseButton />
           </TitletContainer>
           <IconWrapper>
@@ -30,7 +31,7 @@ const IconPickerModal = () => {
           </IconWrapper>
         </ModalView>
       </ModalContainer>
-    </Modal>
+    </CustomModal>
   );
 };
 

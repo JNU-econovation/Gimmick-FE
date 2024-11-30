@@ -19,7 +19,7 @@ const DetailTimer = () => {
         <CloseButton />
       </CloseButtonWrapper>
       <TimerSetContainer>
-        <TimerText>12:30</TimerText>
+        <TimerText weight="bold">12:30</TimerText>
         <FireButtonContainer>
           <FireButton
             isActive={activeButton === '약불'}

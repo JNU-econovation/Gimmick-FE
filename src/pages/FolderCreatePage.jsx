@@ -21,9 +21,9 @@ const FolderCreatePage = () => {
     <FolderCreateContainer>
       <IconPicker />
       <InsertContainer>
-        <FolderCreateText>폴더 이름</FolderCreateText>
+        <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>
         <InputWrapper />
-        <FolderCreateText weight="black">폴더 색상</FolderCreateText>
+        <FolderCreateText weight="semi-bold">폴더 색상</FolderCreateText>
         <ColorPicker />
       </InsertContainer>
     </FolderCreateContainer>
@@ -39,12 +39,10 @@ const FolderCreateContainer = styled.View`
 
 const InsertContainer = styled.View``;
 
-const InputWrapper = styled(InputComponent)`
-  margin: ${scale(20)}px 0;
-`;
+const InputWrapper = styled(InputComponent)``;
 
 const FolderCreateText = styled(CustomText)`
-  margin: ${scale(13)}px 0;
+  margin: ${scale(20)}px 0 ${scale(10)}px 0;
   font-size: ${scale(16)}px;
 `;
 

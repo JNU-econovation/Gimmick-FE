@@ -5,8 +5,8 @@ import {scale} from 'react-native-size-matters';
 const TotalTimer = () => {
   return (
     <TotalTimerContainer>
-      <TotalTimerText>총 소요시간</TotalTimerText>
-      <TimerText>00:00</TimerText>
+      <TotalTimerText weight="medium">총 소요시간</TotalTimerText>
+      <TimerText weight="extra-bold">00:00</TimerText>
     </TotalTimerContainer>
   );
 };

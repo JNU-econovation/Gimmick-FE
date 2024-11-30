@@ -24,9 +24,9 @@ const TimerCreatePage = () => {
     <TimerCreateContainer>
       <IconPicker />
       <InsertContainer>
-        <TimerCreateText>타이머 이름</TimerCreateText>
+        <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
         <InputWrapper />
-        <TimerCreateText weight="black">타이머 색상</TimerCreateText>
+        <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
         <ColorPicker />
       </InsertContainer>
       <DetailTimer />
@@ -54,7 +54,7 @@ const InsertContainer = styled.View`
 const InputWrapper = styled(InputComponent)``;
 
 const TimerCreateText = styled(CustomText)`
-  margin: ${scale(13)}px 0;
+  margin: ${scale(20)}px 0 ${scale(10)}px 0;
   font-size: ${scale(16)}px;
 `;
 

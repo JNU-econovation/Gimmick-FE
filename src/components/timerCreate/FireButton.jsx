@@ -6,7 +6,9 @@ const FireButton = ({style, isActive, fireText, onPress}) => {
   return (
     <ButtonContainer style={style}>
       <Button onPress={onPress} isActive={isActive}>
-        <ButtonText isActive={isActive}>{fireText}</ButtonText>
+        <ButtonText weight="semi-bold" isActive={isActive}>
+          {fireText}
+        </ButtonText>
       </Button>
     </ButtonContainer>
   );

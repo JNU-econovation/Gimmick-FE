@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {Modal} from 'react-native';
 import {scale} from 'react-native-size-matters';
+import CustomModal from '../CustomModal';
+import CustomText from '../../CustomText';
 import styled from 'styled-components/native';
 import CloseButton from '../../common/CloseButton';
 import CreateButton from './CreateButton';
@@ -11,19 +13,23 @@ import timerIcon from '../../../assets/images/NewCreateModal/timerIcon.png';
 const NewCreateModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
+  const onPressModalClose = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <Modal animationType="slide" visible={isModalVisible} transparent={true}>
+    <CustomModal visible={isModalVisible} onClose={onPressModalClose}>
       <ModalContainer>
         <TitletContainer>
-          <TitleText>새로 만들기</TitleText>
+          <TitleText weight="semi-bold">새로 만들기</TitleText>
           <StyledCloseButton />
         </TitletContainer>
         <ButtonsContainer>
-          <CreateButton text="폴더" icon={folderIcon} />
-          <CreateButton text="타이머" icon={timerIcon} />
+          <CreateButton text="폴더 생성" icon={folderIcon} />
+          <CreateButton text="타이머 생성" icon={timerIcon} />
         </ButtonsContainer>
       </ModalContainer>
-    </Modal>
+    </CustomModal>
   );
 };
 
@@ -39,13 +45,12 @@ const ModalContainer = styled.View`
 
 const TitletContainer = styled.View`
   justify-content: center;
-  margin: ${scale(25)}px 0;
+  margin: ${scale(25)}px 0 ${scale(15)}px 0;
 `;
 
-const TitleText = styled.Text`
+const TitleText = styled(CustomText)`
   margin-left: ${scale(40)}px;
   font-size: ${scale(18)}px;
-  font-weight: 500;
 `;
 
 const StyledCloseButton = styled(CloseButton)`
@@ -56,7 +61,6 @@ const StyledCloseButton = styled(CloseButton)`
 const ButtonsContainer = styled.View`
   justify-content: center;
   margin: 0 0 ${scale(40)}px;
-  gap: ${scale(5)}px;
 `;
 
 export default NewCreateModal;

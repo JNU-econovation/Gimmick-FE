@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import {Image} from 'react-native';
 import {scale} from 'react-native-size-matters';
+import CustomText from '../../CustomText';
 
 const CreateButton = ({text, icon, style}) => {
   const onPress = () => {
@@ -48,9 +49,9 @@ const Button = styled.TouchableOpacity`
   height: 100%;
 `;
 
-const ButtonText = styled.Text`
+const ButtonText = styled(CustomText)`
   margin: 0 0 0 ${scale(10)}px;
-  font-size: 15px;
+  font-size: ${scale(15)}px;
   text-align: center;
 `;
 
