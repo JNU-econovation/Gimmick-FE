@@ -7,6 +7,8 @@ import {Platform} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {CustomConfig} from '../node_modules/react-native-reanimated/lib/typescript/layoutReanimation/web/config.d';
+import FolderCreatePage from './pages/FolderCreatePage';
+import TimerCreatePage from './pages/TimerCreatePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,12 +24,20 @@ function App(): React.JSX.Element {
       <Stack.Navigator screenOptions={customStackNavigatorOptions}>
         <Stack.Screen
           name="Main"
-          component={MainPage}
+          component={() => (
+            <BaseLayout>
+              <MainPage />
+            </BaseLayout>
+          )}
           options={{title: 'Main Page'}}
         />
         <Stack.Screen
           name="Detail"
-          component={DetailPage}
+          component={() => (
+            <BaseLayout>
+              <DetailPage />
+            </BaseLayout>
+          )}
           options={{title: 'Detail Page'}}
         />
       </Stack.Navigator>

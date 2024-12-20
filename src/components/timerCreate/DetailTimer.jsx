@@ -59,16 +59,16 @@ const CloseButtonWrapper = styled.View`
 `;
 
 const TimerSetContainer = styled.View`
+  margin-top: ${scale(5)}px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 
 const FireButtonContainer = styled.View`
-  width: 60%;
+  width: 58%;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: ${scale(20)}px;
 `;
 
 const TimerText = styled(CustomText)`

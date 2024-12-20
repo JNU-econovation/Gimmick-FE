@@ -30,6 +30,7 @@ const TimerCreatePage = () => {
         <ColorPicker />
       </InsertContainer>
       <DetailTimer />
+
       <PlusButtonWrapper>
         <PlusButton />
       </PlusButtonWrapper>
