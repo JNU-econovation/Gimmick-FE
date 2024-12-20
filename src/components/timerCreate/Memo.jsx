@@ -15,6 +15,7 @@ const Memo = ({style}) => {
         value={text}
         onChangeText={onChangeText}
         placeholder="메모 작성"
+        placeholderTextColor="#676767"
         textAlign="center"
         multiline={true}
         numberOfLines={3}
@@ -34,15 +35,16 @@ const Container = styled.View`
 `;
 
 const Input = styled.TextInput`
-  padding: ${scale(13)}px;
+  padding: ${scale(11.5)}px;
   min-height: ${scale(38)}px;
   height: auto;
-  background-color: #f4f6f8;
   width: 100%;
   border-radius: ${scale(5)}px;
+  border: 1px solid #d5d7d9;
   text-align: center;
   text-align-vertical: center;
-  font-size: ${scale(14)}px;
+  font-size: ${scale(13)}px;
+  font-family: 'Pretendard-Regular';
 `;
 
 export default Memo;

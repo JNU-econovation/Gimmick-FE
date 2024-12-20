@@ -3,8 +3,8 @@ import {scale} from 'react-native-size-matters';
 import CustomText from '../components/CustomText';
 import styled from 'styled-components/native';
 import ColorPicker from '../components/common/ColorPicker';
-import InputComponent from '../components/folderCreate/InputComponent';
 import IconPicker from '../components/common/IconPicker';
+import InputComponent from '../components/folderCreate/InputComponent';
 
 const FolderCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);

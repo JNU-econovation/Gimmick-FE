@@ -26,15 +26,14 @@ const ColorPicker = () => {
 
 const Container = styled.View`
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const ColorCircle = styled.Pressable`
-  width: ${scale(35)}px;
-  height: ${scale(35)}px;
-  border-radius: ${scale(25)}px;
-  margin: 0 ${scale(15)}px;
+  width: ${scale(45)}px;
+  height: ${scale(45)}px;
+  border-radius: ${scale(4)}px;
   justify-content: center;
   align-items: center;
 `;
