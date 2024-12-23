@@ -6,56 +6,33 @@ import DetailPage from './pages/DetailPage';
 import {Platform} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import NewCreateModal from './components/modal/newCreateModal/NewCreateModal';
-import TimerCreatePage from './pages/TimerCreatePage';
-import FolderCreatePage from './pages/FolderCreatePage';
+import {CustomConfig} from '../node_modules/react-native-reanimated/lib/typescript/layoutReanimation/web/config.d';
+// import BaseLayout from '../components/BaseLayout';
 
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Group
-          screenOptions={{
-            contentStyle: {backgroundColor: '#fff'},
-          }}>
-          <Stack.Screen
-            name="Main"
-            component={MainWithLayout}
-            options={{title: 'Main Page'}}
-          />
-          <Stack.Screen
-            name="Detail"
-            component={DetailWithLayout}
-            options={{title: 'Detail Page'}}
-          />
-          <Stack.Screen
-            name="Create Timer"
-            component={TimerCreateWithLayout}
-            options={{title: 'Create Timer Page'}}
-          />
-          <Stack.Screen
-            name="Create Folder"
-            component={FolderCreateWithLayout}
-            options={{title: 'Create Folder Page'}}
-          />
-        </Stack.Group>
-
-        <Stack.Group
-          screenOptions={{
-            presentation: 'transparentModal',
-            contentStyle: {backgroundColor: 'transparent'},
-          }}>
-          <Stack.Screen
-            name="Create Modal"
-            component={NewCreateModal}
-            options={{title: 'Create Modal'}}
-          />
-        </Stack.Group>
+      <Stack.Navigator screenOptions={customStackNavigatorOptions}>
+        <Stack.Screen
+          name="Main"
+          component={() => (
+            <BaseLayout>
+              <MainPage />
+            </BaseLayout>
+          )}
+          options={{title: 'Main Page'}}
+        />
+        <Stack.Screen
+          name="Detail"
+          component={() => (
+            <BaseLayout>
+              <DetailPage />
+            </BaseLayout>
+          )}
+          options={{title: 'Detail Page'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
