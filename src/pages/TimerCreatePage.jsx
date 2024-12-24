@@ -43,8 +43,6 @@ const TimerCreatePage = () => {
     ]);
   };
 
-  console.log(detailTimers);
-
   return (
     <TimerCreateContainer
       contentContainerStyle={{flexGrow: 1}}
