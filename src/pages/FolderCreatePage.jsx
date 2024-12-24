@@ -6,15 +6,24 @@ import ColorPicker from '../components/common/ColorPicker';
 import IconPicker from '../components/common/IconPicker';
 import InputComponent from '../components/folderCreate/InputComponent';
 import Header from '../components/common/Header';
+import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
+import Header from '../components/common/Header';
+import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 
 const FolderCreatePage = () => {
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState('🌮');
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
   };
 
-  const onPressModalClose = () => {
+  const handleIconSelect = icon => {
+    setSelectedIcon(icon);
+    setIsModalVisible(false);
+  };
+
+  const handleModalClose = () => {
     setIsModalVisible(false);
   };
 
@@ -22,12 +31,23 @@ const FolderCreatePage = () => {
     <FolderCreateContainer>
       <Header type="folderCreate" title="폴더 생성" />
       <IconPicker />
+      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
+      <Header type="folderCreate" title="폴더 생성" />
+      <IconPicker />
+      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>
         <InputWrapper />
         <FolderCreateText weight="semi-bold">폴더 색상</FolderCreateText>
         <ColorPicker />
       </InsertContainer>
+
+      {isModalVisible && (
+        <IconPickerModal
+          onSelectIcon={handleIconSelect}
+          onClose={handleModalClose}
+        />
+      )}
     </FolderCreateContainer>
   );
 };

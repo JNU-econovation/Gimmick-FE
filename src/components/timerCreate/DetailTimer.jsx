@@ -4,10 +4,10 @@ import styled from 'styled-components/native';
 import CustomText from '../CustomText';
 import FireButton from './FireButton';
 import CloseButton from '../common/CloseButton';
-import Memo from './Memo';
+import {TextInput} from 'react-native';
 
-const DetailTimer = () => {
-  const [activeButton, setActiveButton] = useState('약불');
+const DetailTimer = ({fireData, memoData, onFireChange, onMemoChange}) => {
+  const [activeButton, setActiveButton] = useState(fireData);
 
   const handleFirePress = buttonType => {
     setActiveButton(buttonType);
@@ -24,22 +24,34 @@ const DetailTimer = () => {
           <FireButton
             isActive={activeButton === '약불'}
             fireText="약불"
-            onPress={() => handleFirePress('약불')}
+            onPress={() => onFireChange('약불')}
           />
           <FireButton
             isActive={activeButton === '중불'}
             fireText="중불"
-            onPress={() => handleFirePress('중불')}
+            onPress={() => onFireChange('중불')}
           />
           <FireButton
             isActive={activeButton === '강불'}
             fireText="강불"
-            onPress={() => handleFirePress('강불')}
+            onPress={() => onFireChange('강불')}
           />
         </FireButtonContainer>
       </TimerSetContainer>
       <MemoWrapper>
-        <Memo />
+        <MemoTextInput
+          value={memoData}
+          onChangeText={onMemoChange}
+          placeholder="메모 작성"
+          placeholderTextColor="#676767"
+          textAlign="center"
+          multiline={true}
+          numberOfLines={3}
+          style={{
+            textAlign: 'center',
+            textAlignVertical: 'center',
+          }}
+        />
       </MemoWrapper>
     </DetailTimerContainer>
   );
@@ -77,6 +89,18 @@ const TimerText = styled(CustomText)`
 
 const MemoWrapper = styled.View`
   margin: ${scale(15)}px 0;
+`;
+
+const MemoTextInput = styled(TextInput)`
+  padding: ${scale(11.5)}px;
+  min-height: ${scale(38)}px;
+  height: auto;
+  width: 100%;
+  border-radius: ${scale(5)}px;
+  border: 1px solid #d5d7d9;
+  text-align: center;
+  font-size: ${scale(13)}px;
+  font-family: 'Pretendard-Regular';
 `;
 
 export default DetailTimer;
