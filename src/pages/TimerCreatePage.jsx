@@ -17,6 +17,8 @@ const TimerCreatePage = () => {
   const [selectedIcon, setSelectedIcon] = useState('🌮');
   const [timerName, setTimerName] = useState('');
   const [timerColor, setTimerColor] = useState('#f7e485');
+  const [fireData, setFireData] = useState('약불');
+  const [memoData, setMemoData] = useState('');
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
@@ -31,9 +33,19 @@ const TimerCreatePage = () => {
     setIsModalVisible(false);
   };
 
+  const handleFireChange = newFireData => {
+    setFireData(newFireData);
+  };
+
+  const handleMemoChange = newMemoData => {
+    setMemoData(newMemoData);
+  };
+
   console.log(timerName);
   console.log(timerColor);
   console.log(selectedIcon);
+  console.log(fireData);
+  console.log(memoData);
 
   return (
     <TimerCreateContainer>
@@ -46,7 +58,12 @@ const TimerCreatePage = () => {
         <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
         <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
       </InsertContainer>
-      <DetailTimer />
+      <DetailTimer
+        fireData={fireData}
+        memoData={memoData}
+        onFireChange={handleFireChange}
+        onMemoChange={handleMemoChange}
+      />
 
       <PlusButtonWrapper>
         <PlusButton />
