@@ -23,7 +23,8 @@
     "react-native-size-matters": "^0.4.2",
     "react-native-svg": "^15.9.0",
     "react-native-vector-icons": "^10.2.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

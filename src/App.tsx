@@ -9,55 +9,63 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NewCreateModal from './components/modal/newCreateModal/NewCreateModal';
 import TimerCreatePage from './pages/TimerCreatePage';
 import FolderCreatePage from './pages/FolderCreatePage';
+import {StatusBar} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Group
+    <>
+      <StatusBar
+        barStyle="dark-content" // 상태 표시줄 텍스트 색상 설정
+        backgroundColor="transparent" // 상태 표시줄 배경색 투명하게 설정
+        translucent={true} // 상태 표시줄을 투명하게 설정
+      />
+      <NavigationContainer>
+        <Stack.Navigator
           screenOptions={{
-            contentStyle: {backgroundColor: '#fff'},
+            headerShown: false,
           }}>
-          <Stack.Screen
-            name="Main"
-            component={MainWithLayout}
-            options={{title: 'Main Page'}}
-          />
-          <Stack.Screen
-            name="Detail"
-            component={DetailWithLayout}
-            options={{title: 'Detail Page'}}
-          />
-          <Stack.Screen
-            name="Create Timer"
-            component={TimerCreateWithLayout}
-            options={{title: 'Create Timer Page'}}
-          />
-          <Stack.Screen
-            name="Create Folder"
-            component={FolderCreateWithLayout}
-            options={{title: 'Create Folder Page'}}
-          />
-        </Stack.Group>
+          <Stack.Group
+            screenOptions={{
+              contentStyle: {backgroundColor: '#fff'},
+            }}>
+            <Stack.Screen
+              name="Main"
+              component={MainWithLayout}
+              options={{title: 'Main Page'}}
+            />
+            <Stack.Screen
+              name="Detail"
+              component={DetailWithLayout}
+              options={{title: 'Detail Page'}}
+            />
+            <Stack.Screen
+              name="Create Timer"
+              component={TimerCreateWithLayout}
+              options={{title: 'Create Timer Page'}}
+            />
+            <Stack.Screen
+              name="Create Folder"
+              component={FolderCreateWithLayout}
+              options={{title: 'Create Folder Page'}}
+            />
+          </Stack.Group>
 
-        <Stack.Group
-          screenOptions={{
-            presentation: 'transparentModal',
-            contentStyle: {backgroundColor: 'transparent'},
-          }}>
-          <Stack.Screen
-            name="Create Modal"
-            component={NewCreateModal}
-            options={{title: 'Create Modal'}}
-          />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Group
+            screenOptions={{
+              presentation: 'transparentModal',
+              contentStyle: {backgroundColor: 'transparent'},
+            }}>
+            <Stack.Screen
+              name="Create Modal"
+              component={NewCreateModal}
+              options={{title: 'Create Modal'}}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 

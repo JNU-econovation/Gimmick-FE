@@ -4,9 +4,11 @@ import Icon from 'react-native-vector-icons/Entypo';
 import CustomText from '../CustomText';
 import {Platform, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import useTimerStore from '../../store';
 
 const CountdownTimer = () => {
   const navigation = useNavigation();
+  const {time} = useTimerStore(state => state);
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
@@ -18,7 +20,10 @@ const CountdownTimer = () => {
           <Icon name="chevron-right" size={scale(40)} color="#61734D" />
         </TimerHeaderWrapper>
         <FoodTitleText weight="semi-bold">쉬림프 타코</FoodTitleText>
-        <TimerText weight="bold">12:30</TimerText>
+        <TimerText weight="bold">
+          {String(time.minutes).padStart(2, '0')}:
+          {String(time.seconds).padStart(2, '0')}
+        </TimerText>
       </TimerContainer>
     </TouchableOpacity>
   );

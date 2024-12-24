@@ -4,23 +4,43 @@ import CircularProgress from '../components/detail/CircularProgress';
 import Header from '../components/common/Header';
 import styled from 'styled-components/native';
 import CustomText from '../components/CustomText';
+import useTimerStore from '../store';
 
 const DetailPage = () => {
+  const {time, isRunning, startTimer, stopTimer, resetTimer} = useTimerStore(
+    state => state,
+  );
+
+  const handleTimerToggle = () => {
+    if (isRunning) {
+      stopTimer();
+    } else {
+      startTimer();
+    }
+  };
+
   return (
     <DetailContainer>
       <Header type="detail" title="고구마 삶기" />
       <CircularProgress />
       <CurrentFire />
-      <TimerDisplay weight="semi-bold">05:40</TimerDisplay>
+      <TimerDisplay weight="semi-bold">
+        {String(time.minutes).padStart(2, '0')}:
+        {String(time.seconds).padStart(2, '0')}
+      </TimerDisplay>
       <ButtonContainer>
-        <Button>
+        <Button onPress={resetTimer}>
           <ResetButtonImage
             source={require('../assets/images/detail/reset-icon.png')}
           />
         </Button>
-        <Button>
+        <Button onPress={handleTimerToggle}>
           <StartButtonImage
-            source={require('../assets/images/detail/start-icon.png')}
+            source={
+              isRunning
+                ? require('../assets/images/detail/stop-icon.png') // 타이머 실행 중이면 stop-icon
+                : require('../assets/images/detail/start-icon.png') // 타이머 멈춤이면 start-icon
+            }
           />
         </Button>
       </ButtonContainer>
