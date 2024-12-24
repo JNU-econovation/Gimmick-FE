@@ -48,7 +48,9 @@ const TimerCreatePage = () => {
   console.log(memoData);
 
   return (
-    <TimerCreateContainer>
+    <TimerCreateContainer
+      contentContainerStyle={{flexGrow: 1}}
+      showsVerticalScrollIndicator={false}>
       <Header type="timerCreate" title="타이머 생성" />
 
       <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
