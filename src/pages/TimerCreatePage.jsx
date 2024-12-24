@@ -17,8 +17,9 @@ const TimerCreatePage = () => {
   const [selectedIcon, setSelectedIcon] = useState('🌮');
   const [timerName, setTimerName] = useState('');
   const [timerColor, setTimerColor] = useState('#f7e485');
-  const [fireData, setFireData] = useState('약불');
-  const [memoData, setMemoData] = useState('');
+  const [detailTimers, setDetailTimers] = useState([
+    {fireData: '약불', memoData: ''},
+  ]);
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
@@ -33,19 +34,11 @@ const TimerCreatePage = () => {
     setIsModalVisible(false);
   };
 
-  const handleFireChange = newFireData => {
-    setFireData(newFireData);
+  const addDetailTimer = () => {
+    setDetailTimers([...detailTimers, {fireData: '약불', memoData: ''}]);
   };
 
-  const handleMemoChange = newMemoData => {
-    setMemoData(newMemoData);
-  };
-
-  console.log(timerName);
-  console.log(timerColor);
-  console.log(selectedIcon);
-  console.log(fireData);
-  console.log(memoData);
+  console.log(detailTimers);
 
   return (
     <TimerCreateContainer
@@ -60,15 +53,27 @@ const TimerCreatePage = () => {
         <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
         <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
       </InsertContainer>
-      <DetailTimer
-        fireData={fireData}
-        memoData={memoData}
-        onFireChange={handleFireChange}
-        onMemoChange={handleMemoChange}
-      />
+
+      {detailTimers.map((timer, index) => (
+        <DetailTimer
+          key={index}
+          fireData={timer.fireData}
+          memoData={timer.memoData}
+          onFireChange={newFireData => {
+            const newDetailTimers = [...detailTimers];
+            newDetailTimers[index].fireData = newFireData;
+            setDetailTimers(newDetailTimers);
+          }}
+          onMemoChange={newMemoData => {
+            const newDetailTimers = [...detailTimers];
+            newDetailTimers[index].memoData = newMemoData;
+            setDetailTimers(newDetailTimers);
+          }}
+        />
+      ))}
 
       <PlusButtonWrapper>
-        <PlusButton />
+        <PlusButton onPress={addDetailTimer} />
       </PlusButtonWrapper>
       <TotalTimerContainer>
         <TotalTimer />
