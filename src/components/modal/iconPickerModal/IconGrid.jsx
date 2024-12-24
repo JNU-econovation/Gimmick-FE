@@ -9,7 +9,7 @@ const IconGrid = ({onSelectIcon}) => {
       <Grid>
         {foodIconsObjectArray.map(icon => (
           <IconComponent
-            key={icon.index}
+            key={icon.id}
             emoji={icon.icon}
             onPress={() => onSelectIcon(icon.icon)}
           />

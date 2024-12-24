@@ -28,10 +28,6 @@ const FolderCreatePage = () => {
   return (
     <FolderCreateContainer>
       <Header type="folderCreate" title="폴더 생성" />
-      <IconPicker />
-      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
-      <Header type="folderCreate" title="폴더 생성" />
-      <IconPicker />
       <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>
