@@ -4,7 +4,7 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {TouchableOpacity, Image, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const Header = ({type}) => {
+const Header = ({type, title}) => {
   const navigation = useNavigation();
 
   if (type === 'main') {
@@ -28,8 +28,20 @@ const Header = ({type}) => {
             source={require('../../assets/images/header/back-icon.png')}
           />
         </IconButton>
-        <TitleText>타이머 제목</TitleText>
+        <TitleText>{title}</TitleText>
         <RightText>편집</RightText>
+      </HeaderContainer>
+    );
+  } else if (['timerCreate', 'folderCreate'].includes(type)) {
+    return (
+      <HeaderContainer>
+        <IconButton onPress={() => navigation.goBack()}>
+          <BackButtonIcon
+            source={require('../../assets/images/header/back-icon.png')}
+          />
+        </IconButton>
+        <TitleText>{title}</TitleText>
+        <RightText>완료</RightText>
       </HeaderContainer>
     );
   }

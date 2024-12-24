@@ -8,7 +8,7 @@ import CustomText from '../components/CustomText';
 const DetailPage = () => {
   return (
     <DetailContainer>
-      <Header type="detail" />
+      <Header type="detail" title="고구마 삶기" />
       <CircularProgress />
       <CurrentFire />
       <TimerDisplay weight="semi-bold">05:40</TimerDisplay>

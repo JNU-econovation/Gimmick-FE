@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import ColorPicker from '../components/common/ColorPicker';
 import IconPicker from '../components/common/IconPicker';
 import InputComponent from '../components/folderCreate/InputComponent';
+import Header from '../components/common/Header';
 
 const FolderCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -19,6 +20,7 @@ const FolderCreatePage = () => {
 
   return (
     <FolderCreateContainer>
+      <Header type="folderCreate" title="폴더 생성" />
       <IconPicker />
       <InsertContainer>
         <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>

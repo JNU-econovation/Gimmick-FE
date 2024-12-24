@@ -8,6 +8,7 @@ import IconPicker from '../components/common/IconPicker';
 import DetailTimer from '../components/timerCreate/DetailTimer';
 import PlusButton from '../components/timerCreate/PlusButton';
 import TotalTimer from '../components/timerCreate/TotalTimer';
+import Header from '../components/common/Header';
 
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -22,6 +23,7 @@ const TimerCreatePage = () => {
 
   return (
     <TimerCreateContainer>
+      <Header type="timerCreate" title="타이머 생성" />
       <IconPicker />
       <InsertContainer>
         <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
