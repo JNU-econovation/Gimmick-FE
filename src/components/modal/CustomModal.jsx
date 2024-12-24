@@ -12,7 +12,6 @@ const CustomModal = ({visible, onClose, children}) => {
       <View
         style={{
           flex: 1,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
         }}>
         {children}
       </View>

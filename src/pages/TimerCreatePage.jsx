@@ -95,7 +95,7 @@ const TimerCreatePage = () => {
       {isModalVisible && (
         <IconPickerModal
           onSelectIcon={handleIconSelect}
-          onClose={() => handleModalClose}
+          onClose={handleModalClose}
         />
       )}
     </TimerCreateContainer>
