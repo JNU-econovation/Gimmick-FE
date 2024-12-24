@@ -11,6 +11,7 @@ const DetailTimer = ({fireData, memoData, onFireChange, onMemoChange}) => {
 
   const handleFirePress = buttonType => {
     setActiveButton(buttonType);
+    onFireChange(buttonType);
   };
 
   return (

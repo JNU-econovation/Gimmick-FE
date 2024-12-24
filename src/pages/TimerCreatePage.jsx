@@ -11,8 +11,6 @@ import PlusButton from '../components/timerCreate/PlusButton';
 import TotalTimer from '../components/timerCreate/TotalTimer';
 import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
-import Header from '../components/common/Header';
-import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -50,12 +48,11 @@ const TimerCreatePage = () => {
   console.log(memoData);
 
   return (
-    <TimerCreateContainer>
+    <TimerCreateContainer
+      contentContainerStyle={{flexGrow: 1}}
+      showsVerticalScrollIndicator={false}>
       <Header type="timerCreate" title="타이머 생성" />
-      <IconPicker />
-      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
-      <Header type="timerCreate" title="타이머 생성" />
-      <IconPicker />
+
       <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
