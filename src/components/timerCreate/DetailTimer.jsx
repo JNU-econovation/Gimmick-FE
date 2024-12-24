@@ -11,6 +11,7 @@ const DetailTimer = ({fireData, memoData, onFireChange, onMemoChange}) => {
 
   const handleFirePress = buttonType => {
     setActiveButton(buttonType);
+    onFireChange(buttonType);
   };
 
   return (
@@ -24,17 +25,17 @@ const DetailTimer = ({fireData, memoData, onFireChange, onMemoChange}) => {
           <FireButton
             isActive={activeButton === '약불'}
             fireText="약불"
-            onPress={() => onFireChange('약불')}
+            onPress={() => handleFirePress('약불')}
           />
           <FireButton
             isActive={activeButton === '중불'}
             fireText="중불"
-            onPress={() => onFireChange('중불')}
+            onPress={() => handleFirePress('중불')}
           />
           <FireButton
             isActive={activeButton === '강불'}
             fireText="강불"
-            onPress={() => onFireChange('강불')}
+            onPress={() => handleFirePress('강불')}
           />
         </FireButtonContainer>
       </TimerSetContainer>

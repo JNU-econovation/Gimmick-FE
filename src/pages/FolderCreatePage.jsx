@@ -7,8 +7,6 @@ import IconPicker from '../components/common/IconPicker';
 import InputComponent from '../components/folderCreate/InputComponent';
 import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
-import Header from '../components/common/Header';
-import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 
 const FolderCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
