@@ -8,6 +8,7 @@ import InputComponent from '../components/folderCreate/InputComponent';
 import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 import Header from '../components/common/Header';
+import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 
 const FolderCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -33,6 +34,7 @@ const FolderCreatePage = () => {
       <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <Header type="folderCreate" title="폴더 생성" />
       <IconPicker />
+      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>
         <InputWrapper />
