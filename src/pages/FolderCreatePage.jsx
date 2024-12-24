@@ -11,6 +11,9 @@ import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal
 const FolderCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('🌮');
+  const [folderName, setFolderName] = useState('');
+
+  const [folderColor, setFolderColor] = useState('#f7e485');
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
@@ -31,9 +34,9 @@ const FolderCreatePage = () => {
       <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>
-        <InputWrapper />
+        <InputWrapper value={folderName} onChangeText={setFolderName} />
         <FolderCreateText weight="semi-bold">폴더 색상</FolderCreateText>
-        <ColorPicker />
+        <ColorPicker color={folderColor} onChangeColor={setFolderColor} />
       </InsertContainer>
 
       {isModalVisible && (
