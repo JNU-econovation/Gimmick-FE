@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../components/CustomText';
 import styled from 'styled-components/native';
@@ -9,15 +10,23 @@ import DetailTimer from '../components/timerCreate/DetailTimer';
 import PlusButton from '../components/timerCreate/PlusButton';
 import TotalTimer from '../components/timerCreate/TotalTimer';
 import Header from '../components/common/Header';
+import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 
 const TimerCreatePage = () => {
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const navigation = useNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState('🌮');
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
   };
 
-  const onPressModalClose = () => {
+  const handleIconSelect = icon => {
+    setSelectedIcon(icon);
+    setIsModalVisible(false);
+  };
+
+  const handleModalClose = () => {
     setIsModalVisible(false);
   };
 
@@ -25,6 +34,7 @@ const TimerCreatePage = () => {
     <TimerCreateContainer>
       <Header type="timerCreate" title="타이머 생성" />
       <IconPicker />
+      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
         <InputWrapper />
@@ -39,6 +49,13 @@ const TimerCreatePage = () => {
       <TotalTimerContainer>
         <TotalTimer />
       </TotalTimerContainer>
+
+      {isModalVisible && (
+        <IconPickerModal
+          onSelectIcon={handleIconSelect}
+          onClose={handleModalClose}
+        />
+      )}
     </TimerCreateContainer>
   );
 };

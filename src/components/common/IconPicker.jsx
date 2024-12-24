@@ -2,21 +2,15 @@ import {useState} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import {TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-const IconPicker = () => {
-  const [icon, setIcon] = useState('🌮'); // 기본 이모티콘 설정
-
-  // 이모티콘 선택 함수
-  const selectIcon = icon => {
-    setIcon('🌮');
-  };
-
+const IconPicker = ({icon, onPress}) => {
   return (
     <Container>
-      {/* 선택된 이모티콘을 표시 */}
       <IconContainer>
         <IconText>{icon}</IconText>
-        <PlusIcon>
+        <PlusIcon onPress={onPress}>
           <PlusText>
             <Icon name="plus" color="white" size={scale(9)} />
           </PlusText>
@@ -44,7 +38,7 @@ const IconText = styled.Text`
   font-size: ${scale(60)}px;
 `;
 
-const PlusIcon = styled.View`
+const PlusIcon = styled(TouchableOpacity)`
   position: absolute;
   bottom: ${scale(5)}px;
   right: ${scale(5)}px;

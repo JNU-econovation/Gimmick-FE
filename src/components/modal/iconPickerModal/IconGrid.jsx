@@ -3,24 +3,26 @@ import styled from 'styled-components/native';
 import foodIconsObjectArray from '../../../assets/IconList';
 import {scale} from 'react-native-size-matters';
 
-const IconGrid = () => {
-  const [setIcon, setSelectedIcon] = useState('0');
-
+const IconGrid = ({onSelectIcon}) => {
   return (
     <Container>
       <Grid>
         {foodIconsObjectArray.map(icon => (
-          <IconComponent key={icon.index} emoji={icon.icon} />
+          <IconComponent
+            key={icon.index}
+            emoji={icon.icon}
+            onPress={() => onSelectIcon(icon.icon)}
+          />
         ))}
       </Grid>
     </Container>
   );
 };
 
-const IconComponent = ({emoji}) => {
+const IconComponent = ({emoji, onPress}) => {
   return (
     <IconContainer>
-      <Icon>
+      <Icon onPress={onPress}>
         <IconText>{emoji}</IconText>
       </Icon>
     </IconContainer>

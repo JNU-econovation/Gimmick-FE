@@ -7,15 +7,17 @@ import IconGrid from './IconGrid';
 import CustomText from '../../CustomText';
 import CloseButton from '../../common/CloseButton';
 
-const IconPickerModal = () => {
+const IconPickerModal = ({onSelectIcon, onClose}) => {
   const [isModalVisible, setIsModalVisible] = useState(true);
-
-  const onPressModalOpen = () => {
-    setIsModalVisible(true);
-  };
 
   const onPressModalClose = () => {
     setIsModalVisible(false);
+    onClose();
+  };
+
+  const handleIconSelect = icon => {
+    onSelectIcon(icon); // 선택된 아이콘으로 업데이트
+    setIsModalVisible(false); // 모달 닫기
   };
 
   return (
@@ -24,10 +26,10 @@ const IconPickerModal = () => {
         <ModalView>
           <TitletContainer>
             <TitleText weight="semi-bold">아이콘 선택</TitleText>
-            <StyledCloseButton />
+            <StyledCloseButton onClose={onPressModalClose} />
           </TitletContainer>
           <IconWrapper>
-            <IconGrid />
+            <IconGrid onSelectIcon={handleIconSelect} />
           </IconWrapper>
         </ModalView>
       </ModalContainer>
