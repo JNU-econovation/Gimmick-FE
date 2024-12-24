@@ -6,7 +6,13 @@ import FireButton from './FireButton';
 import CloseButton from '../common/CloseButton';
 import {TextInput} from 'react-native';
 
-const DetailTimer = ({fireData, memoData, onFireChange, onMemoChange}) => {
+const DetailTimer = ({
+  fireData,
+  memoData,
+  onDelete,
+  onFireChange,
+  onMemoChange,
+}) => {
   const [activeButton, setActiveButton] = useState(fireData);
 
   const handleFirePress = buttonType => {
@@ -17,7 +23,7 @@ const DetailTimer = ({fireData, memoData, onFireChange, onMemoChange}) => {
   return (
     <DetailTimerContainer>
       <CloseButtonWrapper>
-        <CloseButton />
+        <CloseButton onClose={onDelete} />
       </CloseButtonWrapper>
       <TimerSetContainer>
         <TimerText weight="bold">12:30</TimerText>

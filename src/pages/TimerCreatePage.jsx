@@ -16,9 +16,10 @@ const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('🌮');
   const [timerName, setTimerName] = useState('');
+  const [id, setId] = useState(0);
   const [timerColor, setTimerColor] = useState('#f7e485');
   const [detailTimers, setDetailTimers] = useState([
-    {fireData: '약불', memoData: ''},
+    {id: 0, fireData: '약불', memoData: ''},
   ]);
 
   const onPressModalOpen = () => {
@@ -34,8 +35,12 @@ const TimerCreatePage = () => {
     setIsModalVisible(false);
   };
 
-  const addDetailTimer = () => {
-    setDetailTimers([...detailTimers, {fireData: '약불', memoData: ''}]);
+  const addDetailTimer = id => {
+    setId(id + 1);
+    setDetailTimers([
+      ...detailTimers,
+      {id: id + 1, fireData: '약불', memoData: ''},
+    ]);
   };
 
   console.log(detailTimers);
@@ -56,9 +61,15 @@ const TimerCreatePage = () => {
 
       {detailTimers.map((timer, index) => (
         <DetailTimer
-          key={index}
+          key={timer.id}
           fireData={timer.fireData}
           memoData={timer.memoData}
+          onDelete={index => {
+            const newDetailTimers = detailTimers.filter(
+              detailTimer => detailTimer.id !== timer.id,
+            );
+            setDetailTimers(newDetailTimers);
+          }}
           onFireChange={newFireData => {
             const newDetailTimers = [...detailTimers];
             newDetailTimers[index].fireData = newFireData;
@@ -73,7 +84,11 @@ const TimerCreatePage = () => {
       ))}
 
       <PlusButtonWrapper>
-        <PlusButton onPress={addDetailTimer} />
+        <PlusButton
+          onPress={() => {
+            addDetailTimer(id);
+          }}
+        />
       </PlusButtonWrapper>
       <TotalTimerContainer>
         <TotalTimer />
@@ -82,7 +97,7 @@ const TimerCreatePage = () => {
       {isModalVisible && (
         <IconPickerModal
           onSelectIcon={handleIconSelect}
-          onClose={handleModalClose}
+          onClose={() => handleModalClose}
         />
       )}
     </TimerCreateContainer>
