@@ -2,16 +2,10 @@ import {useState} from 'react';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
-const InputComponent = ({style}) => {
-  const [text, setText] = useState('');
-
-  const onChangeText = inputText => {
-    setText(inputText);
-  };
-
+const InputComponent = ({style, value, onChangeText}) => {
   return (
     <Container style={style}>
-      <Input value={text} onChangeText={onChangeText} />
+      <Input value={value} onChangeText={onChangeText} />
     </Container>
   );
 };

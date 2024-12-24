@@ -13,9 +13,10 @@ import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 
 const TimerCreatePage = () => {
-  const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('🌮');
+  const [timerName, setTimerName] = useState('');
+  const [timerColor, setTimerColor] = useState('#f7e485');
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
@@ -30,6 +31,10 @@ const TimerCreatePage = () => {
     setIsModalVisible(false);
   };
 
+  console.log(timerName);
+  console.log(timerColor);
+  console.log(selectedIcon);
+
   return (
     <TimerCreateContainer>
       <Header type="timerCreate" title="타이머 생성" />
@@ -37,9 +42,9 @@ const TimerCreatePage = () => {
       <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
       <InsertContainer>
         <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
-        <InputWrapper />
+        <InputWrapper value={timerName} onChangeText={setTimerName} />
         <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
-        <ColorPicker />
+        <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
       </InsertContainer>
       <DetailTimer />
 
