@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Platform} from 'react-native';
+import {Platform, Alert} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../components/CustomText';
 import styled from 'styled-components/native';
@@ -59,29 +59,35 @@ const TimerCreatePage = () => {
         </InsertContainer>
       </BaseLayout>
 
-      {detailTimers.map((timer, index) => (
-        <DetailTimer
-          key={timer.id}
-          fireData={timer.fireData}
-          memoData={timer.memoData}
-          onDelete={index => {
-            const newDetailTimers = detailTimers.filter(
-              detailTimer => detailTimer.id !== timer.id,
-            );
-            setDetailTimers(newDetailTimers);
-          }}
-          onFireChange={newFireData => {
-            const newDetailTimers = [...detailTimers];
-            newDetailTimers[index].fireData = newFireData;
-            setDetailTimers(newDetailTimers);
-          }}
-          onMemoChange={newMemoData => {
-            const newDetailTimers = [...detailTimers];
-            newDetailTimers[index].memoData = newMemoData;
-            setDetailTimers(newDetailTimers);
-          }}
-        />
-      ))}
+      <DetailTimerWrapper>
+        {detailTimers.map((timer, index) => (
+          <DetailTimer
+            key={timer.id}
+            fireData={timer.fireData}
+            memoData={timer.memoData}
+            onDelete={index => {
+              if (detailTimers.length > 1) {
+                const newDetailTimers = detailTimers.filter(
+                  detailTimer => detailTimer.id !== timer.id,
+                );
+                setDetailTimers(newDetailTimers);
+              } else {
+                Alert.alert('최소 1개의 타이머가 설정 되어야합니다.');
+              }
+            }}
+            onFireChange={newFireData => {
+              const newDetailTimers = [...detailTimers];
+              newDetailTimers[index].fireData = newFireData;
+              setDetailTimers(newDetailTimers);
+            }}
+            onMemoChange={newMemoData => {
+              const newDetailTimers = [...detailTimers];
+              newDetailTimers[index].memoData = newMemoData;
+              setDetailTimers(newDetailTimers);
+            }}
+          />
+        ))}
+      </DetailTimerWrapper>
 
       <BaseLayout>
         <PlusButtonWrapper>
@@ -116,6 +122,11 @@ const TimerCreateContainer = styled.ScrollView`
 const BaseLayout = styled.View`
   padding: 0 ${scale(22)}px;
   padding-top: ${Platform.select({ios: scale(25), android: scale(12)})}px;
+`;
+
+const DetailTimerWrapper = styled.View`
+  border-bottom-width: ${scale(10)}px;
+  border-bottom-color: #f3f5f7;
 `;
 
 const InsertContainer = styled.View`

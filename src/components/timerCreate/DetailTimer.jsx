@@ -5,6 +5,7 @@ import CustomText from '../CustomText';
 import FireButton from './FireButton';
 import CloseButton from '../common/CloseButton';
 import {TextInput} from 'react-native';
+import {Platform} from 'react-native';
 
 const DetailTimer = ({
   fireData,
@@ -22,44 +23,46 @@ const DetailTimer = ({
 
   return (
     <DetailTimerContainer>
-      <CloseButtonWrapper>
-        <CloseButton onClose={onDelete} />
-      </CloseButtonWrapper>
-      <TimerSetContainer>
-        <TimerText weight="bold">12:30</TimerText>
-        <FireButtonContainer>
-          <FireButton
-            isActive={activeButton === '약불'}
-            fireText="약불"
-            onPress={() => handleFirePress('약불')}
+      <BaseLayout>
+        <CloseButtonWrapper>
+          <CloseButton onClose={onDelete} />
+        </CloseButtonWrapper>
+        <TimerSetContainer>
+          <TimerText weight="bold">12:30</TimerText>
+          <FireButtonContainer>
+            <FireButton
+              isActive={activeButton === '약불'}
+              fireText="약불"
+              onPress={() => handleFirePress('약불')}
+            />
+            <FireButton
+              isActive={activeButton === '중불'}
+              fireText="중불"
+              onPress={() => handleFirePress('중불')}
+            />
+            <FireButton
+              isActive={activeButton === '강불'}
+              fireText="강불"
+              onPress={() => handleFirePress('강불')}
+            />
+          </FireButtonContainer>
+        </TimerSetContainer>
+        <MemoWrapper>
+          <MemoTextInput
+            value={memoData}
+            onChangeText={onMemoChange}
+            placeholder="메모 작성"
+            placeholderTextColor="#676767"
+            textAlign="center"
+            multiline={true}
+            numberOfLines={3}
+            style={{
+              textAlign: 'center',
+              textAlignVertical: 'center',
+            }}
           />
-          <FireButton
-            isActive={activeButton === '중불'}
-            fireText="중불"
-            onPress={() => handleFirePress('중불')}
-          />
-          <FireButton
-            isActive={activeButton === '강불'}
-            fireText="강불"
-            onPress={() => handleFirePress('강불')}
-          />
-        </FireButtonContainer>
-      </TimerSetContainer>
-      <MemoWrapper>
-        <MemoTextInput
-          value={memoData}
-          onChangeText={onMemoChange}
-          placeholder="메모 작성"
-          placeholderTextColor="#676767"
-          textAlign="center"
-          multiline={true}
-          numberOfLines={3}
-          style={{
-            textAlign: 'center',
-            textAlignVertical: 'center',
-          }}
-        />
-      </MemoWrapper>
+        </MemoWrapper>
+      </BaseLayout>
     </DetailTimerContainer>
   );
 };
@@ -67,9 +70,13 @@ const DetailTimer = ({
 const DetailTimerContainer = styled.View`
   width: 100%;
   padding: ${scale(10)}px 0;
-  border-bottom-width: 1px;
-  border-bottom-color: #e6e6e6;
+  border-top-width: ${scale(10)}px;
+  border-top-color: #f3f5f7;
   border-style: solid;
+`;
+
+const BaseLayout = styled.View`
+  padding: 0 ${scale(22)}px;
 `;
 
 const CloseButtonWrapper = styled.View`
