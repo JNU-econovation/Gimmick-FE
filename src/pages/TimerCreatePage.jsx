@@ -47,9 +47,8 @@ const TimerCreatePage = () => {
     <TimerCreateContainer
       contentContainerStyle={{flexGrow: 1}}
       showsVerticalScrollIndicator={false}>
-      <Header type="timerCreate" title="타이머 생성" />
-
       <BaseLayout>
+        <Header type="timerCreate" title="타이머 생성" />
         <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
         <InsertContainer>
           <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
