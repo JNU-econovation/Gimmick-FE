@@ -81,11 +81,7 @@ const DetailWithLayout = () => (
   </BaseLayout>
 );
 
-const TimerCreateWithLayout = () => (
-  <BaseLayout>
-    <TimerCreatePage />
-  </BaseLayout>
-);
+const TimerCreateWithLayout = () => <TimerCreatePage />;
 
 const FolderCreateWithLayout = () => (
   <BaseLayout>

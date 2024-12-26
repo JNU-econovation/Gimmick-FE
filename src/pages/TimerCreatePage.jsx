@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {Platform} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../components/CustomText';
 import styled from 'styled-components/native';
@@ -49,13 +49,15 @@ const TimerCreatePage = () => {
       showsVerticalScrollIndicator={false}>
       <Header type="timerCreate" title="타이머 생성" />
 
-      <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
-      <InsertContainer>
-        <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
-        <InputWrapper value={timerName} onChangeText={setTimerName} />
-        <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
-        <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
-      </InsertContainer>
+      <BaseLayout>
+        <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
+        <InsertContainer>
+          <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
+          <InputWrapper value={timerName} onChangeText={setTimerName} />
+          <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
+          <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
+        </InsertContainer>
+      </BaseLayout>
 
       {detailTimers.map((timer, index) => (
         <DetailTimer
@@ -81,23 +83,25 @@ const TimerCreatePage = () => {
         />
       ))}
 
-      <PlusButtonWrapper>
-        <PlusButton
-          onPress={() => {
-            addDetailTimer(id);
-          }}
-        />
-      </PlusButtonWrapper>
-      <TotalTimerContainer>
-        <TotalTimer />
-      </TotalTimerContainer>
+      <BaseLayout>
+        <PlusButtonWrapper>
+          <PlusButton
+            onPress={() => {
+              addDetailTimer(id);
+            }}
+          />
+        </PlusButtonWrapper>
+        <TotalTimerContainer>
+          <TotalTimer />
+        </TotalTimerContainer>
 
-      {isModalVisible && (
-        <IconPickerModal
-          onSelectIcon={handleIconSelect}
-          onClose={handleModalClose}
-        />
-      )}
+        {isModalVisible && (
+          <IconPickerModal
+            onSelectIcon={handleIconSelect}
+            onClose={handleModalClose}
+          />
+        )}
+      </BaseLayout>
     </TimerCreateContainer>
   );
 };
@@ -107,6 +111,11 @@ const TimerCreateContainer = styled.ScrollView`
   height: 100%;
 
   position: relative;
+`;
+
+const BaseLayout = styled.View`
+  padding: 0 ${scale(22)}px;
+  padding-top: ${Platform.select({ios: scale(25), android: scale(12)})}px;
 `;
 
 const InsertContainer = styled.View`
