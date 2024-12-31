@@ -20,17 +20,18 @@ const TimerCreatePage = () => {
 
   const [timerColor, setTimerColor] = useState('#f7e485');
   const [detailTimers, setDetailTimers] = useState([
-    {id: 0, timeData: ['00', '00'], fireData: '약불', memoData: ''},
+    {id: 0, minutes: '00', seconds: '00', fireData: '약불', memoData: ''},
   ]);
-  const [totalTime, setTotalTime] = useState(['00', '00']);
-
+  const [totalMinutes, setTotalMinutes] = useState('00');
+  const [totalSeconds, setTotalSeconds] = useState('00');
   useEffect(() => {
     const calculateTotalTime = () => {
       let totalMinutes = 0;
       let totalSeconds = 0;
 
       detailTimers.forEach(timer => {
-        const [minutes, seconds] = timer.timeData.map(Number);
+        const minutes = Number(timer.minutes);
+        const seconds = Number(timer.seconds);
         totalMinutes += minutes;
         totalSeconds += seconds;
       });
@@ -38,10 +39,8 @@ const TimerCreatePage = () => {
       totalMinutes += Math.floor(totalSeconds / 60);
       totalSeconds = totalSeconds % 60;
 
-      setTotalTime([
-        String(totalMinutes).padStart(2, '0'),
-        String(totalSeconds).padStart(2, '0'),
-      ]);
+      setTotalMinutes(String(totalMinutes).padStart(2, '0'));
+      setTotalSeconds(String(totalSeconds).padStart(2, '0'));
     };
 
     calculateTotalTime();
@@ -64,7 +63,13 @@ const TimerCreatePage = () => {
     setId(id + 1);
     setDetailTimers([
       ...detailTimers,
-      {id: id + 1, timeData: ['00', '00'], fireData: '약불', memoData: ''},
+      {
+        id: id + 1,
+        minutes: '00',
+        seconds: '00',
+        fireData: '약불',
+        memoData: '',
+      },
     ]);
   };
 
@@ -87,7 +92,8 @@ const TimerCreatePage = () => {
         {detailTimers.map((timer, index) => (
           <DetailTimer
             key={timer.id}
-            timeData={timer.timeData}
+            minutes={timer.minutes}
+            seconds={timer.seconds}
             fireData={timer.fireData}
             memoData={timer.memoData}
             onDelete={index => {
@@ -100,9 +106,10 @@ const TimerCreatePage = () => {
                 Alert.alert('최소 1개의 타이머가 설정 되어야합니다.');
               }
             }}
-            onTimeChange={newTimeData => {
+            onTimeChange={(minutes, seconds) => {
               const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].timeData = newTimeData;
+              newDetailTimers[index].minutes = minutes;
+              newDetailTimers[index].seconds = seconds;
               setDetailTimers(newDetailTimers);
             }}
             onFireChange={newFireData => {
@@ -128,7 +135,7 @@ const TimerCreatePage = () => {
           />
         </PlusButtonWrapper>
         <TotalTimerContainer>
-          <TotalTimer totalTime={totalTime} />
+          <TotalTimer totalTime={[totalMinutes, totalSeconds]} />
         </TotalTimerContainer>
 
         {isModalVisible && (

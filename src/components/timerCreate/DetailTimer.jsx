@@ -8,7 +8,8 @@ import {TextInput, TouchableOpacity, Modal, View, Button} from 'react-native';
 import TimeSelectModal from '../modal/timeSelectModal/TimeSelectModal';
 
 const DetailTimer = ({
-  timeData,
+  minutes,
+  seconds,
   fireData,
   memoData,
   onDelete,
@@ -28,17 +29,13 @@ const DetailTimer = ({
     setModalVisible(false);
   };
 
-  const handleTimeSelect = (hour, minute) => {
-    onTimeChange([hour, minute]);
+  const handleTimeSelect = (minutes, seconds) => {
+    onTimeChange(minutes, seconds);
     handleModalClose();
   };
 
   const openTimeSelectModal = () => {
     setModalVisible(true);
-  };
-
-  const closeTimeSelectModal = () => {
-    setModalVisible(false);
   };
 
   return (
@@ -50,7 +47,7 @@ const DetailTimer = ({
         <TimerSetContainer>
           <TouchableOpacity onPress={openTimeSelectModal} activeOpacity={1}>
             <TimerText weight="bold">
-              {timeData[0]}:{timeData[1]}
+              {minutes}:{seconds}
             </TimerText>
           </TouchableOpacity>
           <FireButtonContainer>
