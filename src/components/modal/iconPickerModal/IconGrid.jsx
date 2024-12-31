@@ -9,7 +9,7 @@ const IconGrid = ({onSelectIcon}) => {
       <Grid>
         {foodIconsObjectArray.map(icon => (
           <IconComponent
-            key={icon.id}
+            key={icon.index}
             emoji={icon.icon}
             onPress={() => onSelectIcon(icon.icon)}
           />
@@ -22,11 +22,9 @@ const IconGrid = ({onSelectIcon}) => {
 const IconComponent = ({emoji, onPress}) => {
   return (
     <IconContainer>
-      <TouchableWithoutFeedback onPress={onPress}>
-        <IconWrapper>
-          <IconText>{emoji}</IconText>
-        </IconWrapper>
-      </TouchableWithoutFeedback>
+      <Icon onPress={onPress} activeOpacity={1}>
+        <IconText>{emoji}</IconText>
+      </Icon>
     </IconContainer>
   );
 };
@@ -49,7 +47,7 @@ const IconContainer = styled.View`
   align-items: center;
 `;
 
-const IconWrapper = styled.View`
+const Icon = styled.TouchableOpacity`
   width: ${scale(50)}px;
   height: ${scale(50)}px;
   border-radius: ${scale(20)}px;
