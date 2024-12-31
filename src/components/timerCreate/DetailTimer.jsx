@@ -48,7 +48,7 @@ const DetailTimer = ({
           <CloseButton onClose={onDelete} />
         </CloseButtonWrapper>
         <TimerSetContainer>
-          <TouchableOpacity onPress={openTimeSelectModal}>
+          <TouchableOpacity onPress={openTimeSelectModal} activeOpacity={1}>
             <TimerText weight="bold">
               {timeData[0]}:{timeData[1]}
             </TimerText>
