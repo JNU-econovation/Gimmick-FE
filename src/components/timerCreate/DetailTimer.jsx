@@ -4,21 +4,41 @@ import styled from 'styled-components/native';
 import CustomText from '../CustomText';
 import FireButton from './FireButton';
 import CloseButton from '../common/CloseButton';
-import {TextInput} from 'react-native';
-import {Platform} from 'react-native';
+import {TextInput, TouchableOpacity, Modal, View, Button} from 'react-native';
+import TimeSelectModal from '../modal/timeSelectModal/TimeSelectModal';
 
 const DetailTimer = ({
+  timeData,
   fireData,
   memoData,
   onDelete,
+  onTimeChange,
   onFireChange,
   onMemoChange,
 }) => {
   const [activeButton, setActiveButton] = useState(fireData);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleFirePress = buttonType => {
     setActiveButton(buttonType);
     onFireChange(buttonType);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
+
+  const handleTimeSelect = (hour, minute) => {
+    onTimeChange([hour, minute]);
+    handleModalClose();
+  };
+
+  const openTimeSelectModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeTimeSelectModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -28,7 +48,11 @@ const DetailTimer = ({
           <CloseButton onClose={onDelete} />
         </CloseButtonWrapper>
         <TimerSetContainer>
-          <TimerText weight="bold">12:30</TimerText>
+          <TouchableOpacity onPress={openTimeSelectModal}>
+            <TimerText weight="bold">
+              {timeData[0]}:{timeData[1]}
+            </TimerText>
+          </TouchableOpacity>
           <FireButtonContainer>
             <FireButton
               isActive={activeButton === '약불'}
@@ -63,6 +87,14 @@ const DetailTimer = ({
           />
         </MemoWrapper>
       </BaseLayout>
+
+      {isModalVisible && (
+        <TimeSelectModal
+          isVisible={isModalVisible}
+          onClose={handleModalClose}
+          onHandleTimeSelect={handleTimeSelect}
+        />
+      )}
     </DetailTimerContainer>
   );
 };

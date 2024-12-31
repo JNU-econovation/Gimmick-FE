@@ -11,15 +11,17 @@ import PlusButton from '../components/timerCreate/PlusButton';
 import TotalTimer from '../components/timerCreate/TotalTimer';
 import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
+import RNPickerSelect from 'react-native-picker-select';
 
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('🌮');
   const [timerName, setTimerName] = useState('');
   const [id, setId] = useState(0);
+
   const [timerColor, setTimerColor] = useState('#f7e485');
   const [detailTimers, setDetailTimers] = useState([
-    {id: 0, fireData: '약불', memoData: ''},
+    {id: 0, timeData: ['00', '00'], fireData: '약불', memoData: ''},
   ]);
 
   const onPressModalOpen = () => {
@@ -39,9 +41,11 @@ const TimerCreatePage = () => {
     setId(id + 1);
     setDetailTimers([
       ...detailTimers,
-      {id: id + 1, fireData: '약불', memoData: ''},
+      {id: id + 1, timeData: ['00', '00'], fireData: '약불', memoData: ''},
     ]);
   };
+
+  console.log(detailTimers);
 
   return (
     <TimerCreateContainer
@@ -62,6 +66,7 @@ const TimerCreatePage = () => {
         {detailTimers.map((timer, index) => (
           <DetailTimer
             key={timer.id}
+            timeData={timer.timeData}
             fireData={timer.fireData}
             memoData={timer.memoData}
             onDelete={index => {
@@ -73,6 +78,11 @@ const TimerCreatePage = () => {
               } else {
                 Alert.alert('최소 1개의 타이머가 설정 되어야합니다.');
               }
+            }}
+            onTimeChange={newTimeData => {
+              const newDetailTimers = [...detailTimers];
+              newDetailTimers[index].timeData = newTimeData;
+              setDetailTimers(newDetailTimers);
             }}
             onFireChange={newFireData => {
               const newDetailTimers = [...detailTimers];
