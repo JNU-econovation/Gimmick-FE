@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Platform, Alert} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../components/CustomText';
@@ -11,7 +11,6 @@ import PlusButton from '../components/timerCreate/PlusButton';
 import TotalTimer from '../components/timerCreate/TotalTimer';
 import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
-import RNPickerSelect from 'react-native-picker-select';
 
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -23,6 +22,30 @@ const TimerCreatePage = () => {
   const [detailTimers, setDetailTimers] = useState([
     {id: 0, timeData: ['00', '00'], fireData: '약불', memoData: ''},
   ]);
+  const [totalTime, setTotalTime] = useState(['00', '00']);
+
+  useEffect(() => {
+    const calculateTotalTime = () => {
+      let totalMinutes = 0;
+      let totalSeconds = 0;
+
+      detailTimers.forEach(timer => {
+        const [minutes, seconds] = timer.timeData.map(Number);
+        totalMinutes += minutes;
+        totalSeconds += seconds;
+      });
+
+      totalMinutes += Math.floor(totalSeconds / 60);
+      totalSeconds = totalSeconds % 60;
+
+      setTotalTime([
+        String(totalMinutes).padStart(2, '0'),
+        String(totalSeconds).padStart(2, '0'),
+      ]);
+    };
+
+    calculateTotalTime();
+  }, [detailTimers]);
 
   const onPressModalOpen = () => {
     setIsModalVisible(true);
@@ -44,8 +67,6 @@ const TimerCreatePage = () => {
       {id: id + 1, timeData: ['00', '00'], fireData: '약불', memoData: ''},
     ]);
   };
-
-  console.log(detailTimers);
 
   return (
     <TimerCreateContainer
@@ -107,7 +128,7 @@ const TimerCreatePage = () => {
           />
         </PlusButtonWrapper>
         <TotalTimerContainer>
-          <TotalTimer />
+          <TotalTimer totalTime={totalTime} />
         </TotalTimerContainer>
 
         {isModalVisible && (
