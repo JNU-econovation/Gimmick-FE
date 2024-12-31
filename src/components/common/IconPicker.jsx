@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-import {TouchableOpacity} from 'react-native';
+import {scale} from 'react-native-size-matters';
+import {TouchableWithoutFeedback} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 const IconPicker = ({icon, onPress}) => {
@@ -10,7 +10,7 @@ const IconPicker = ({icon, onPress}) => {
     <Container>
       <IconContainer>
         <IconText>{icon}</IconText>
-        <PlusIcon onPress={onPress}>
+        <PlusIcon onPress={onPress} activeOpacity={1}>
           <PlusText>
             <Icon name="plus" color="white" size={scale(9)} />
           </PlusText>
@@ -38,7 +38,7 @@ const IconText = styled.Text`
   font-size: ${scale(60)}px;
 `;
 
-const PlusIcon = styled(TouchableOpacity)`
+const PlusIcon = styled.TouchableOpacity`
   position: absolute;
   bottom: ${scale(5)}px;
   right: ${scale(5)}px;
