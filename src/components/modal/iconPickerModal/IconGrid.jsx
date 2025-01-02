@@ -40,10 +40,11 @@ const Container = styled.View`
 const Grid = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const IconContainer = styled.View`
-  width: 20%;
+  width: 19%;
   align-items: center;
 `;
 
