@@ -9,7 +9,6 @@ import {View} from 'react-native';
 const CountdownTimer = ({timer}) => {
   const navigation = useNavigation();
   const {time} = useTimerStore(state => state);
-
   return (
     <TouchableWithoutFeedback
       onPress={() =>

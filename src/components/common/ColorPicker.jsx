@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {scale} from 'react-native-size-matters';
 
-const colors = ['#d4e9c1', '#d3d3f8', '#c5e5fa', '#f7e485', '#f4b5b5'];
+const colors = ['#FBDF60', '#F6DBB7', '#BAE2FF', '#C8E7A7', '#FFACAC'];
 
 const ColorPicker = ({color, onChangeColor}) => {
   return (

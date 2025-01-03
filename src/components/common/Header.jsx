@@ -40,7 +40,10 @@ const Header = ({type, title, onPressComplete}) => {
           </IconButton>
         </TouchableWithoutFeedback>
         <TitleText weight={titleWeight}>{title}</TitleText>
-        <RightText>편집</RightText>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('Timer Update')}>
+          <RightText>편집</RightText>
+        </TouchableWithoutFeedback>
       </HeaderContainer>
     );
   } else if (['timerCreate', 'folderCreate'].includes(type)) {

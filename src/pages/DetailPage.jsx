@@ -23,7 +23,7 @@ const DetailPage = () => {
   const {time, isRunning, startTimer, stopTimer, resetTimer} = useTimerStore(
     state => state,
   );
-
+  console.log(timer);
   const detailColor = DetailColor(timer.timerColor);
 
   const handleTimerToggle = () => {
