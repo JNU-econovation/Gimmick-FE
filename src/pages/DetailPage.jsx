@@ -23,7 +23,6 @@ const DetailPage = () => {
   const {time, isRunning, startTimer, stopTimer, resetTimer} = useTimerStore(
     state => state,
   );
-  console.log(timer);
   const detailColor = DetailColor(timer.timerColor);
 
   const handleTimerToggle = () => {
@@ -37,7 +36,7 @@ const DetailPage = () => {
   return (
     <DetailLayout>
       <HeaderWrapper>
-        <Header type="detail" title={timer.timerName} />
+        <Header type="detail" title={timer.timerName} timer={timer} />
       </HeaderWrapper>
       <ContentContainer>
         <CircularProgress icon={timer.icon} color={detailColor} />

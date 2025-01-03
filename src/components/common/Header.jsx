@@ -5,7 +5,7 @@ import {TouchableWithoutFeedback, Image, Text, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
 
-const Header = ({type, title, onPressComplete}) => {
+const Header = ({type, title, onPressComplete, timer}) => {
   const navigation = useNavigation();
 
   const titleWeight = Platform.select({
@@ -41,7 +41,7 @@ const Header = ({type, title, onPressComplete}) => {
         </TouchableWithoutFeedback>
         <TitleText weight={titleWeight}>{title}</TitleText>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('Timer Update')}>
+          onPress={() => navigation.navigate('Timer Update', {timer})}>
           <RightText>편집</RightText>
         </TouchableWithoutFeedback>
       </HeaderContainer>

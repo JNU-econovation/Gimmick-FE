@@ -12,21 +12,22 @@ import TotalTimer from '../components/timerCreate/TotalTimer';
 import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const TimerUpdatePage = () => {
+  const route = useRoute();
+  const {timer} = route.params || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedIcon, setSelectedIcon] = useState('🌮');
-  const [timerName, setTimerName] = useState('');
+  const [selectedIcon, setSelectedIcon] = useState(timer.icon);
+  const [timerName, setTimerName] = useState(timer.timerName);
   const [id, setId] = useState(0);
 
-  const [timerColor, setTimerColor] = useState('#f7e485');
-  const [detailTimers, setDetailTimers] = useState([
-    {id: 0, minutes: '00', seconds: '00', fireData: '약불', memoData: ''},
-  ]);
+  const [timerColor, setTimerColor] = useState(timer.timerColor);
+  const [detailTimers, setDetailTimers] = useState(timer.detailTimerData);
   const navigation = useNavigation();
-  const [totalMinutes, setTotalMinutes] = useState('00');
-  const [totalSeconds, setTotalSeconds] = useState('00');
+  const [totalMinutes, setTotalMinutes] = useState(timer.totalMinutes);
+  const [totalSeconds, setTotalSeconds] = useState(timer.totalSeconds);
+
   useEffect(() => {
     const calculateTotalTime = () => {
       let totalMinutes = 0;
