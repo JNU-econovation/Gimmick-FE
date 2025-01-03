@@ -20,13 +20,19 @@ const TimerUpdatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState(timer.icon);
   const [timerName, setTimerName] = useState(timer.timerName);
-  const [id, setId] = useState(0);
+  const [id, setId] = useState(
+    timer.detailTimerData[timer.detailTimerData.length - 1].id,
+  );
 
   const [timerColor, setTimerColor] = useState(timer.timerColor);
   const [detailTimers, setDetailTimers] = useState(timer.detailTimerData);
   const navigation = useNavigation();
-  const [totalMinutes, setTotalMinutes] = useState(timer.totalMinutes);
-  const [totalSeconds, setTotalSeconds] = useState(timer.totalSeconds);
+  const [totalMinutes, setTotalMinutes] = useState(
+    String(timer.totalMinutes).padStart(2, '0'),
+  );
+  const [totalSeconds, setTotalSeconds] = useState(
+    String(timer.totalSeconds).padStart(2, '0'),
+  );
 
   useEffect(() => {
     const calculateTotalTime = () => {
@@ -111,6 +117,40 @@ const TimerUpdatePage = () => {
     }
   };
 
+  const handleTimeChange = (index, minutes, seconds) => {
+    setDetailTimers(prevTimers => {
+      const newTimers = [...prevTimers];
+      newTimers[index] = {
+        ...newTimers[index],
+        minutes,
+        seconds,
+      };
+      return newTimers;
+    });
+  };
+
+  const handleFireChange = (index, newFireData) => {
+    setDetailTimers(prevTimers => {
+      const newTimers = [...prevTimers];
+      newTimers[index] = {
+        ...newTimers[index],
+        fireData: newFireData,
+      };
+      return newTimers;
+    });
+  };
+
+  const handleMemoChange = (index, newMemoData) => {
+    setDetailTimers(prevTimers => {
+      const newTimers = [...prevTimers];
+      newTimers[index] = {
+        ...newTimers[index],
+        memoData: newMemoData,
+      };
+      return newTimers;
+    });
+  };
+
   return (
     <TimerUpdateContainer
       contentContainerStyle={{flexGrow: 1}}
@@ -131,39 +171,28 @@ const TimerUpdatePage = () => {
       </BaseLayout>
 
       <DetailTimerWrapper>
-        {detailTimers.map((timer, index) => (
+        {detailTimers.map((time, index) => (
           <DetailTimer
-            key={timer.id}
-            minutes={timer.minutes}
-            seconds={timer.seconds}
-            fireData={timer.fireData}
-            memoData={timer.memoData}
+            key={time.id}
+            minutes={String(time.minutes).padStart(2, '0')}
+            seconds={String(time.seconds).padStart(2, '0')}
+            fireData={time.fireData}
+            memoData={time.memoData}
             onDelete={index => {
               if (detailTimers.length > 1) {
                 const newDetailTimers = detailTimers.filter(
-                  detailTimer => detailTimer.id !== timer.id,
+                  detailTimer => detailTimer.id !== time.id,
                 );
                 setDetailTimers(newDetailTimers);
               } else {
                 Alert.alert('최소 1개의 타이머가 설정 되어야합니다.');
               }
             }}
-            onTimeChange={(minutes, seconds) => {
-              const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].minutes = minutes;
-              newDetailTimers[index].seconds = seconds;
-              setDetailTimers(newDetailTimers);
-            }}
-            onFireChange={newFireData => {
-              const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].fireData = newFireData;
-              setDetailTimers(newDetailTimers);
-            }}
-            onMemoChange={newMemoData => {
-              const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].memoData = newMemoData;
-              setDetailTimers(newDetailTimers);
-            }}
+            onTimeChange={(minutes, seconds) =>
+              handleTimeChange(index, minutes, seconds)
+            }
+            onFireChange={newFireData => handleFireChange(index, newFireData)}
+            onMemoChange={newMemoData => handleMemoChange(index, newMemoData)}
           />
         ))}
       </DetailTimerWrapper>

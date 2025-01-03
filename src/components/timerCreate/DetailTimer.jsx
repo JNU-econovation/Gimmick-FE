@@ -71,7 +71,9 @@ const DetailTimer = ({
         <MemoWrapper>
           <MemoTextInput
             value={memoData}
-            onChangeText={onMemoChange}
+            onChangeText={text => {
+              onMemoChange(text);
+            }}
             placeholder="메모 작성"
             placeholderTextColor="#676767"
             textAlign="center"

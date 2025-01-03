@@ -20,7 +20,7 @@ const TimerCreatePage = () => {
   const [timerName, setTimerName] = useState('');
   const [id, setId] = useState(0);
 
-  const [timerColor, setTimerColor] = useState('#f7e485');
+  const [timerColor, setTimerColor] = useState('#FBDF60');
   const [detailTimers, setDetailTimers] = useState([
     {id: 0, minutes: '00', seconds: '00', fireData: '약불', memoData: ''},
   ]);
@@ -74,6 +74,36 @@ const TimerCreatePage = () => {
         memoData: '',
       },
     ]);
+  };
+
+  const handleDeleteTimer = timerId => {
+    if (detailTimers.length > 1) {
+      const newDetailTimers = detailTimers.filter(
+        detailTimer => detailTimer.id !== timerId,
+      );
+      setDetailTimers(newDetailTimers);
+    } else {
+      Alert.alert('최소 1개의 타이머가 설정 되어야합니다.');
+    }
+  };
+
+  const handleTimeChange = (index, minutes, seconds) => {
+    const newDetailTimers = [...detailTimers];
+    newDetailTimers[index].minutes = minutes;
+    newDetailTimers[index].seconds = seconds;
+    setDetailTimers(newDetailTimers);
+  };
+
+  const handleFireChange = (index, newFireData) => {
+    const newDetailTimers = [...detailTimers];
+    newDetailTimers[index].fireData = newFireData;
+    setDetailTimers(newDetailTimers);
+  };
+
+  const handleMemoChange = (index, newMemoData) => {
+    const newDetailTimers = [...detailTimers];
+    newDetailTimers[index].memoData = newMemoData;
+    setDetailTimers(newDetailTimers);
   };
 
   const saveTimerData = async () => {
@@ -137,32 +167,12 @@ const TimerCreatePage = () => {
             seconds={timer.seconds}
             fireData={timer.fireData}
             memoData={timer.memoData}
-            onDelete={index => {
-              if (detailTimers.length > 1) {
-                const newDetailTimers = detailTimers.filter(
-                  detailTimer => detailTimer.id !== timer.id,
-                );
-                setDetailTimers(newDetailTimers);
-              } else {
-                Alert.alert('최소 1개의 타이머가 설정 되어야합니다.');
-              }
-            }}
-            onTimeChange={(minutes, seconds) => {
-              const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].minutes = minutes;
-              newDetailTimers[index].seconds = seconds;
-              setDetailTimers(newDetailTimers);
-            }}
-            onFireChange={newFireData => {
-              const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].fireData = newFireData;
-              setDetailTimers(newDetailTimers);
-            }}
-            onMemoChange={newMemoData => {
-              const newDetailTimers = [...detailTimers];
-              newDetailTimers[index].memoData = newMemoData;
-              setDetailTimers(newDetailTimers);
-            }}
+            onDelete={() => handleDeleteTimer(timer.id)}
+            onTimeChange={(minutes, seconds) =>
+              handleTimeChange(index, minutes, seconds)
+            }
+            onFireChange={newFireData => handleFireChange(index, newFireData)}
+            onMemoChange={newMemoData => handleMemoChange(index, newMemoData)}
           />
         ))}
       </DetailTimerWrapper>
