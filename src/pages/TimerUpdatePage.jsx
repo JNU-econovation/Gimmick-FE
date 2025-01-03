@@ -17,6 +17,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 const TimerUpdatePage = () => {
   const route = useRoute();
   const {timer} = route.params || {};
+  console.log(timer);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState(timer.icon);
   const [timerName, setTimerName] = useState(timer.timerName);
@@ -91,23 +92,27 @@ const TimerUpdatePage = () => {
 
     try {
       const newTimer = {
-        id: Date.now(),
+        id: timer.id,
         timerName: timerName,
         timerColor: timerColor,
         icon: selectedIcon,
         detailTimers,
       };
 
+      // 데이터 수정 완료되면 확인해야 할 부분
       const storedTimers = await AsyncStorage.getItem('timers');
       const parsedTimers = storedTimers ? JSON.parse(storedTimers) : [];
 
-      const updatedTimers = [...parsedTimers, newTimer];
+      // 현재 id가 없어서인지 타이머를 수정하면 전체 타이머에 적용되는 오류가 발생하고 있음
+      const updatedTimers = parsedTimers.map(t =>
+        t.id === timer.id ? newTimer : t,
+      );
 
       await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
       Alert.alert('저장 완료', '타이머가 성공적으로 저장되었습니다.');
 
       setTimerName('');
-      setTimerColor('#f7e485');
+      setTimerColor('#FBDF60');
       setSelectedIcon('🌮');
       setDetailTimers([{id: 0, fireData: '약불', memoData: ''}]);
       navigation.goBack();
