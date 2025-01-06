@@ -93,10 +93,12 @@ const TimerUpdatePage = () => {
     try {
       const newTimer = {
         id: timer.id,
+        totalMinutes: totalMinutes,
+        totalSeconds: totalSeconds,
         timerName: timerName,
         timerColor: timerColor,
         icon: selectedIcon,
-        detailTimers,
+        detailTimerData: detailTimers,
       };
 
       // 데이터 수정 완료되면 확인해야 할 부분
@@ -115,6 +117,7 @@ const TimerUpdatePage = () => {
       setTimerColor('#FBDF60');
       setSelectedIcon('🌮');
       setDetailTimers([{id: 0, fireData: '약불', memoData: ''}]);
+      navigation.goBack();
       navigation.goBack();
     } catch (error) {
       console.error('타이머 저장 실패:', error);
