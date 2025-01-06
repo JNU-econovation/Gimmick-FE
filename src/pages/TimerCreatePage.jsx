@@ -115,10 +115,12 @@ const TimerCreatePage = () => {
     try {
       const newTimer = {
         id: Date.now(),
+        totalMinutes: totalMinutes,
+        totalSeconds: totalSeconds,
         timerName: timerName,
         timerColor: timerColor,
         icon: selectedIcon,
-        detailTimers,
+        detailTimerData: detailTimers,
       };
 
       const storedTimers = await AsyncStorage.getItem('timers');
