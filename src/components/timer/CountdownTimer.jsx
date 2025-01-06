@@ -87,9 +87,8 @@ const TimerHeaderWrapper = styled.View`
 const IconboxWrapper = styled.View`
   width: ${scale(40)}px;
   height: ${scale(40)}px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: ${scale(13)}px;
-  opacity: 0.7;
   margin-right: ${scale(54)}px;
   justify-content: center;
   align-items: center;
