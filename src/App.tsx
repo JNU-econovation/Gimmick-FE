@@ -11,6 +11,7 @@ import TimerCreatePage from './pages/TimerCreatePage';
 import FolderCreatePage from './pages/FolderCreatePage';
 import {StatusBar} from 'react-native';
 import TimerUpdatePage from './pages/TimerUpdatePage';
+import Refresh from './pages/Refresh';
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
@@ -33,7 +34,7 @@ function App(): React.JSX.Element {
             <Stack.Screen
               name="Main"
               component={MainWithLayout}
-              options={{title: 'Main Page'}}
+              options={{title: 'Main Page', animation: 'none'}}
             />
             <Stack.Screen
               name="Detail"
@@ -54,6 +55,12 @@ function App(): React.JSX.Element {
               name="Timer Update"
               component={TimerUpdateWithLayout}
               options={{title: 'Timer Update Page'}}
+            />
+
+            <Stack.Screen
+              name="Refresh"
+              component={Refresh}
+              options={{title: 'Refresh Page'}}
             />
           </Stack.Group>
 
