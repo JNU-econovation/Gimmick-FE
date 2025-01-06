@@ -1,21 +1,54 @@
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../CustomText';
-import {Platform, TouchableWithoutFeedback} from 'react-native';
+import {Platform, TouchableWithoutFeedback, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import useTimerStore from '../../store';
-import {View} from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const CountdownTimer = ({timer}) => {
   const navigation = useNavigation();
   const {time} = useTimerStore(state => state);
+
+  // 타이머 삭제 함수 선택한 타이머의 id와 일치하는 데이터를 제거한 리스트를 반환 후 저장
+  const deleteTimerData = async id => {
+    try {
+      const storedTimers = await AsyncStorage.getItem('timers');
+      const parsedTimers = storedTimers ? JSON.parse(storedTimers) : [];
+
+      const updatedTimers = parsedTimers.filter(
+        parsedTimer => parsedTimer.id !== id,
+      );
+
+      await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
+      Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
+    } catch (error) {
+      console.error('타이머 삭제 실패:', error);
+      Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
+    }
+  };
+
+  const handleLongPress = () => {
+    Alert.alert(
+      '타이머 삭제',
+      '삭제한 타이머는 되돌릴 수 없습니다. 삭제하시겠습니까?',
+      [
+        {
+          text: '취소',
+          style: 'cancel',
+        },
+        {text: '삭제', onPress: () => deleteTimerData(timer.id)},
+      ],
+    );
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() =>
         navigation.navigate('Detail', {
           timer,
         })
-      }>
+      }
+      onLongPress={handleLongPress}>
       <TimerContainer color={timer.timerColor}>
         <TimerHeaderWrapper>
           <IconboxWrapper>
