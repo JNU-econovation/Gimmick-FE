@@ -14,6 +14,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1AEF42062D2FFC3600C73367 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1AEF42052D2FFC3600C73367 /* Config.xcconfig */; };
+		1AEF42072D2FFC3600C73367 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1AEF42052D2FFC3600C73367 /* Config.xcconfig */; };
 		2F57567F2D9446AFAEE7D9F7 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D747126915BD4FCB80063642 /* Pretendard-SemiBold.otf */; };
 		6BCF45A8AABB4AFCB04D3D4B /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C18A8E7E8DF44797B7BD7221 /* Pretendard-Bold.otf */; };
 		6DF05818F0BD464C9847B933 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7C8B93E2FF8B4756993FCD73 /* Pretendard-ExtraBold.otf */; };
@@ -48,6 +50,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = cooktime/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = cooktime/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-cooktime-cooktimeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cooktime-cooktimeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AEF42052D2FFC3600C73367 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-cooktime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cooktime.debug.xcconfig"; path = "Target Support Files/Pods-cooktime/Pods-cooktime.debug.xcconfig"; sourceTree = "<group>"; };
 		3DF28ECD8A2948F28BE3F374 /* Pretendard-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Black.otf"; path = "../src/assets/fonts/Pretendard-Black.otf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-cooktime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cooktime.release.xcconfig"; path = "Target Support Files/Pods-cooktime/Pods-cooktime.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +175,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1AEF42052D2FFC3600C73367 /* Config.xcconfig */,
 				A63B237B2CDDEC0700DFB8EC /* Fonts */,
 				13B07FAE1A68108700A75B9A /* cooktime */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -318,6 +322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AEF42072D2FFC3600C73367 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +335,7 @@
 				BA98693EE4B42A08E15D8820 /* PrivacyInfo.xcprivacy in Resources */,
 				DE2C679409C14E3593C2020E /* Pretendard-Black.otf in Resources */,
 				6BCF45A8AABB4AFCB04D3D4B /* Pretendard-Bold.otf in Resources */,
+				1AEF42062D2FFC3600C73367 /* Config.xcconfig in Resources */,
 				6DF05818F0BD464C9847B933 /* Pretendard-ExtraBold.otf in Resources */,
 				03C248D17A844F978C1AEF82 /* Pretendard-ExtraLight.otf in Resources */,
 				7F3AE7138DC048A9A0125E4B /* Pretendard-Light.otf in Resources */,
@@ -611,6 +617,7 @@
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEF42052D2FFC3600C73367 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -678,10 +685,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -691,6 +695,7 @@
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEF42052D2FFC3600C73367 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -750,10 +755,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

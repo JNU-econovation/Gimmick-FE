@@ -75,3 +75,6 @@ yarn-error.log
 
 # For local env file 
 .env
+
+# For ios env file
+/ios/Config.xcconfig
