@@ -8,8 +8,10 @@ import CountdownFolder from '../components/timer/CountdownFolder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
+import {checkFirstUser} from '../utils/checkFirstUser';
 
 const MainPage = () => {
+  const [isFirstUser, setIsFirstUser] = useState(false);
   const [timers, setTimers] = useState([]);
   const [folders, setFolders] = useState([]);
 
@@ -19,35 +21,36 @@ const MainPage = () => {
       if (storedTimers) {
         setTimers(JSON.parse(storedTimers));
       }
-
-      const storedFolders = await AsyncStorage.getItem('folders');
-      if (storedFolders) {
-        setFolders(JSON.parse(storedFolders));
-      }
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('데이터 가져오기 실패:', error);
     }
   };
 
+  useEffect(() => {
+    const initialize = async () => {
+      const firstUser = await checkFirstUser();
+      setIsFirstUser(firstUser);
+
+      if (isFirstUser) {
+        try {
+          await AsyncStorage.setItem('timers', JSON.stringify(initialMockData));
+        } catch (error) {
+          console.error('Mock data 저장 실패:', error);
+        }
+      }
+
+      await loadData();
+    };
+
+    initialize();
+  }, []);
+
+  // 새로고침되어 새로 추가된 타이머 ui가 보이도록
   useFocusEffect(
     React.useCallback(() => {
       loadData();
     }, []),
   );
-  const [mockData, setMockData] = useState([]);
-
-  useEffect(() => {
-    AsyncStorage.setItem('timers', JSON.stringify(initialMockData), () => {
-      console.log('유저정보 저장 완료');
-    });
-
-    AsyncStorage.getItem('timers', (err, result) => {
-      const storedData = JSON.parse(result);
-      if (storedData) {
-        setMockData(storedData);
-      }
-    });
-  }, []);
 
   return (
     <MainContainer>
