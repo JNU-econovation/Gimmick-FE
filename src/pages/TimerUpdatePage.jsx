@@ -17,7 +17,6 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 const TimerUpdatePage = () => {
   const route = useRoute();
   const {timer} = route.params || {};
-  console.log(timer);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState(timer.icon);
   const [timerName, setTimerName] = useState(timer.timerName);
