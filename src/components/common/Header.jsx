@@ -72,7 +72,8 @@ const HeaderContainer = styled.View`
   justify-content: space-between;
   align-items: center;
   padding-top: ${scale(15)}px;
-  margin-bottom: ${scale(25)}px;
+  margin-top: ${scale(25)}px;
+  margin-bottom: ${scale(10)}px;
 `;
 
 const Logo = styled.Image`
