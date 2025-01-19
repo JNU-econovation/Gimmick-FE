@@ -43,6 +43,14 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
 
+  // 알림 권한 요청
+  [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound)
+                        completionHandler:^(BOOL granted, NSError * _Nullable error) {
+    if (!granted) {
+      NSLog(@"User denied notifications");
+    }
+  }];
+
   // React Native 기본 초기화 실행
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
