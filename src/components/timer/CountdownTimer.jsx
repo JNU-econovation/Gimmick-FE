@@ -22,7 +22,11 @@ const CountdownTimer = ({timer, onTimerClick}) => {
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
 
   useEffect(() => {
-    if (!currentTimer || currentTimer !== timer) {
+    if (
+      !currentTimer ||
+      currentTimer.totalMinutes !== timer.totalMinutes ||
+      currentTimer.totalSeconds !== timer.totalSeconds
+    ) {
       timerStore.initTimer(
         timer.id,
         timer.totalMinutes,
@@ -30,7 +34,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
         timer.detailTimerData,
       );
     }
-  }, [timer]);
+  }, [timer.totalMinutes, timer.totalSeconds]);
 
   const calculateProgress = () => {
     if (!currentTimer) return 0;
