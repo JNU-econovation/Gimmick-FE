@@ -6,33 +6,6 @@ import {useNavigation} from '@react-navigation/native';
 import useTimerStore from '../../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect} from 'react';
-import PushNotification from 'react-native-push-notification';
-
-PushNotification.configure({
-  onRegister: function (token) {
-    console.log('TOKEN:', token);
-  },
-
-  onNotification: function (notification) {
-    console.log('NOTIFICATION:', notification);
-    // 알림을 처리하는 로직
-  },
-
-  popInitialNotification: true,
-  requestPermissions: true,
-});
-
-PushNotification.createChannel(
-  {
-    channelId: 'default-channel-id',
-    channelName: 'Default Channel',
-    channelDescription: 'A default channel',
-    soundName: 'default',
-    importance: 4,
-    vibrate: true,
-  },
-  created => console.log(`createChannel returned '${created}'`),
-);
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -70,22 +43,6 @@ const CountdownTimer = ({timer, onTimerClick}) => {
     const remainingSeconds = currentTimer.remainingTotalSeconds;
     return 1 - remainingSeconds / totalSeconds;
   };
-
-  useEffect(() => {
-    if (
-      currentTimer &&
-      currentTimer.time.minutes === 0 &&
-      currentTimer.time.seconds === 0
-    ) {
-      console.log('타이머 종료');
-      PushNotification.localNotification({
-        title: '타이머 종료',
-        message: '타이머가 종료되었습니다!',
-        playSound: true,
-        soundName: 'default',
-      });
-    }
-  }, [currentTimer?.time.minutes, currentTimer?.time.seconds]);
 
   const deleteTimerData = async id => {
     try {

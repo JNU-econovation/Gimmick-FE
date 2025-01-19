@@ -8,6 +8,7 @@ import {scale} from 'react-native-size-matters';
 import useTimerStore from '../store';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useRoute} from '@react-navigation/native';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -17,12 +18,32 @@ const DetailColor = color => {
   if (color === '#FCC4C4') return '#F4A7A3';
 };
 
+// 알림 보내기 함수
+const sendNotification = () => {
+  PushNotificationIOS.addNotificationRequest({
+    id: 'timerComplete',
+    title: '타이머 완료',
+    body: '타이머가 완료되었습니다!',
+  });
+};
+
 const DetailPage = () => {
   const route = useRoute();
   const {timer} = route.params || {};
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
   const detailColor = DetailColor(timer.timerColor);
+
+  useEffect(() => {
+    if (
+      currentTimer &&
+      currentTimer.time.minutes === 0 &&
+      currentTimer.time.seconds === 0
+    ) {
+      console.log('Sending notification...');
+      sendNotification();
+    }
+  }, [currentTimer?.time.minutes, currentTimer?.time.seconds]);
 
   useEffect(() => {
     if (!currentTimer && !timerStore.timers[timer.id]) {
