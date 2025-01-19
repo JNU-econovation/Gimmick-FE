@@ -1,4 +1,5 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const useTimerStore = create(set => ({
   timers: {},
@@ -54,13 +55,19 @@ const useTimerStore = create(set => ({
       const intervalId = setInterval(() => {
         set(state => {
           const currentTimer = state.timers[timerId];
-          const {minutes, seconds} = currentTimer.time;
+          const { minutes, seconds } = currentTimer.time;
           const newRemainingTotalSeconds = Math.max(
             currentTimer.remainingTotalSeconds - 1,
             0,
           );
 
           if (minutes === 0 && seconds === 0) {
+            PushNotificationIOS.addNotificationRequest({
+              id: `timerComplete-${timerId}`,
+              title: '타이머 완료',
+              body: `${currentTimer.currentStepIndex + 1}번째 타이머가 완료되었습니다!`,
+            });
+
             if (
               currentTimer.currentStepIndex <
               currentTimer.detailTimerData.length - 1
@@ -124,8 +131,8 @@ const useTimerStore = create(set => ({
 
           const newTime =
             seconds === 0
-              ? {minutes: minutes - 1, seconds: 59}
-              : {minutes, seconds: seconds - 1};
+              ? { minutes: minutes - 1, seconds: 59 }
+              : { minutes, seconds: seconds - 1 };
 
           return {
             timers: {
