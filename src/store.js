@@ -66,6 +66,7 @@ const useTimerStore = create(set => ({
               id: `timerComplete-${timerId}`,
               title: '타이머 완료',
               body: `${currentTimer.currentStepIndex + 1}번째 타이머가 완료되었습니다!`,
+              sound: 'default',
             });
 
             if (
