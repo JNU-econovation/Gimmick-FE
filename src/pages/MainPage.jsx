@@ -9,8 +9,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
 import {checkFirstUser} from '../utils/checkFirstUser';
-
+import {useNavigation} from '@react-navigation/native';
 const MainPage = () => {
+  const navigation = useNavigation();
   const [timers, setTimers] = useState([]);
   const [folders, setFolders] = useState([]);
 
@@ -46,6 +47,7 @@ const MainPage = () => {
         const firstUser = await checkFirstUser();
 
         if (firstUser) {
+          navigation.navigate('Login');
           await AsyncStorage.setItem('timers', JSON.stringify(initialMockData));
           setTimers(initialMockData);
         }
