@@ -18,10 +18,10 @@ const DetailColor = color => {
 const CountdownTimer = ({timer, onTimerClick}) => {
   const navigation = useNavigation();
   const timerStore = useTimerStore();
-  console.log('countdowntimer', timer);
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
 
   useEffect(() => {
+    //다시 확인
     if (
       !currentTimer ||
       currentTimer.totalMinutes !== timer.totalMinutes ||

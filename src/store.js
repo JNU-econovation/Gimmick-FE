@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import {create} from 'zustand';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const useTimerStore = create(set => ({
@@ -9,53 +9,60 @@ const useTimerStore = create(set => ({
       if (state.timers[timerId] && state.timers[timerId].isRunning) {
         return state;
       }
-      return state;
-    });
-    const defaultTimer = {
-      minutes: initialMinutes,
-      seconds: initialSeconds,
-      fireData: '중불',
-    };
 
-    const timerData =
-      detailTimerData && detailTimerData.length > 0
-        ? detailTimerData[0]
-        : defaultTimer;
+      const defaultTimer = {
+        minutes: initialMinutes,
+        seconds: initialSeconds,
+        fireData: '중불',
+      };
 
-    const totalSeconds =
-      parseInt(initialMinutes) * 60 + parseInt(initialSeconds);
+      const timerData =
+        detailTimerData && detailTimerData.length > 0
+          ? detailTimerData[0]
+          : defaultTimer;
 
-    set(state => ({
-      timers: {
-        ...state.timers,
-        [timerId]: {
-          time: {
-            minutes: parseInt(timerData.minutes),
-            seconds: parseInt(timerData.seconds),
-          },
-          currentStepIndex: 0,
-          detailTimerData: detailTimerData || [defaultTimer],
-          isRunning: false,
-          intervalId: null,
-          remainingTotalSeconds: totalSeconds,
-          totalTime: {
-            minutes: parseInt(initialMinutes),
-            seconds: parseInt(initialSeconds),
+      const totalSeconds =
+        parseInt(initialMinutes) * 60 + parseInt(initialSeconds);
+
+      return {
+        timers: {
+          ...state.timers,
+          [timerId]: {
+            time: {
+              minutes: parseInt(timerData.minutes),
+              seconds: parseInt(timerData.seconds),
+            },
+            currentStepIndex: 0,
+            detailTimerData: detailTimerData || [defaultTimer],
+            isRunning: false,
+            intervalId: null,
+            remainingTotalSeconds: totalSeconds,
+            totalTime: {
+              minutes: parseInt(initialMinutes),
+              seconds: parseInt(initialSeconds),
+            },
           },
         },
-      },
-    }));
+      };
+    });
   },
 
   startTimer: timerId => {
     set(state => {
       const timer = state.timers[timerId];
-      if (!timer || timer.isRunning) return state;
+      if (!timer) return state;
+
+      if (timer.isRunning && timer.intervalId) return state;
 
       const intervalId = setInterval(() => {
         set(state => {
           const currentTimer = state.timers[timerId];
-          const { minutes, seconds } = currentTimer.time;
+          if (!currentTimer) {
+            clearInterval(intervalId);
+            return state;
+          }
+
+          const {minutes, seconds} = currentTimer.time;
           const newRemainingTotalSeconds = Math.max(
             currentTimer.remainingTotalSeconds - 1,
             0,
@@ -65,7 +72,9 @@ const useTimerStore = create(set => ({
             PushNotificationIOS.addNotificationRequest({
               id: `timerComplete-${timerId}`,
               title: '타이머 완료',
-              body: `${currentTimer.currentStepIndex + 1}번째 타이머가 완료되었습니다!`,
+              body: `${
+                currentTimer.currentStepIndex + 1
+              }번째 타이머가 완료되었습니다!`,
               sound: 'default',
             });
 
@@ -95,7 +104,7 @@ const useTimerStore = create(set => ({
                 },
               };
             } else {
-              clearInterval(currentTimer.intervalId);
+              clearInterval(intervalId);
               const initialTotalSeconds = currentTimer.detailTimerData.reduce(
                 (total, step) =>
                   total +
@@ -132,8 +141,8 @@ const useTimerStore = create(set => ({
 
           const newTime =
             seconds === 0
-              ? { minutes: minutes - 1, seconds: 59 }
-              : { minutes, seconds: seconds - 1 };
+              ? {minutes: minutes - 1, seconds: 59}
+              : {minutes, seconds: seconds - 1};
 
           return {
             timers: {

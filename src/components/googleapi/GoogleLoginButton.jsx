@@ -6,13 +6,12 @@ import {IOS_CLIENT_ID, WEB_CLIENT_ID} from '@env';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = async () => {
-
     console.log('Google login start');
-    console.log("Config.IOS_CLIENT_ID", IOS_CLIENT_ID);
-    console.log("Config.WEB_CLIENT_ID", WEB_CLIENT_ID);
+    console.log('Config.IOS_CLIENT_ID', IOS_CLIENT_ID);
+    console.log('Config.WEB_CLIENT_ID', WEB_CLIENT_ID);
 
     GoogleSignin.configure({
-      scopes: ["https://www.googleapis.com/auth/drive.file"],
+      scopes: ['https://www.googleapis.com/auth/drive.file'],
       iosClientId: IOS_CLIENT_ID,
       webClientId: WEB_CLIENT_ID,
       offlineAccess: true,
@@ -30,8 +29,8 @@ const GoogleLoginButton = () => {
   return (
     <ButtonContainer onPress={handleGoogleLogin} activeOpacity={1}>
       <ContentContainer>
-        <GoogleIcon 
-          source={require('../../assets/images/login/googleLogo.png')} 
+        <GoogleIcon
+          source={require('../../assets/images/login/googleLogo.png')}
         />
         <ButtonText>Google 계정으로 로그인</ButtonText>
       </ContentContainer>
