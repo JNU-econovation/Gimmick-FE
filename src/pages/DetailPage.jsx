@@ -84,12 +84,13 @@ const DetailPage = () => {
       }
     })
     .onEnd(() => {
-     if (translateY.value <= 0 && translateY.value >= -400) {
+     if (translateY.value <= 0 && translateY.value >= -350
+     ) {
         runOnJS(setSwifeOpen)(false);
-        translateY.value = withSpring(0, { damping: 20, stiffness: 150 });
+        translateY.value = withSpring(0, { damping: 40, stiffness: 150 });
       } else {
         runOnJS(setSwifeOpen)(true);
-        translateY.value = withSpring(-400, { damping: 20, stiffness: 150 });
+        translateY.value = withSpring(-350, { damping: 40, stiffness: 150 });
       }
     });
 
