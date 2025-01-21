@@ -74,50 +74,16 @@ const DetailPage = () => {
   const translateY = useSharedValue(0);
 
   const panGesture = Gesture.Pan()
-    .onStart(() => {
-      // 시작 시의 동작
-    })
-    .onUpdate((event) => {
-      if (event.translationY < 0) {
-        // 하단에서 상단으로의 스와이프만 허용
-        translateY.value = event.translationY;
-      }
-    })
-    .onEnd(() => {
-      if (translateY.value > 100) {
-        // 하단으로 스와이프가 100 이상일 때의 동작
-        translateY.value = withSpring(0); // 원래 위치로 돌아가기
-      } else {
-        translateY.value = withSpring(0);
-      }
-    });
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: translateY.value}],
-  }));
-
-  const getCurrentMemoData = () => {
-    if (!currentTimer) return '';
-    return timer.detailTimerData[currentTimer.currentStepIndex].memoData;
-  };
-
-
-  const translateY = useSharedValue(0);
-
-  const panGesture = Gesture.Pan()
     .onUpdate((event) => {
       if (event.translationY <= 0) {
         translateY.value = event.translationY;
       }
     })
     .onEnd(() => {
-     if (translateY.value <= 0 && translateY.value >= -350
-     ) {
-        runOnJS(setSwifeOpen)(false);
-        translateY.value = withSpring(0, { damping: 40, stiffness: 150 });
+     if (translateY.value <= 0 && translateY.value >= -400) {
+        translateY.value = withSpring(0, { damping: 20, stiffness: 150 });
       } else {
-        runOnJS(setSwifeOpen)(true);
-        translateY.value = withSpring(-350, { damping: 40, stiffness: 150 });
+        translateY.value = withSpring(-400, { damping: 20, stiffness: 150 });
       }
     });
 
@@ -125,12 +91,7 @@ const DetailPage = () => {
     transform: [{translateY: translateY.value}],
   }));
 
-  const handleTextLayout = (event) => {
-    const { width } = event.nativeEvent.layout;
-    setTextWidth(width);
-  };
-
-  const screenWidth = Dimensions.get('window').width;
+  if (!currentTimer) return null;
 
   return (
     <DetailLayout>
@@ -174,9 +135,7 @@ const DetailPage = () => {
           </ContentContainer>
           <SwifeContainer>
             <SwifeButtonImage
-              source={ isSwifeOpen
-                ? require('../assets/images/detail/swife-arrow-bottom.png')
-                : require('../assets/images/detail/swife-arrow-top.png')}
+              source={require('../assets/images/detail/swife-arrow.png')}
             />
             <SwifeText weight="semi-bold">스와이프하여 전체 정보 확인</SwifeText>
           </SwifeContainer>
@@ -184,86 +143,12 @@ const DetailPage = () => {
           
           <Animated.View>
             <SwipeContent>
-                <TimeTextProgressContainer>
-                  <TimerText weight="semi-bold">총 남은 시간</TimerText>
-                  <TimerRemainText
-                    weight="bold"
-                  >
-                    {currentTimer
-                      ? `${String(currentTimer.totalTime.minutes).padStart(2, '0')}:${String(currentTimer.totalTime.seconds).padStart(2, '0')}`
-                      : '00:00'}
-                  </TimerRemainText>
-                </TimeTextProgressContainer>
-              <ProgressIconContainer>
-                <ProgressView 
-                  style={{
-                    right: 0,
-                    width: `${progress * 95}%`,
-                    height: `${scale(10)}px`,
-                    borderTopRightRadius: scale(13),
-                    borderBottomRightRadius: scale(13),
-                  }}
-                />
-                <ProgressIconImage source={require('../assets/images/detail/progress-icon.png')} />
-              </ProgressIconContainer>
-              <ProgressLine
-                color={detailColor}
-                width={screenWidth - scale(48)}
-              />
-              <MemoContainer>
-                <MemoText weight="semi-bold">메모 사항</MemoText>
-                <CurrentMemo memoData={getCurrentMemoData()} />
-              </MemoContainer>
+
             </SwipeContent>
           </Animated.View>
         </Animated.View>
       </GestureDetector>
 
-      <GestureDetector gesture={panGesture}>
-        <Animated.View style={animatedStyle}>
-          <HeaderWrapper>
-            <Header type="detail" title={timer.timerName} timer={timer} />
-          </HeaderWrapper>
-          <ContentContainer>
-            <CircularProgress
-              icon={timer.icon}
-              color={detailColor}
-              progress={calculateProgress()}
-            />
-            <CurrentFire fireData={getCurrentFireData()} />
-            <TimerDisplay weight="semi-bold">
-              {String(currentTimer.time.minutes).padStart(2, '0')}:
-              {String(currentTimer.time.seconds).padStart(2, '0')}
-            </TimerDisplay>
-            <ButtonContainer>
-              <TouchableWithoutFeedback onPress={handleReset}>
-                <ButtonWrapper color={detailColor}>
-                  <ResetButtonImage
-                    source={require('../assets/images/detail/reset-icon.png')}
-                  />
-                </ButtonWrapper>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={handleTimerToggle}>
-                <ButtonWrapper color={detailColor}>
-                  <StartButtonImage
-                    source={
-                      currentTimer.isRunning
-                        ? require('../assets/images/detail/stop-icon.png')
-                        : require('../assets/images/detail/start-icon.png')
-                    }
-                  />
-                </ButtonWrapper>
-              </TouchableWithoutFeedback>
-            </ButtonContainer>
-          </ContentContainer>
-        </Animated.View>
-      </GestureDetector>
-      <SwifeContainer>
-        <SwifeButtonImage
-          source={require('../assets/images/detail/swife-arrow.png')}
-        />
-        <SwifeText weight="semi-bold">스와이프하여 전체 정보 확인</SwifeText>
-      </SwifeContainer>
     </DetailLayout>
   );
 };
@@ -278,8 +163,6 @@ const DetailTimerContainer = styled(Animated.View)`
   height: 100%;
 `
 
-const StyledGestureDetector = styled(GestureDetector)`
-`;
 
 const ContentContainer = styled.View`
   height: 90%;
@@ -403,4 +286,16 @@ const MemoText = styled(CustomText)`
   margin-bottom: ${scale(10)}px;
   font-size: ${scale(15)}px;
 `;
+
+const SwipeContent = styled(Animated.View)`
+  width: 100%;
+  height: ${scale(200)};
+  background-color: #f0f0f0;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+`;
+
+
 export default DetailPage;
