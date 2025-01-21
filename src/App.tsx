@@ -13,6 +13,8 @@ import {StatusBar} from 'react-native';
 import TimerUpdatePage from './pages/TimerUpdatePage';
 import Refresh from './pages/Refresh';
 import Login from './pages/Login';
+import { GestureHandlerRootView} from 'react-native-gesture-handler';
+
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
@@ -23,6 +25,7 @@ function App(): React.JSX.Element {
         backgroundColor="transparent" // 상태 표시줄 배경색 투명하게 설정
         translucent={true} // 상태 표시줄을 투명하게 설정
       />
+      <GestureHandlerRootView style={{flex:1}}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -82,6 +85,7 @@ function App(): React.JSX.Element {
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
+      </GestureHandlerRootView>
     </>
   );
 }
