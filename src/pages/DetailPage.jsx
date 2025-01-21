@@ -65,21 +65,16 @@ const DetailPage = () => {
   const translateY = useSharedValue(0);
 
   const panGesture = Gesture.Pan()
-    .onStart(() => {
-      // 시작 시의 동작
-    })
     .onUpdate((event) => {
-      if (event.translationY < 0) {
-        // 하단에서 상단으로의 스와이프만 허용
+      if (event.translationY <= 0) {
         translateY.value = event.translationY;
       }
     })
     .onEnd(() => {
-      if (translateY.value > 100) {
-        // 하단으로 스와이프가 100 이상일 때의 동작
-        translateY.value = withSpring(0); // 원래 위치로 돌아가기
+     if (translateY.value <= 0 && translateY.value >= -400) {
+        translateY.value = withSpring(0, { damping: 20, stiffness: 150 });
       } else {
-        translateY.value = withSpring(0);
+        translateY.value = withSpring(-400, { damping: 20, stiffness: 150 });
       }
     });
 
@@ -93,6 +88,7 @@ const DetailPage = () => {
     <DetailLayout>
       <GestureDetector gesture={panGesture}>
         <Animated.View style={animatedStyle}>
+          <DetailTimerContainer>
           <HeaderWrapper>
             <Header type="detail" title={timer.timerName} timer={timer} />
           </HeaderWrapper>
@@ -128,14 +124,22 @@ const DetailPage = () => {
               </TouchableWithoutFeedback>
             </ButtonContainer>
           </ContentContainer>
+          <SwifeContainer>
+            <SwifeButtonImage
+              source={require('../assets/images/detail/swife-arrow.png')}
+            />
+            <SwifeText weight="semi-bold">스와이프하여 전체 정보 확인</SwifeText>
+          </SwifeContainer>
+          </DetailTimerContainer>
+          
+          <Animated.View>
+            <SwipeContent>
+
+            </SwipeContent>
+          </Animated.View>
         </Animated.View>
       </GestureDetector>
-      <SwifeContainer>
-        <SwifeButtonImage
-          source={require('../assets/images/detail/swife-arrow.png')}
-        />
-        <SwifeText weight="semi-bold">스와이프하여 전체 정보 확인</SwifeText>
-      </SwifeContainer>
+
     </DetailLayout>
   );
 };
@@ -146,8 +150,10 @@ const DetailLayout = styled.View`
 
 const HeaderWrapper = styled.View``;
 
-const StyledGestureDetector = styled(GestureDetector)`
-`;
+const DetailTimerContainer = styled(Animated.View)`
+  height: 100%;
+`
+
 
 const ContentContainer = styled.View`
   height: 90%;
@@ -206,5 +212,16 @@ const SwifeText = styled(CustomText)`
   color: #6c7386;
   font-size: ${scale(15)}px;
 `;
+
+const SwipeContent = styled(Animated.View)`
+  width: 100%;
+  height: ${scale(200)};
+  background-color: #f0f0f0;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+`;
+
 
 export default DetailPage;
