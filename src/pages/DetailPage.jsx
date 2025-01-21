@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import CurrentFire from '../components/detail/CurrentFire';
+import CurrentMemo from '../components/detail/CurrentMemo';
 import CircularProgress from '../components/detail/CircularProgress';
 import Header from '../components/common/Header';
 import styled from 'styled-components/native';
@@ -22,13 +23,11 @@ const DetailColor = color => {
 
 const DetailPage = () => {
   const [isSwifeOpen, setSwifeOpen] =useState(false);
-
   const route = useRoute();
   const {timer} = route.params || {};
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
   const detailColor = DetailColor(timer.timerColor);
-
 
   useEffect(() => {
     if (!currentTimer && !timerStore.timers[timer.id]) {
@@ -64,6 +63,12 @@ const DetailPage = () => {
     if (!currentTimer) return '';
     return timer.detailTimerData[currentTimer.currentStepIndex].fireData;
   };
+
+  const getCurrentMemoData = () => {
+    if (!currentTimer) return '';
+    return timer.detailTimerData[currentTimer.currentStepIndex].memoData;
+  };
+
 
   const translateY = useSharedValue(0);
 
@@ -141,7 +146,10 @@ const DetailPage = () => {
           
           <Animated.View>
             <SwipeContent>
-
+              <MemoContainer>
+                <MemoText weight="semi-bold">메모 사항</MemoText>
+                <CurrentMemo memoData={getCurrentMemoData()} />
+              </MemoContainer>
             </SwipeContent>
           </Animated.View>
         </Animated.View>
@@ -216,19 +224,30 @@ const SwifeButtonImage = styled.Image`
 `;
 
 const SwifeText = styled(CustomText)`
-  color: #6c7386;
+  color: #000000;
   font-size: ${scale(15)}px;
 `;
 
 const SwipeContent = styled(Animated.View)`
   width: 100%;
   height: ${scale(200)};
-  background-color: #f0f0f0;
   overflow: hidden;
   align-items: center;
   justify-content: center;
   position: absolute;
 `;
 
+const MemoContainer = styled.View`
+  margin-top: ${scale(10)}px;
+  width: 100%;
+  height: ${scale(200)}px;
+  justify-content:center;
+`;
 
+const MemoText = styled(CustomText)`
+  color: #000000;
+  padding-left: ${scale(15)}px;
+  margin-bottom: ${scale(10)}px;
+  font-size: ${scale(15)}px;
+`;
 export default DetailPage;
