@@ -8,6 +8,8 @@ import {scale} from 'react-native-size-matters';
 import useTimerStore from '../store';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useRoute} from '@react-navigation/native';
+import {GestureDetector, Gesture} from 'react-native-gesture-handler';
+import Animated, {useSharedValue, withSpring, useAnimatedStyle} from 'react-native-reanimated';
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -16,8 +18,6 @@ const DetailColor = color => {
   if (color === '#C8E7A7') return '#93C572';
   if (color === '#FCC4C4') return '#F4A7A3';
 };
-
-
 
 const DetailPage = () => {
   const route = useRoute();
@@ -62,45 +62,74 @@ const DetailPage = () => {
     return timer.detailTimerData[currentTimer.currentStepIndex].fireData;
   };
 
+  const translateY = useSharedValue(0);
+
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      // 시작 시의 동작
+    })
+    .onUpdate((event) => {
+      if (event.translationY < 0) {
+        // 하단에서 상단으로의 스와이프만 허용
+        translateY.value = event.translationY;
+      }
+    })
+    .onEnd(() => {
+      if (translateY.value > 100) {
+        // 하단으로 스와이프가 100 이상일 때의 동작
+        translateY.value = withSpring(0); // 원래 위치로 돌아가기
+      } else {
+        translateY.value = withSpring(0);
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{translateY: translateY.value}],
+  }));
+
   if (!currentTimer) return null;
 
   return (
     <DetailLayout>
-      <HeaderWrapper>
-        <Header type="detail" title={timer.timerName} timer={timer} />
-      </HeaderWrapper>
-      <ContentContainer>
-        <CircularProgress
-          icon={timer.icon}
-          color={detailColor}
-          progress={calculateProgress()}
-        />
-        <CurrentFire fireData={getCurrentFireData()} />
-        <TimerDisplay weight="semi-bold">
-          {String(currentTimer.time.minutes).padStart(2, '0')}:
-          {String(currentTimer.time.seconds).padStart(2, '0')}
-        </TimerDisplay>
-        <ButtonContainer>
-          <TouchableWithoutFeedback onPress={handleReset}>
-            <ButtonWrapper color={detailColor}>
-              <ResetButtonImage
-                source={require('../assets/images/detail/reset-icon.png')}
-              />
-            </ButtonWrapper>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={handleTimerToggle}>
-            <ButtonWrapper color={detailColor}>
-              <StartButtonImage
-                source={
-                  currentTimer.isRunning
-                    ? require('../assets/images/detail/stop-icon.png')
-                    : require('../assets/images/detail/start-icon.png')
-                }
-              />
-            </ButtonWrapper>
-          </TouchableWithoutFeedback>
-        </ButtonContainer>
-      </ContentContainer>
+      <GestureDetector gesture={panGesture}>
+        <Animated.View style={animatedStyle}>
+          <HeaderWrapper>
+            <Header type="detail" title={timer.timerName} timer={timer} />
+          </HeaderWrapper>
+          <ContentContainer>
+            <CircularProgress
+              icon={timer.icon}
+              color={detailColor}
+              progress={calculateProgress()}
+            />
+            <CurrentFire fireData={getCurrentFireData()} />
+            <TimerDisplay weight="semi-bold">
+              {String(currentTimer.time.minutes).padStart(2, '0')}:
+              {String(currentTimer.time.seconds).padStart(2, '0')}
+            </TimerDisplay>
+            <ButtonContainer>
+              <TouchableWithoutFeedback onPress={handleReset}>
+                <ButtonWrapper color={detailColor}>
+                  <ResetButtonImage
+                    source={require('../assets/images/detail/reset-icon.png')}
+                  />
+                </ButtonWrapper>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={handleTimerToggle}>
+                <ButtonWrapper color={detailColor}>
+                  <StartButtonImage
+                    source={
+                      currentTimer.isRunning
+                        ? require('../assets/images/detail/stop-icon.png')
+                        : require('../assets/images/detail/start-icon.png')
+                    }
+                  />
+                </ButtonWrapper>
+              </TouchableWithoutFeedback>
+            </ButtonContainer>
+          </ContentContainer>
+        </Animated.View>
+      </GestureDetector>
       <SwifeContainer>
         <SwifeButtonImage
           source={require('../assets/images/detail/swife-arrow.png')}
@@ -116,6 +145,9 @@ const DetailLayout = styled.View`
 `;
 
 const HeaderWrapper = styled.View``;
+
+const StyledGestureDetector = styled(GestureDetector)`
+`;
 
 const ContentContainer = styled.View`
   height: 90%;
