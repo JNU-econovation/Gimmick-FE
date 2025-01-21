@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { Platform, Dimensions } from 'react-native';
+import React, {useEffect, useState} from 'react';
 import CurrentFire from '../components/detail/CurrentFire';
 import CurrentMemo from '../components/detail/CurrentMemo';
 import CircularProgress from '../components/detail/CircularProgress';
@@ -13,7 +14,7 @@ import {useRoute} from '@react-navigation/native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import Animated, {useSharedValue, withSpring, useAnimatedStyle, runOnJS} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
-import Animated, {useSharedValue, withSpring, useAnimatedStyle} from 'react-native-reanimated';
+import Animated, {useSharedValue, withSpring, useAnimatedStyle, runOnJS} from 'react-native-reanimated';
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -24,8 +25,11 @@ const DetailColor = color => {
 };
 
 
+
 const DetailPage = () => {
   const [isSwifeOpen, setSwifeOpen] =useState(false);
+  const [isSwifeOpen, setSwifeOpen] =useState(false);
+
   const route = useRoute();
   const {timer} = route.params || {};
   const timerStore = useTimerStore();
@@ -81,8 +85,10 @@ const DetailPage = () => {
     })
     .onEnd(() => {
      if (translateY.value <= 0 && translateY.value >= -400) {
+        runOnJS(setSwifeOpen)(false);
         translateY.value = withSpring(0, { damping: 20, stiffness: 150 });
       } else {
+        runOnJS(setSwifeOpen)(true);
         translateY.value = withSpring(-400, { damping: 20, stiffness: 150 });
       }
     });
@@ -135,7 +141,9 @@ const DetailPage = () => {
           </ContentContainer>
           <SwifeContainer>
             <SwifeButtonImage
-              source={require('../assets/images/detail/swife-arrow.png')}
+              source={ isSwifeOpen
+                ? require('../assets/images/detail/swife-arrow-bottom.png')
+                : require('../assets/images/detail/swife-arrow-top.png')}
             />
             <SwifeText weight="semi-bold">스와이프하여 전체 정보 확인</SwifeText>
           </SwifeContainer>
