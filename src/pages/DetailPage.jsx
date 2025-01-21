@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { Platform, Dimensions } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
+import { Platform, Dimensions } from 'react-native';
 import CurrentFire from '../components/detail/CurrentFire';
 import CurrentMemo from '../components/detail/CurrentMemo';
 import CircularProgress from '../components/detail/CircularProgress';
@@ -34,7 +36,7 @@ const DetailPage = () => {
   const {timer} = route.params || {};
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
-  const currentTotalTimer = useTimerStore(state => state.timers[timer.id]);
+
 
   const detailColor = DetailColor(timer.timerColor);
 
@@ -63,6 +65,8 @@ const DetailPage = () => {
     const remainingSeconds = currentTimer.remainingTotalSeconds;
     return remainingSeconds / totalSeconds;
   };
+
+  const progress = calculateProgress();
 
   const progress = calculateProgress();
 
@@ -103,7 +107,12 @@ const DetailPage = () => {
     transform: [{translateY: translateY.value}],
   }));
 
-  if (!currentTimer) return null;
+  const handleTextLayout = (event) => {
+    const { width } = event.nativeEvent.layout;
+    setTextWidth(width);
+  };
+
+  const screenWidth = Dimensions.get('window').width;
 
   return (
     <DetailLayout>
@@ -157,6 +166,32 @@ const DetailPage = () => {
           
           <Animated.View>
             <SwipeContent>
+                <TimeTextProgressContainer>
+                  <TimerText weight="semi-bold">총 남은 시간</TimerText>
+                  <TimerRemainText
+                    weight="bold"
+                  >
+                    {currentTimer
+                      ? `${String(currentTimer.totalTime.minutes).padStart(2, '0')}:${String(currentTimer.totalTime.seconds).padStart(2, '0')}`
+                      : '00:00'}
+                  </TimerRemainText>
+                </TimeTextProgressContainer>
+              <ProgressIconContainer>
+                <ProgressView 
+                  style={{
+                    right: 0,
+                    width: `${progress * 95}%`,
+                    height: `${scale(10)}px`,
+                    borderTopRightRadius: scale(13),
+                    borderBottomRightRadius: scale(13),
+                  }}
+                />
+                <ProgressIconImage source={require('../assets/images/detail/progress-icon.png')} />
+              </ProgressIconContainer>
+              <ProgressLine
+                color={detailColor}
+                width={screenWidth - scale(48)}
+              />
               <MemoContainer>
                 <MemoText weight="semi-bold">메모 사항</MemoText>
                 <CurrentMemo memoData={getCurrentMemoData()} />
@@ -179,7 +214,6 @@ const HeaderWrapper = styled.View``;
 const DetailTimerContainer = styled(Animated.View)`
   height: 100%;
 `
-
 
 const ContentContainer = styled.View`
   height: 90%;
@@ -302,15 +336,59 @@ const MemoText = styled(CustomText)`
   padding-left: ${scale(12)}px;
   margin-bottom: ${scale(10)}px;
   font-size: ${scale(15)}px;
+  color: #6C7386;
+  font-size: ${scale(17)}px;
 `;
 
 const SwipeContent = styled(Animated.View)`
   width: 100%;
-  height: ${scale(200)};
+  height: ${scale(300)};
   overflow: hidden;
+  margin-top: ${scale(20)}px;
   align-items: center;
-  justify-content: center;
   position: absolute;
+`;
+
+const TimeTextProgressContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: ${scale(10)}px;
+  gap: ${scale(5)}px;
+
+`;
+
+const  TimerText= styled(CustomText)`
+  font-size: ${scale(13)}px;  
+  color: #6C7386;
+`;
+
+const TimerRemainText = styled(CustomText)`
+  font-size: ${scale(20)}px;  
+  color: #6C7386;
+`;
+
+const ProgressIconContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: ${scale(4)}px;
+`;
+
+
+const ProgressIconImage = styled.Image`
+  width: ${scale(12)}px;
+  height: ${scale(20)}px;
+`;
+
+const ProgressView = styled.View`
+`;
+
+const ProgressLine = styled.View`
+  width: ${props => props.width};
+  height: ${scale(10)}px;
+  justify-content: center;
+  border-radius: ${scale(10)}px;
+  background-color: ${props => props.color};
 `;
 
 const MemoContainer = styled.View`
@@ -322,7 +400,7 @@ const MemoContainer = styled.View`
 
 const MemoText = styled(CustomText)`
   color: #000000;
-  padding-left: ${scale(15)}px;
+  padding-left: ${scale(12)}px;
   margin-bottom: ${scale(10)}px;
   font-size: ${scale(15)}px;
 `;
