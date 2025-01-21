@@ -21,14 +21,14 @@ const CurrentMemoContainer = styled.View`
 `;
 
 const MemoText = styled(CustomText)`
-  font-size: ${scale(17)}px;
+  font-size: ${scale(15)}px;
   color: #000;
 `;
 
 const MemoWrapper = styled.View`
   width: 100%;
   padding: ${scale(15)}px;
-  height: ${scale(100)}px;
+  height: ${scale(120)}px;
   background-color: #F4F6F8;
   border-radius: ${scale(7)}px;
 `;
