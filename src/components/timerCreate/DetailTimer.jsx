@@ -37,7 +37,7 @@ const DetailTimer = ({
   const openTimeSelectModal = () => {
     setModalVisible(true);
   };
-
+  console.log(memoData.length);
   return (
     <DetailTimerContainer>
       <BaseLayout>
@@ -78,10 +78,7 @@ const DetailTimer = ({
             placeholderTextColor="#676767"
             multiline={true}
             numberOfLines={3}
-            style={{
-              textAlign: memoData.length === 0 ? 'center' : 'left',
-              textAlignVertical: memoData.length === 0 ? 'center' : 'top',
-            }}
+            isMemoEmpty={memoData.length === 0}
           />
         </MemoWrapper>
       </BaseLayout>
@@ -142,9 +139,8 @@ const MemoTextInput = styled(TextInput)`
   width: 100%;
   border-radius: ${scale(5)}px;
   border: 1px solid #d5d7d9;
-  text-align: left;
   font-size: ${scale(13)}px;
   font-family: 'Pretendard-Regular';
+  text-align: ${props => (props.isMemoEmpty === true ? 'center' : 'left')};
 `;
-
 export default DetailTimer;
