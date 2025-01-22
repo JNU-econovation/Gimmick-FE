@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 import CloseButton from '../../common/CloseButton';
 import CreateButton from './CreateButton';
 import {useNavigation} from '@react-navigation/native';
-
+import {Alert} from 'react-native';
 import folderIcon from '../../../assets/images/NewCreateModal/folderIcon.png';
 import timerIcon from '../../../assets/images/NewCreateModal/timerIcon.png';
 
@@ -27,9 +27,10 @@ const NewCreateModal = () => {
   };
 
   const handleCreateFolder = () => {
-    setIsModalVisible(false);
-    navigation.goBack();
-    navigation.navigate('Create Folder');
+    Alert.alert('서비스 준비중', '폴더 기능은 서비스 준비 중입니다.');
+    // setIsModalVisible(false);
+    // navigation.goBack();
+    // navigation.navigate('Create Folder');
   };
 
   return (
