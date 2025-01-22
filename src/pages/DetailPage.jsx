@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {Platform, Dimensions} from 'react-native';
+import {Dimensions} from 'react-native';
 import CurrentFire from '../components/detail/CurrentFire';
 import CurrentMemo from '../components/detail/CurrentMemo';
 import CircularProgress from '../components/detail/CircularProgress';
@@ -82,18 +82,33 @@ const DetailPage = () => {
 
   const panGesture = Gesture.Pan()
     .onUpdate(event => {
-      if (event.translationY <= 0) {
+      if (isGestureActive) return;
+
+      if (!isSwifeOpen && event.translationY <= 0 && translateY.value > -350) {
         translateY.value = event.translationY;
       }
-    })
-    .onEnd(() => {
-      if (translateY.value <= 0 && translateY.value >= -350) {
-        runOnJS(setSwifeOpen)(false);
-        translateY.value = withSpring(0, {damping: 40, stiffness: 150});
-      } else {
-        runOnJS(setSwifeOpen)(true);
-        translateY.value = withSpring(-350, {damping: 40, stiffness: 150});
+      else if (isSwifeOpen && event.translationY < 0) {
+        translateY.value = -350 + event.translationY;
       }
+    })
+    .onEnd((event) => {
+      runOnJS(setGestureActive)(true);
+      if (!isSwifeOpen) {
+        if (translateY.value < 0 && translateY.value > -350 && event.translationY < 0) {
+          runOnJS(setSwifeOpen)(true);
+          translateY.value = withSpring(-350, { damping: 40, stiffness: 150 });
+        } 
+      } else if (translateY.value <= -300) {
+          if (event.translationY > 0) {
+            runOnJS(setSwifeOpen)(false);
+            translateY.value = withSpring(0 , { damping: 40, stiffness: 150 });
+          }
+
+          if (event.translationY < 0 ) {
+            translateY.value = withSpring(-350, { damping: 40, stiffness: 150 });
+          }
+      }
+      runOnJS(setGestureActive)(false);
     });
 
   const animatedStyle = useAnimatedStyle(() => ({
