@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 const Login = () => {
   const navigation = useNavigation();
 
+  // 로그인 화면에서 스와이프를 통한 뒤로가기 불가능 설정
   useEffect(() => {
     navigation.setOptions({
       headerLeft: null,

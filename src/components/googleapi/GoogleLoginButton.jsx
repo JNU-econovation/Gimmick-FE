@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {scale} from 'react-native-size-matters';
+import {useNavigation} from '@react-navigation/native';
 import {IOS_CLIENT_ID, WEB_CLIENT_ID} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GoogleLoginButton = () => {
+  const navigation = useNavigation();
   const handleGoogleLogin = async () => {
     console.log('Google login start');
     console.log('Config.IOS_CLIENT_ID', IOS_CLIENT_ID);
@@ -21,6 +24,8 @@ const GoogleLoginButton = () => {
       await GoogleSignin.hasPlayServices();
       const result = await GoogleSignin.signIn();
       console.log('Google login successful', result);
+      await AsyncStorage.setItem('isFirstUser', 'false');
+      navigation.goBack();
     } catch (error) {
       console.error('Google login error', error);
     }

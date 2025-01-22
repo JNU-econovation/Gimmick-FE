@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OnDeviceButton = () => {
   const navigation = useNavigation();
 
   const handleOnDeviceLogin = async () => {
+    await AsyncStorage.setItem('isFirstUser', 'false');
     navigation.goBack();
   };
 
