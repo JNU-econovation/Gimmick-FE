@@ -1,8 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import { Platform, Dimensions } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import React, {useEffect, useState, useRef} from 'react';
-import { Platform, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import CurrentFire from '../components/detail/CurrentFire';
 import CurrentMemo from '../components/detail/CurrentMemo';
 import CircularProgress from '../components/detail/CircularProgress';
@@ -15,8 +12,7 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import Animated, {useSharedValue, withSpring, useAnimatedStyle, runOnJS} from 'react-native-reanimated';
-import {GestureDetector, Gesture} from 'react-native-gesture-handler';
-import Animated, {useSharedValue, withSpring, useAnimatedStyle, runOnJS} from 'react-native-reanimated';
+
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -29,7 +25,6 @@ const DetailColor = color => {
 
 
 const DetailPage = () => {
-  const [isSwifeOpen, setSwifeOpen] =useState(false);
   const [isSwifeOpen, setSwifeOpen] =useState(false);
 
   const route = useRoute();
@@ -65,8 +60,6 @@ const DetailPage = () => {
     const remainingSeconds = currentTimer.remainingTotalSeconds;
     return remainingSeconds / totalSeconds;
   };
-
-  const progress = calculateProgress();
 
   const progress = calculateProgress();
 
@@ -124,11 +117,6 @@ const DetailPage = () => {
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{translateY: translateY.value}],
   }));
-
-  const handleTextLayout = (event) => {
-    const { width } = event.nativeEvent.layout;
-    setTextWidth(width);
-  };
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -287,73 +275,6 @@ const SwifeButtonImage = styled.Image`
 `;
 
 const SwifeText = styled(CustomText)`
-  color: #6C7386;
-  font-size: ${scale(17)}px;
-`;
-
-const SwipeContent = styled(Animated.View)`
-  width: 100%;
-  height: ${scale(300)};
-  overflow: hidden;
-  margin-top: ${scale(20)}px;
-  align-items: center;
-  position: absolute;
-`;
-
-const TimeTextProgressContainer = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: ${scale(10)}px;
-  gap: ${scale(5)}px;
-
-`;
-
-const  TimerText= styled(CustomText)`
-  font-size: ${scale(13)}px;  
-  color: #6C7386;
-`;
-
-const TimerRemainText = styled(CustomText)`
-  font-size: ${scale(20)}px;  
-  color: #6C7386;
-`;
-
-const ProgressIconContainer = styled.View`
-  width: 100%;
-  flex-direction: row;
-  margin-bottom: ${scale(4)}px;
-`;
-
-
-const ProgressIconImage = styled.Image`
-  width: ${scale(12)}px;
-  height: ${scale(20)}px;
-`;
-
-const ProgressView = styled.View`
-`;
-
-const ProgressLine = styled.View`
-  width: ${props => props.width};
-  height: ${scale(10)}px;
-  justify-content: center;
-  border-radius: ${scale(10)}px;
-  background-color: ${props => props.color};
-`;
-
-const MemoContainer = styled.View`
-  margin-top: ${scale(10)}px;
-  width: 100%;
-  height: ${scale(200)}px;
-  justify-content:center;
-`;
-
-const MemoText = styled(CustomText)`
-  color: #000000;
-  padding-left: ${scale(12)}px;
-  margin-bottom: ${scale(10)}px;
-  font-size: ${scale(15)}px;
   color: #6C7386;
   font-size: ${scale(17)}px;
 `;
