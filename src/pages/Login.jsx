@@ -26,13 +26,12 @@ const Login = () => {
 
   return (
     <LoginContainer>
-      <LogoImage source={require('../assets/images/login/cookingPot.png')} />
+      <LogoImage source={require('../assets/images/login/login-page.png')} />
       <TitleImage source={require('../assets/images/login/logo.png')} />
       <ButtonContainer>
+        <GoogleLoginButton />
         <OnDeviceButton />
-        <GoogleLoginButtonWrapper>
-          <GoogleLoginButton />
-        </GoogleLoginButtonWrapper>
+
       </ButtonContainer>
     </LoginContainer>
   );
@@ -45,29 +44,25 @@ const LoginContainer = styled.View`
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  padding: 0 ${scale(20)}px;
 `;
 
 const LogoImage = styled.Image`
-  width: ${scale(100)}px;
-  height: ${scale(100)}px;
+  width:100%;
+  height: 55%;
   margin-bottom: ${scale(10)}px;
 `;
 
 const TitleImage = styled.Image`
-  width: ${scale(82.25)}px;
+  width: ${scale(250)}px;
   height: ${scale(35)}px;
-  margin-bottom: ${scale(40)}px;
+  margin-bottom: ${scale(20)}px;
 `;
-
 
 const ButtonContainer = styled.View`
   width: 100%;
   justify-content: center;
   align-items: center;
-  gap: ${scale(10)}px;
+  gap: ${scale(15)}px;
 `;
 
-const GoogleLoginButtonWrapper = styled.View`
-  margin-top: ${scale(10)}px;
-`;
+

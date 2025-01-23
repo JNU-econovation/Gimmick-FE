@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
+import CustomText from '../CustomText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OnDeviceButton = () => {
@@ -15,22 +16,24 @@ const OnDeviceButton = () => {
   return (
     <ButtonContainer onPress={handleOnDeviceLogin} activeOpacity={1}>
       <ContentContainer>
-        <ButtonText>로그인 없이 사용하기</ButtonText>
+        <GuestIcon
+          source={require('../../assets/images/login/guest.png')}
+        />
+        <ButtonText weight="regular">게스트 모드로 로그인</ButtonText>
       </ContentContainer>
     </ButtonContainer>
   );
 };
 
 const ButtonContainer = styled.TouchableOpacity`
-  background-color: #FBDF60;
-  border-radius: ${scale(24)}px;
-  padding: ${scale(12)}px ${scale(16)}px;
+  background-color: #F0F0F0;
+  border-radius: ${scale(10)}px;
+  padding: ${scale(10)}px ${scale(12)}px;
   elevation: ${scale(2)}px;
   shadow-color: #000000;
   shadow-offset: ${scale(0)}px ${scale(2)}px;
-  shadow-opacity: 0.25;
+  shadow-opacity: 0.05;
   shadow-radius: ${scale(3.84)}px;
-  width: ${scale(210)}px;
 `;
 
 const ContentContainer = styled.View`
@@ -39,10 +42,16 @@ const ContentContainer = styled.View`
   justify-content: center;
 `;
 
-const ButtonText = styled.Text`
+const GuestIcon = styled.Image`
+  width: ${scale(17)}px;
+  height: ${scale(17)}px;
+`;
+
+const ButtonText = styled(CustomText)`
+  width: ${scale(200)}px;
+  text-align: center;
   color: #000000;
-  font-size: ${scale(14)}px;
-  font-weight: 500;
+  font-size: ${scale(12.5)}px;
 `;
 
 export default OnDeviceButton;

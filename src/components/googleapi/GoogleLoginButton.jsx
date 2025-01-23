@@ -5,6 +5,7 @@ import {scale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
 import {IOS_CLIENT_ID, WEB_CLIENT_ID} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomText from '../CustomText';
 
 const GoogleLoginButton = () => {
   const navigation = useNavigation();
@@ -42,17 +43,15 @@ const GoogleLoginButton = () => {
     </ButtonContainer>
   );
 };
-
 const ButtonContainer = styled.TouchableOpacity`
   background-color: #ffffff;
-  border-radius: ${scale(24)}px;
-  padding: ${scale(12)}px ${scale(16)}px;
+  border-radius: ${scale(10)}px;
+  padding: ${scale(10)}px ${scale(12)}px;
   elevation: ${scale(2)}px;
   shadow-color: #000000;
   shadow-offset: ${scale(0)}px ${scale(2)}px;
-  shadow-opacity: 0.25;
+  shadow-opacity: 0.05;
   shadow-radius: ${scale(3.84)}px;
-  width: ${scale(210)}px;
 `;
 
 const ContentContainer = styled.View`
@@ -62,15 +61,15 @@ const ContentContainer = styled.View`
 `;
 
 const GoogleIcon = styled.Image`
-  width: ${scale(18)}px;
-  height: ${scale(18)}px;
-  margin-right: ${scale(12)}px;
+  width: ${scale(17)}px;
+  height: ${scale(17)}px;
 `;
 
-const ButtonText = styled.Text`
+const ButtonText = styled(CustomText)`
+  width: ${scale(200)}px;
+  text-align: center;
   color: #000000;
-  font-size: ${scale(14)}px;
-  font-weight: 500;
+  font-size: ${scale(12.5)}px;
 `;
 
 export default GoogleLoginButton;
