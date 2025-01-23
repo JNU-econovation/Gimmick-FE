@@ -25,7 +25,7 @@ export default class GoogleDriveService {
     async signinExplicitly() {
         try {
             if (GoogleSignin.hasPreviousSignIn()) {
-                GoogleSignin.signOut();
+                await GoogleSignin.signOut();
             }
 
             await GoogleSignin.hasPlayServices();
@@ -43,8 +43,8 @@ export default class GoogleDriveService {
                 throw new Error('구글 로그인이 필요합니다. signinExplicitly()를 호출해주세요.');
             }
             if (GoogleSignin.getCurrentUser() == null) {
-                this.initGoogleSignin();
-                GoogleSignin.signInSilently();
+                await this.initGoogleSignin();
+                await GoogleSignin.signInSilently();
             }
 
             const tokens = await GoogleSignin.getTokens();
@@ -88,7 +88,7 @@ export default class GoogleDriveService {
     async createFolder(folderName) {
         const metadata = {
             name: folderName,
-            mimeType: 'application/vnd.google-apps.folder',
+            mimeType: this.FOLDER_MIMETYPE,
         };
 
         try {
@@ -116,7 +116,7 @@ export default class GoogleDriveService {
     }
 
     async deleteFolder(folderId) {
-        this.deleteFile(folderId);
+        await this.deleteFile(folderId);
     }
 
     async createFile(folderId, fileName, fileContent) {
