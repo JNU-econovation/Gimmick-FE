@@ -10,9 +10,11 @@ const GoogleLoginButton = () => {
   const navigation = useNavigation();
   return (
     <ButtonContainer onPress={async () => {
-        await (new GoogleDriveService()).signinExplicitly();
-        await AsyncStorage.setItem('isFirstUser', 'false');
-        navigation.goBack();
+        const result = await (new GoogleDriveService()).signinExplicitly();
+        if(result) {
+          await AsyncStorage.setItem('isFirstUser', 'false');
+          navigation.goBack();
+        } ;
     }} activeOpacity={1}>
       <ContentContainer>
         <GoogleIcon
