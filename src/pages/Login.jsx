@@ -1,8 +1,8 @@
 import {View, Image, BackHandler} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import GoogleLoginButton from '../components/googleapi/GoogleLoginButton';
-import OnDeviceButton from '../components/login/onDeviceButton';
+import GoogleLoginButton from '../components/login/GoogleLoginButton';
+import OnDeviceButton from '../components/login/OnDeviceButton';
 import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
