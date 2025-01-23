@@ -103,7 +103,7 @@ export default class GoogleDriveService {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Folder created successfully:', data);
+                console.log('Folder created successfully');
                 return data.id;
             } else {
                 const errorData = await response.json();
@@ -126,6 +126,18 @@ export default class GoogleDriveService {
             parents: [folderId],
         };
 
+        return await this.uploadFile(metadata, fileContent, 'POST');
+    }
+
+    async updateFile(fileId, fileContent) {
+        const metadata = {
+            mimeType: 'text/plain',
+        };
+
+        return await this.uploadFile(metadata, fileContent, 'PATCH', fileId);
+    }
+
+    async uploadFile(metadata, fileContent, method, fileId = '') {
         const boundary = 'foo_bar_baz';
         const delimiter = `--${boundary}`;
         const closeDelimiter = `--${boundary}--`;
@@ -142,9 +154,13 @@ export default class GoogleDriveService {
             closeDelimiter,
         ].join('\r\n');
 
+        const url = fileId
+            ? `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart`
+            : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+
         try {
-            const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-                method: 'POST',
+            const response = await fetch(url, {
+            method: method,
                 headers: {
                     Authorization: `Bearer ${await this.getAccessToken()}`,
                     'Content-Type': `multipart/related; boundary=${boundary}`,
@@ -154,11 +170,11 @@ export default class GoogleDriveService {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('File created successfully:', data);
+                console.log(`${method === 'POST' ? 'File created' : 'File updated'} successfully`);
                 return data.id;
             } else {
                 const errorData = await response.json();
-                throw new Error('Error creating file: ' + JSON.stringify(errorData));
+                throw new Error(`Error ${method === 'POST' ? 'creating' : 'updating'} file: ` + JSON.stringify(errorData));
             }
         } catch (error) {
             console.error('Error during API call:', error);
