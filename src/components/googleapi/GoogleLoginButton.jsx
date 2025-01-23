@@ -1,38 +1,18 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {scale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
-import {IOS_CLIENT_ID, WEB_CLIENT_ID} from '@env';
+import GoogleDriveService from './GoogleDriveService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GoogleLoginButton = () => {
   const navigation = useNavigation();
-  const handleGoogleLogin = async () => {
-    console.log('Google login start');
-    console.log('Config.IOS_CLIENT_ID', IOS_CLIENT_ID);
-    console.log('Config.WEB_CLIENT_ID', WEB_CLIENT_ID);
-
-    GoogleSignin.configure({
-      scopes: ['https://www.googleapis.com/auth/drive.file'],
-      iosClientId: IOS_CLIENT_ID,
-      webClientId: WEB_CLIENT_ID,
-      offlineAccess: true,
-    });
-
-    try {
-      await GoogleSignin.hasPlayServices();
-      const result = await GoogleSignin.signIn();
-      console.log('Google login successful', result);
-      await AsyncStorage.setItem('isFirstUser', 'false');
-      navigation.goBack();
-    } catch (error) {
-      console.error('Google login error', error);
-    }
-  };
-
   return (
-    <ButtonContainer onPress={handleGoogleLogin} activeOpacity={1}>
+    <ButtonContainer onPress={async () => {
+        await (new GoogleDriveService()).signinExplicitly();
+        await AsyncStorage.setItem('isFirstUser', 'false');
+        navigation.goBack();
+    }} activeOpacity={1}>
       <ContentContainer>
         <GoogleIcon
           source={require('../../assets/images/login/googleLogo.png')}
