@@ -37,7 +37,6 @@ const DetailTimer = ({
   const openTimeSelectModal = () => {
     setModalVisible(true);
   };
-  console.log(memoData.length);
   return (
     <DetailTimerContainer>
       <BaseLayout>

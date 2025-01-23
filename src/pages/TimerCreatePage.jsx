@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {Platform, Alert} from 'react-native';
+import {Platform, Alert, Keyboard, KeyboardAvoidingView} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../components/CustomText';
 import styled from 'styled-components/native';
@@ -14,8 +14,10 @@ import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
+
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('🌮');
   const [timerName, setTimerName] = useState('');
   const [id, setId] = useState(0);
@@ -27,6 +29,25 @@ const TimerCreatePage = () => {
   const navigation = useNavigation();
   const [totalMinutes, setTotalMinutes] = useState('00');
   const [totalSeconds, setTotalSeconds] = useState('00');
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
+  
+
+
   useEffect(() => {
     const calculateTotalTime = () => {
       let totalMinutes = 0;
@@ -143,69 +164,74 @@ const TimerCreatePage = () => {
   };
 
   return (
-    <TimerCreateContainer
-      contentContainerStyle={{flexGrow: 1}}
-      showsVerticalScrollIndicator={false}>
-      <BaseLayout>
-        <Header
-          type="timerCreate"
-          title="타이머 생성"
-          onPressComplete={saveTimerData}
-        />
-        <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
-        <InsertContainer>
-          <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
-          <InputWrapper value={timerName} onChangeText={setTimerName} />
-          <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
-          <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
-        </InsertContainer>
-      </BaseLayout>
-
-      <DetailTimerWrapper>
-        {detailTimers.map((timer, index) => (
-          <DetailTimer
-            key={timer.id}
-            minutes={timer.minutes}
-            seconds={timer.seconds}
-            fireData={timer.fireData}
-            memoData={timer.memoData}
-            onDelete={() => handleDeleteTimer(timer.id)}
-            onTimeChange={(minutes, seconds) =>
-              handleTimeChange(index, minutes, seconds)
-            }
-            onFireChange={newFireData => handleFireChange(index, newFireData)}
-            onMemoChange={newMemoData => handleMemoChange(index, newMemoData)}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={0}
+    >
+      <TimerCreateContainer
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
+        <BaseLayout>
+          <Header
+            type="timerCreate"
+            title="타이머 생성"
+            onPressComplete={saveTimerData}
           />
-        ))}
-      </DetailTimerWrapper>
+          <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
+          <InsertContainer>
+            <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
+            <InputWrapper value={timerName} onChangeText={setTimerName} />
+            <TimerCreateText weight="semi-bold">타이머 색상</TimerCreateText>
+            <ColorPicker color={timerColor} onChangeColor={setTimerColor} />
+          </InsertContainer>
+        </BaseLayout>
 
-      <BaseLayout>
-        <PlusButtonWrapper>
-          <PlusButton
-            onPress={() => {
-              addDetailTimer(id);
-            }}
-          />
-        </PlusButtonWrapper>
-        <TotalTimerContainer>
-          <TotalTimer totalTime={[totalMinutes, totalSeconds]} />
-        </TotalTimerContainer>
+        <DetailTimerWrapper>
+          {detailTimers.map((timer, index) => (
+            <DetailTimer
+              key={timer.id}
+              minutes={timer.minutes}
+              seconds={timer.seconds}
+              fireData={timer.fireData}
+              memoData={timer.memoData}
+              onDelete={() => handleDeleteTimer(timer.id)}
+              onTimeChange={(minutes, seconds) =>
+                handleTimeChange(index, minutes, seconds)
+              }
+              onFireChange={newFireData => handleFireChange(index, newFireData)}
+              onMemoChange={newMemoData => handleMemoChange(index, newMemoData)}
+            />
+          ))}
+        </DetailTimerWrapper>
 
-        {isModalVisible && (
-          <IconPickerModal
-            onSelectIcon={handleIconSelect}
-            onClose={handleModalClose}
-          />
-        )}
-      </BaseLayout>
-    </TimerCreateContainer>
+        <BaseLayout>
+          <PlusButtonWrapper>
+            <PlusButton
+              onPress={() => {
+                addDetailTimer(id);
+              }}
+            />
+          </PlusButtonWrapper>
+          <TotalTimerContainer>
+            <TotalTimer totalTime={[totalMinutes, totalSeconds]} />
+          </TotalTimerContainer>
+
+          {isModalVisible && (
+            <IconPickerModal
+              onSelectIcon={handleIconSelect}
+              onClose={handleModalClose}
+            />
+          )}
+        </BaseLayout>
+      </TimerCreateContainer>
+    </KeyboardAvoidingView>
   );
 };
 
 const TimerCreateContainer = styled.ScrollView`
   width: 100%;
   height: 100%;
-
   position: relative;
 `;
 
