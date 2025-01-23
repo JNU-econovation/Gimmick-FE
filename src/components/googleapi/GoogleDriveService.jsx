@@ -1,4 +1,4 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { IOS_CLIENT_ID, WEB_CLIENT_ID } from '@env';
 
 export default class GoogleDriveService {
@@ -28,8 +28,7 @@ export default class GoogleDriveService {
             }
 
             await GoogleSignin.hasPlayServices();
-            await GoogleSignin.signIn();
-            return true;
+            return isSuccessResponse(await GoogleSignin.signIn());
         } catch (error) {
             console.error('Google login error:', error);
             return false;
