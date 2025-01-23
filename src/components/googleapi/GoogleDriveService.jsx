@@ -1,5 +1,6 @@
 import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { IOS_CLIENT_ID, WEB_CLIENT_ID } from '@env';
+import { Alert } from 'react-native';
 
 export default class GoogleDriveService {
     constructor(config = {}) {
@@ -31,6 +32,7 @@ export default class GoogleDriveService {
             return isSuccessResponse(await GoogleSignin.signIn());
         } catch (error) {
             console.error('Google login error:', error);
+            Alert.alert('로그인 실패', '알 수 없는 오류로 인해 로그인에 실패했습니다.');
             return false;
         }
     }
