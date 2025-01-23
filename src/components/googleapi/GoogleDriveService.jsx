@@ -1,17 +1,6 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { IOS_CLIENT_ID, WEB_CLIENT_ID } from '@env';
 
-const log = (obj) => {
-    console.log('\n', obj);
-    return obj;
-};
-
-const indentedJsonLog = (json) => {
-    const s = JSON.stringify(json, null, 2);
-    console.log(s);
-    return json;
-};
-
 export default class GoogleDriveService {
     constructor(config = {}) {
         this.scopes = config.scopes || ['https://www.googleapis.com/auth/drive.file'];
@@ -40,8 +29,10 @@ export default class GoogleDriveService {
 
             await GoogleSignin.hasPlayServices();
             await GoogleSignin.signIn();
+            return true;
         } catch (error) {
             console.error('Google login error:', error);
+            return false;
         }
     }
 
@@ -86,7 +77,7 @@ export default class GoogleDriveService {
                 acc.files.push({name: file.name, id: file.id});
                 return acc;
             }, {});
-            return indentedJsonLog(list);
+            return list;
         } catch (error) {
             console.error('Error listing files:', error);
             throw error;
