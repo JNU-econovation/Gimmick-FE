@@ -4,17 +4,27 @@ import {scale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import GoogleDriveService from '../../utils/GoogleDriveService';
-import { markAsNotFirstUser } from '../../utils/CheckFirstUser';
+import { markAsNotFirstUser } from '../../utils/checkFirstUser';
 import { setGoogleUser } from '../../utils/CheckUserType';
 
 const GoogleLoginButton = () => {
   const navigation = useNavigation();
+
+  // const syncData = async (service) => {
+  //   service.
+  // };
+
   return (
     <ButtonContainer onPress={async () => {
-        const result = await (new GoogleDriveService()).signinExplicitly();
+
+        const service = new GoogleDriveService();
+        const result = await service.signinExplicitly();
         if(result) {
           await markAsNotFirstUser();
           await setGoogleUser();
+
+        // logic
+
           navigation.goBack();
         }
     }} activeOpacity={1}>

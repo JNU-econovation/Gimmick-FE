@@ -1,17 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
 import CustomText from '../CustomText';
-import { markAsNotFirstUser } from '../../utils/CheckFirstUser';
+import { markAsNotFirstUser } from '../../utils/checkFirstUser';
 import { setLocalUser } from '../../utils/CheckUserType';
+import initialMockData from '../../data/initialMockData';
+import AppDataStorage from '../../utils/AppDataStorage';
 
 const OnDeviceButton = () => {
   const navigation = useNavigation();
+  // const [timers, setTimers] = useState([]);
 
   const handleOnDeviceLogin = async () => {
     await markAsNotFirstUser();
     await setLocalUser();
+
+
+
+    // AppDataStorage.save('timers', initialMockData);
+    // setTimers(initialMockData);
     navigation.goBack();
   };
 

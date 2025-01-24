@@ -7,7 +7,7 @@ import CountdownTimer from '../components/timer/CountdownTimer';
 import CountdownFolder from '../components/timer/CountdownFolder';
 import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
-import {checkFirstUser} from '../utils/CheckFirstUser';
+import {checkFirstUser} from '../utils/checkFirstUser';
 import {useNavigation} from '@react-navigation/native';
 import AppDataStorage from '../utils/AppDataStorage';
 
