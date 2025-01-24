@@ -3,13 +3,15 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
 import CustomText from '../CustomText';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { markAsNotFirstUser } from '../../utils/CheckFirstUser';
+import { setLocalUser } from '../../utils/CheckUserType';
 
 const OnDeviceButton = () => {
   const navigation = useNavigation();
 
   const handleOnDeviceLogin = async () => {
-    await AsyncStorage.setItem('isFirstUser', 'false');
+    await markAsNotFirstUser();
+    await setLocalUser();
     navigation.goBack();
   };
 
