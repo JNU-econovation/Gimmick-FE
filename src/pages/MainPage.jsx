@@ -5,11 +5,12 @@ import {ScrollView} from 'react-native';
 import Header from '../components/common/Header';
 import CountdownTimer from '../components/timer/CountdownTimer';
 import CountdownFolder from '../components/timer/CountdownFolder';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
-import {checkFirstUser} from '../utils/checkFirstUser';
+import {checkFirstUser} from '../utils/CheckFirstUser';
 import {useNavigation} from '@react-navigation/native';
+import AppDataStorage from '../utils/AppDataStorage';
+
 const MainPage = () => {
   const navigation = useNavigation();
   const [timers, setTimers] = useState([]);
@@ -17,9 +18,9 @@ const MainPage = () => {
 
   const loadData = async () => {
     try {
-      const storedTimers = await AsyncStorage.getItem('timers');
+      const storedTimers = await AppDataStorage.load('timers');
       if (storedTimers) {
-        setTimers(JSON.parse(storedTimers));
+        setTimers(storedTimers);
       }
     } catch (error) {
       console.error('데이터 가져오기 실패:', error);
@@ -34,7 +35,7 @@ const MainPage = () => {
         const [timer] = updatedTimers.splice(timerIndex, 1);
         updatedTimers.unshift(timer);
         setTimers(updatedTimers);
-        await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
+        AppDataStorage.save('timers', updatedTimers);
       }
     } catch (error) {
       console.error('타이머 순서 업데이트 실패:', error);
@@ -44,11 +45,9 @@ const MainPage = () => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        const firstUser = await checkFirstUser();
-
-        if (firstUser) {
+        if (await checkFirstUser()) {
           navigation.navigate('Login');
-          await AsyncStorage.setItem('timers', JSON.stringify(initialMockData));
+          AppDataStorage.save('timers', initialMockData);
           setTimers(initialMockData);
         }
       } catch (error) {
