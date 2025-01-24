@@ -11,6 +11,9 @@ class AppDataStorage {
     constructor() {
         if (!AppDataStorage.instance) {
             AppDataStorage.instance = this;
+            this.googleapi = {
+                initComplete: false,
+            };
         }
         return AppDataStorage.instance;
     }
@@ -37,7 +40,6 @@ class AppDataStorage {
 
     async initGoogleDriveEnvironment() {
         try {
-            this.googleapi = {};
             this.googleapi.service = new GoogleDriveService();
 
             const fileList = await this.googleapi.service.listFiles();
@@ -52,10 +54,7 @@ class AppDataStorage {
 
     async getGoogleDriveService() {
         if (!this.googleapi.initComplete) {
-            if (!this.googleapiInitStarted) {
-                this.googleapiInitStarted = true;
-                this.initGoogleDriveEnvironment();
-            }
+            this.initGoogleDriveEnvironment();
             return null;
         }
         return this.googleapi.service;
@@ -76,6 +75,7 @@ class AppDataStorage {
     async save_google(key, value) {
         const service = await this.getGoogleDriveService();
         if (!service) {
+            console.log('Google Drive service not ready');
             return;
         }
         const data = JSON.parse(await service.getFileContent(this.googleapi.fileId));
