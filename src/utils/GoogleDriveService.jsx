@@ -31,7 +31,7 @@ export default class GoogleDriveService {
             await GoogleSignin.hasPlayServices();
             return isSuccessResponse(await GoogleSignin.signIn());
         } catch (error) {
-            console.error('Google login error:', error);
+            console.warn('Google login error:', error);
             Alert.alert('로그인 실패', '알 수 없는 오류로 인해 로그인에 실패했습니다.');
             return false;
         }
@@ -80,7 +80,7 @@ export default class GoogleDriveService {
             }, {});
             return list;
         } catch (error) {
-            console.error('Error listing files:', error);
+            console.warn('Error listing files:', error);
             throw error;
         }
     }
@@ -110,7 +110,7 @@ export default class GoogleDriveService {
                 throw new Error('Error creating folder: ' + JSON.stringify(errorData));
             }
         } catch (error) {
-            console.error('Error during API call:', error);
+            console.warn('Error during API call:', error);
             throw error;
         }
     }
@@ -177,7 +177,7 @@ export default class GoogleDriveService {
                 throw new Error(`Error ${method === 'POST' ? 'creating' : 'updating'} file: ` + JSON.stringify(errorData));
             }
         } catch (error) {
-            console.error('Error during API call:', error);
+            console.warn('Error during API call:', error);
             throw error;
         }
     }
@@ -198,7 +198,7 @@ export default class GoogleDriveService {
                 throw new Error('Error deleting file:', JSON.stringify(errorData));
             }
         } catch (error) {
-            console.error('Error during API call:', error);
+            console.warn('Error during API call:', error);
             throw error;
         }
     }
@@ -220,7 +220,7 @@ export default class GoogleDriveService {
             }
         }
         catch (error) {
-            console.error('Error during API call:', error);
+            console.warn('Error during API call:', error);
             throw error;
         }
     }
