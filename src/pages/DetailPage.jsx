@@ -34,7 +34,7 @@ const DetailPage = () => {
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
 
   const detailColor = DetailColor(timer.timerColor);
-
+  
   useEffect(() => {
     if (!currentTimer && !timerStore.timers[timer.id]) {
       timerStore.initTimer(
@@ -42,6 +42,7 @@ const DetailPage = () => {
         timer.detailTimerData[0].minutes,
         timer.detailTimerData[0].seconds,
         timer.detailTimerData,
+        timer.timerName,
       );
     }
   }, [timer.id]);

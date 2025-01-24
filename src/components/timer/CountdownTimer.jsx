@@ -27,6 +27,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
         timer.totalMinutes,
         timer.totalSeconds,
         timer.detailTimerData,
+        timer.timerName,
       );
     }
   }, [timer.id]);
