@@ -48,8 +48,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
       );
       await AppDataStorage.save('timers', updatedTimers);
       Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
-      navigation.navigate('Refresh', {animation: 'none'});
-      navigation.navigate('Main', {animation: 'none'});
+      navigation.replace('Main', {animation: 'none'});
     } catch (error) {
       console.error('타이머 삭제 실패:', error);
       Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
