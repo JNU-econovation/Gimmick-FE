@@ -18,14 +18,13 @@ const Header = ({type, title, onPressComplete, timer}) => {
       <HeaderContainer>
         <Logo source={require('../../assets/images/header/logo.png')} />
         <IconContainer>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('Create Modal')}>
+          <RightTextButton onPress={() => navigation.navigate('Create Modal')}>
             <IconButton>
               <StyledIcon
                 source={require('../../assets/images/header/plus.png')}
               />
             </IconButton>
-          </TouchableWithoutFeedback>
+          </RightTextButton>
         </IconContainer>
       </HeaderContainer>
     );
@@ -40,10 +39,10 @@ const Header = ({type, title, onPressComplete, timer}) => {
           </IconButton>
         </TouchableWithoutFeedback>
         <TitleText weight={titleWeight}>{title}</TitleText>
-        <TouchableWithoutFeedback
+        <RightTextButton
           onPress={() => navigation.navigate('Timer Update', {timer})}>
           <RightText>편집</RightText>
-        </TouchableWithoutFeedback>
+        </RightTextButton>
       </HeaderContainer>
     );
   } else if (['timerCreate', 'folderCreate'].includes(type)) {
@@ -57,9 +56,9 @@ const Header = ({type, title, onPressComplete, timer}) => {
           </IconButton>
         </TouchableWithoutFeedback>
         <TitleText weight={titleWeight}>{title}</TitleText>
-        <TouchableWithoutFeedback onPress={onPressComplete}>
+        <RightTextButton onPress={onPressComplete}>
           <RightText>완료</RightText>
-        </TouchableWithoutFeedback>
+        </RightTextButton>
       </HeaderContainer>
     );
   }
@@ -71,7 +70,7 @@ const HeaderContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-top: ${scale(15)}px;
+  padding: ${scale(10)}px -${scale(10)}px 0 -${scale(10)}px;
   margin-top: ${scale(25)}px;
   margin-bottom: ${scale(10)}px;
 `;
@@ -88,6 +87,7 @@ const IconContainer = styled.View`
 `;
 
 const IconButton = styled.View`
+  padding: ${scale(10)}px;
   margin-left: ${props => (props.applyMargin ? scale(14) : 0)}px;
 `;
 
@@ -106,6 +106,10 @@ const TitleText = styled(CustomText)`
 
 const RightText = styled(Text)`
   font-size: ${scale(15)}px;
-  margin-top: ${scale(5)}px;
+  padding: ${scale(10)}px;
   color: #777777;
+`;
+
+const RightTextButton = styled(TouchableWithoutFeedback)`
+  background-color: red;
 `;
