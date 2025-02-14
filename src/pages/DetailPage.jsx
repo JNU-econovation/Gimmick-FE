@@ -34,7 +34,7 @@ const DetailPage = () => {
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
 
   const detailColor = DetailColor(timer.timerColor);
-  
+
   useEffect(() => {
     if (!currentTimer && !timerStore.timers[timer.id]) {
       timerStore.initTimer(
@@ -87,27 +87,30 @@ const DetailPage = () => {
 
       if (!isSwifeOpen && event.translationY <= 0 && translateY.value > -350) {
         translateY.value = event.translationY;
-      }
-      else if (isSwifeOpen && event.translationY < 0) {
+      } else if (isSwifeOpen && event.translationY < 0) {
         translateY.value = -350 + event.translationY;
       }
     })
-    .onEnd((event) => {
+    .onEnd(event => {
       runOnJS(setGestureActive)(true);
       if (!isSwifeOpen) {
-        if (translateY.value < 0 && translateY.value > -350 && event.translationY < 0) {
+        if (
+          translateY.value < 0 &&
+          translateY.value > -350 &&
+          event.translationY < 0
+        ) {
           runOnJS(setSwifeOpen)(true);
-          translateY.value = withSpring(-350, { damping: 40, stiffness: 150 });
-        } 
+          translateY.value = withSpring(-350, {damping: 40, stiffness: 150});
+        }
       } else if (translateY.value <= -300) {
-          if (event.translationY > 0) {
-            runOnJS(setSwifeOpen)(false);
-            translateY.value = withSpring(0 , { damping: 40, stiffness: 150 });
-          }
+        if (event.translationY > 0) {
+          runOnJS(setSwifeOpen)(false);
+          translateY.value = withSpring(0, {damping: 40, stiffness: 150});
+        }
 
-          if (event.translationY < 0 ) {
-            translateY.value = withSpring(-350, { damping: 40, stiffness: 150 });
-          }
+        if (event.translationY < 0) {
+          translateY.value = withSpring(-350, {damping: 40, stiffness: 150});
+        }
       }
       runOnJS(setGestureActive)(false);
     });
@@ -116,12 +119,17 @@ const DetailPage = () => {
     transform: [{translateY: translateY.value}],
   }));
 
-  const handleTextLayout = event => {
-    const {width} = event.nativeEvent.layout;
-    setTextWidth(width);
+  const screenWidth = Dimensions.get('window').width;
+
+  const swifeOpen = () => {
+    setSwifeOpen(true);
+    translateY.value = withSpring(-350, {damping: 40, stiffness: 150});
   };
 
-  const screenWidth = Dimensions.get('window').width;
+  const swifeClose = () => {
+    setSwifeOpen(false);
+    translateY.value = withSpring(0, {damping: 40, stiffness: 150});
+  };
 
   return (
     <DetailLayout>
@@ -164,13 +172,18 @@ const DetailPage = () => {
               </ButtonContainer>
             </ContentContainer>
             <SwifeContainer>
-              <SwifeButtonImage
-                source={
-                  isSwifeOpen
-                    ? require('../assets/images/detail/swife-arrow-bottom.png')
-                    : require('../assets/images/detail/swife-arrow-top.png')
-                }
-              />
+              <SwifeButton
+                onPress={isSwifeOpen ? swifeClose : swifeOpen}
+                activeOpacity={1}>
+                <SwifeButtonImage
+                  source={
+                    isSwifeOpen
+                      ? require('../assets/images/detail/swife-arrow-bottom.png')
+                      : require('../assets/images/detail/swife-arrow-top.png')
+                  }
+                />
+              </SwifeButton>
+
               <SwifeText weight="semi-bold">
                 스와이프하여 전체 정보 확인
               </SwifeText>
@@ -235,7 +248,7 @@ const DetailTimerContainer = styled(Animated.View)`
 `;
 
 const ContentContainer = styled.View`
-  height: 90%;
+  height: 87%;
   margin-top: ${scale(-50)}px;
   align-items: center;
   justify-content: center;
@@ -278,7 +291,13 @@ const SwifeContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: ${scale(10)}px;
+  margin-bottom: ${scale(30)}px;
+`;
+
+const SwifeButton = styled.TouchableOpacity`
+  width: ${scale(40)}px;
+  height: ${scale(30)}px;
+  padding: ${scale(10)}px;
 `;
 
 const SwifeButtonImage = styled.Image`
