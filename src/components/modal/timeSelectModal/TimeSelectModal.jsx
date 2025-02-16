@@ -35,7 +35,7 @@ const TimeSelectModal = ({isVisible, onClose, onHandleTimeSelect}) => {
                 height: scale(200),
               }}
               selectedValue={hour}
-              pickerData={generatePickerItems(1000)}
+              pickerData={generatePickerItems(100)}
               onValueChange={value => setHour(value)}
             />
           </PickerWrapper>
