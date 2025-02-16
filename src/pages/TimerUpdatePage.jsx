@@ -89,6 +89,15 @@ const TimerUpdatePage = () => {
       return;
     }
 
+    if (
+      detailTimers.filter(
+        timer => timer.minutes === '00' && timer.seconds === '00',
+      ).length > 0
+    ) {
+      Alert.alert('저장 실패', '타이머 시간을 설정해주세요');
+      return;
+    }
+
     try {
       const newTimer = {
         id: timer.id,
@@ -157,14 +166,14 @@ const TimerUpdatePage = () => {
   };
 
   return (
-      <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={0}>
-        <TimerUpdateContainer
-          contentContainerStyle={{flexGrow: 1}}
-          showsVerticalScrollIndicator={false}>
-          <BaseLayout>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={0}>
+      <TimerUpdateContainer
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
+        <BaseLayout>
           <Header
             type="timerCreate"
             title="타이머 생성"

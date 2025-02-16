@@ -14,7 +14,6 @@ import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal
 import AppDataStorage from '../utils/AppDataStorage';
 import {useNavigation} from '@react-navigation/native';
 
-
 const TimerCreatePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -31,22 +30,25 @@ const TimerCreatePage = () => {
   const [totalSeconds, setTotalSeconds] = useState('00');
 
   useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
-    });
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      },
+    );
 
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      },
+    );
 
     return () => {
       keyboardDidHideListener.remove();
       keyboardDidShowListener.remove();
     };
   }, []);
-
-  
-
 
   useEffect(() => {
     const calculateTotalTime = () => {
@@ -133,6 +135,15 @@ const TimerCreatePage = () => {
       return;
     }
 
+    if (
+      detailTimers.filter(
+        timer => timer.minutes === '00' && timer.seconds === '00',
+      ).length > 0
+    ) {
+      Alert.alert('저장 실패', '타이머 시간을 설정해주세요');
+      return;
+    }
+
     try {
       const newTimer = {
         id: Date.now(),
@@ -163,10 +174,9 @@ const TimerCreatePage = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={0}
-    >
+      keyboardVerticalOffset={0}>
       <TimerCreateContainer
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
