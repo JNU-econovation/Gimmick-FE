@@ -90,7 +90,7 @@ const CountdownTimer = ({
         />
       )}
       <TouchableWithoutFeedback
-        onPress={handlePress}
+        onPress={isDeleteMode ? () => {} : handlePress}
         onLongPress={handleLongPress}>
         <TimerContainer>
           <BackgroundView color={timer.timerColor} />
