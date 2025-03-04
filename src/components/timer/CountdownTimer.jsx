@@ -7,6 +7,7 @@ import useTimerStore from '../../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect} from 'react';
 import FolderDeleteButton from './FolderDeleteButton';
+
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
   if (color === '#F6DBB7') return '#E9B97E';
@@ -42,11 +43,13 @@ const CountdownTimer = ({timer, onTimerClick}) => {
 
   const deleteTimerData = async id => {
     try {
+      console.log(id);
       const storedTimers = await AsyncStorage.getItem('timers');
-      const updatedTimers = (storedTimers ? storedTimers : []).filter(
-        parsedTimer => parsedTimer.id !== id,
-      );
-      await AsyncStorage.save('timers', updatedTimers);
+      const updatedTimers = (
+        storedTimers ? JSON.parse(storedTimers) : []
+      ).filter(parsedTimer => parsedTimer.id !== id);
+
+      await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
       Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
       navigation.replace('Main', {animation: 'none'});
     } catch (error) {
@@ -55,19 +58,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
     }
   };
 
-  const handleLongPress = () => {
-    Alert.alert(
-      '타이머 삭제',
-      '삭제한 타이머는 되돌릴 수 없습니다. 삭제하시겠습니까?',
-      [
-        {
-          text: '취소',
-          style: 'cancel',
-        },
-        {text: '삭제', onPress: () => deleteTimerData(timer.id)},
-      ],
-    );
-  };
+  const handleLongPress = () => {};
 
   const handlePress = () => {
     navigation.navigate('Detail', {timer});
@@ -81,7 +72,10 @@ const CountdownTimer = ({timer, onTimerClick}) => {
 
   return (
     <Container>
-      <FolderDeleteButton onDelete={handleLongPress} />
+      <FolderDeleteButton
+        onDelete={() => deleteTimerData(timer.id)}
+        id={timer.id}
+      />
       <TouchableWithoutFeedback
         onPress={handlePress}
         onLongPress={handleLongPress}>
@@ -125,9 +119,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
 
 const Container = styled.View`
   z-index: 1;
-  padding-left: ${scale(2)}px;
   position: relative;
-  width: 45%;
 `;
 
 const TimerContainer = styled.View`

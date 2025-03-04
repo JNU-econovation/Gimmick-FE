@@ -2,11 +2,21 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {scale} from 'react-native-size-matters';
 import {TouchableWithoutFeedback} from 'react-native';
+import {Alert} from 'react-native';
 
-const FolderDeleteButton = ({style, onDelete}) => {
+const onClick = (onDelete, id) => {
+  Alert.alert('삭제', '삭제하시겠습니까?', [
+    {text: '취소', style: 'cancel'},
+    {text: '삭제', onPress: () => onDelete(id)},
+  ]);
+};
+
+const FolderDeleteButton = ({style, onDelete, id}) => {
+  console.log(onDelete);
+
   return (
     <Container style={style}>
-      <TouchableWithoutFeedback onPress={onDelete}>
+      <TouchableWithoutFeedback onPress={() => onClick(onDelete, id)}>
         <ButtonWrapper>
           <Icon name="close" size={scale(20)} color="white" />
         </ButtonWrapper>
