@@ -11,8 +11,10 @@ const TimeSelectModal = ({isVisible, onClose, onHandleTimeSelect}) => {
   const [hour, setHour] = useState('00');
   const [minute, setMinute] = useState('00');
 
-  const generatePickerItems = limit =>
-    Array.from({length: limit}, (_, i) => String(i).padStart(2, '0'));
+  const generatePickerItems = (limit, step = 1) =>
+    Array.from({length: Math.ceil(limit / step)}, (_, i) =>
+      String(i * step).padStart(2, '0'),
+    );
 
   const handleConfirm = () => {
     onHandleTimeSelect(hour, minute);
