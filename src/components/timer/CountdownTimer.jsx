@@ -16,7 +16,12 @@ const DetailColor = color => {
   if (color === '#FCC4C4') return '#F4A7A3';
 };
 
-const CountdownTimer = ({timer, onTimerClick}) => {
+const CountdownTimer = ({
+  timer,
+  onTimerClick,
+  setIsDeleteMode,
+  isDeleteMode,
+}) => {
   const navigation = useNavigation();
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
@@ -58,9 +63,15 @@ const CountdownTimer = ({timer, onTimerClick}) => {
     }
   };
 
-  const handleLongPress = () => {};
+  const handleLongPress = () => {
+    setIsDeleteMode(true);
+  };
 
   const handlePress = () => {
+    if (isDeleteMode) {
+      setIsDeleteMode(false);
+      return;
+    }
     navigation.navigate('Detail', {timer});
     setTimeout(() => {
       onTimerClick(timer);
@@ -72,10 +83,12 @@ const CountdownTimer = ({timer, onTimerClick}) => {
 
   return (
     <Container>
-      <FolderDeleteButton
-        onDelete={() => deleteTimerData(timer.id)}
-        id={timer.id}
-      />
+      {isDeleteMode && (
+        <FolderDeleteButton
+          onDelete={() => deleteTimerData(timer.id)}
+          id={timer.id}
+        />
+      )}
       <TouchableWithoutFeedback
         onPress={handlePress}
         onLongPress={handleLongPress}>

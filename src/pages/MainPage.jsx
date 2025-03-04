@@ -9,11 +9,12 @@ import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
 import {checkFirstUser} from '../utils/checkFirstUser';
 import {useNavigation} from '@react-navigation/native';
+import {TouchableWithoutFeedback} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainPage = () => {
-  const navigation = useNavigation();
   const [items, setItems] = useState([]);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   const loadData = async () => {
     try {
@@ -181,7 +182,11 @@ const MainPage = () => {
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
-        <CountdownTimerWrapper>
+        <CountdownTimerWrapper
+          contentContainerStyle={{flexGrow: 1}}
+          onPress={() => {
+            isDeleteMode && setIsDeleteMode(false);
+          }}>
           <TimersAndFoldersContainer>
             {items.map(item => (
               <React.Fragment key={item.id}>
@@ -189,11 +194,15 @@ const MainPage = () => {
                   <CountdownTimer
                     timer={item}
                     onTimerClick={handleTimerClick}
+                    isDeleteMode={isDeleteMode}
+                    setIsDeleteMode={setIsDeleteMode}
                   />
                 ) : (
                   <CountdownFolder
                     folder={item}
                     onFolderClick={handleFolderClick}
+                    isDeleteMode={isDeleteMode}
+                    setIsDeleteMode={setIsDeleteMode}
                   />
                 )}
               </React.Fragment>
@@ -213,9 +222,10 @@ const MainContainer = styled.View`
   height: 100%;
 `;
 
-const CountdownTimerWrapper = styled.View`
-  justify-content: center;
-  align-items: center;
+const CountdownTimerWrapper = styled.Pressable`
+  margin: 0 ${scale(21)}px;
+  height: 100%;
+  width: 100%;
 `;
 
 const TimersAndFoldersContainer = styled.View`
