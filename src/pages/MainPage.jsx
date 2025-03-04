@@ -210,7 +210,10 @@ const MainContainer = styled.View`
   height: 100%;
 `;
 
-const CountdownTimerWrapper = styled.View``;
+const CountdownTimerWrapper = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
 
 const TimersAndFoldersContainer = styled.View`
   flex-direction: row;

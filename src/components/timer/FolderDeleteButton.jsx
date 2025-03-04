@@ -23,8 +23,8 @@ const ButtonWrapper = styled.View`
   align-items: flex-start;
   border-radius: ${scale(30)}px;
   position: absolute;
-  right: ${scale(-5)}px;
   top: ${scale(-5)}px;
+  right: ${scale(-5)}px;
   background-color: red;
   width: ${scale(20)}px;
   height: ${scale(20)}px;

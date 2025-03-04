@@ -125,7 +125,9 @@ const CountdownTimer = ({timer, onTimerClick}) => {
 
 const Container = styled.View`
   z-index: 1;
+  padding-left: ${scale(2)}px;
   position: relative;
+  width: 45%;
 `;
 
 const TimerContainer = styled.View`
