@@ -175,10 +175,12 @@ const MainPage = () => {
 
   return (
     <MainContainer>
+      <HeaderWrapper>
+        <Header type="main" />
+      </HeaderWrapper>
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
-        <Header type="main" />
         <CountdownTimerWrapper>
           <TimersAndFoldersContainer>
             {items.map(item => (
@@ -207,6 +209,7 @@ export default MainPage;
 
 const MainContainer = styled.View`
   flex-direction: column;
+  padding-top: ${Platform.select({ios: scale(25), android: scale(12)})}px;
   height: 100%;
 `;
 
@@ -221,4 +224,8 @@ const TimersAndFoldersContainer = styled.View`
   flex-wrap: wrap;
   justify-content: flex-start;
   padding-top: ${scale(20)}px;
+`;
+
+const HeaderWrapper = styled.View`
+  padding: 0 ${scale(21)}px;
 `;
