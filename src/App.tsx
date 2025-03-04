@@ -101,11 +101,7 @@ const FolderPageWithLayout = () => (
   </BaseLayout>
 );
 
-const MainWithLayout = () => (
-  <BaseLayout>
-    <MainPage />
-  </BaseLayout>
-);
+const MainWithLayout = () => <MainPage />;
 
 const DetailWithLayout = () => (
   <BaseLayout>
