@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 const InputComponent = ({style, value, onChangeText}) => {
   return (
     <Container style={style}>
-      <Input value={value} onChangeText={onChangeText} />
+      <Input value={value} onChangeText={onChangeText} maxLength={15} />
     </Container>
   );
 };
