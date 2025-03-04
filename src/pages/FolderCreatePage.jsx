@@ -49,11 +49,11 @@ const FolderCreatePage = () => {
 
       const storedFolders = await AsyncStorage.getItem('folders');
       const updatedFolders = [
-        ...(storedFolders ? storedFolders : []),
+        ...(storedFolders ? JSON.parse(storedFolders) : []),
         newFolder,
       ];
 
-      await AsyncStorage.save('folders', updatedFolders);
+      await AsyncStorage.setItem('folders', JSON.stringify(updatedFolders));
       Alert.alert('저장 완료', '폴더가 성공적으로 저장되었습니다.');
 
       setFolderName('');

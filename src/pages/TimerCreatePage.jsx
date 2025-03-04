@@ -161,9 +161,12 @@ const TimerCreatePage = () => {
       };
 
       const storedTimers = await AsyncStorage.getItem('timers');
-      const updatedTimers = [...(storedTimers ? storedTimers : []), newTimer];
+      const updatedTimers = [
+        ...(storedTimers ? JSON.parse(storedTimers) : []),
+        newTimer,
+      ];
 
-      await AsyncStorage.save('timers', updatedTimers);
+      await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
       Alert.alert('저장 완료', '타이머가 성공적으로 저장되었습니다.');
 
       setTimerName('');

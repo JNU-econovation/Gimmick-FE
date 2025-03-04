@@ -112,11 +112,11 @@ const TimerUpdatePage = () => {
       // 데이터 수정 완료되면 확인해야 할 부분
       const storedTimers = await AsyncStorage.getItem('timers');
       // 현재 id가 없어서인지 타이머를 수정하면 전체 타이머에 적용되는 오류가 발생하고 있음
-      const updatedTimers = (storedTimers ? storedTimers : []).map(t =>
-        t.id === timer.id ? newTimer : t,
+      const updatedTimers = (storedTimers ? JSON.parse(storedTimers) : []).map(
+        t => (t.id === timer.id ? newTimer : t),
       );
 
-      await AsyncStorage.save('timers', updatedTimers);
+      await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
       Alert.alert('저장 완료', '타이머가 성공적으로 저장되었습니다.');
 
       setTimerName('');
