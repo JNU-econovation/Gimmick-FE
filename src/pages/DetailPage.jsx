@@ -74,7 +74,7 @@ const DetailPage = () => {
   };
 
   const getCurrentMemoData = () => {
-    if (!currentTimer) return '';
+    if (!currentTimer) return '이번 단계에 작성된 메모가 없습니다.';
     return timer.detailTimerData[currentTimer.currentStepIndex].memoData;
   };
 
