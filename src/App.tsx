@@ -42,7 +42,7 @@ function App(): React.JSX.Element {
               }}>
               <Stack.Screen
                 name="Main"
-                component={MainWithLayout}
+                component={MainPage}
                 options={{title: 'Main Page', animation: 'none'}}
               />
               <Stack.Screen
@@ -52,12 +52,12 @@ function App(): React.JSX.Element {
               />
               <Stack.Screen
                 name="Create Timer"
-                component={TimerCreateWithLayout}
+                component={TimerCreatePage}
                 options={{title: 'Create Timer Page'}}
               />
               <Stack.Screen
                 name="Create Folder"
-                component={FolderCreateWithLayout}
+                component={FolderCreatePage}
                 options={{title: 'Create Folder Page'}}
               />
               <Stack.Screen
@@ -67,7 +67,7 @@ function App(): React.JSX.Element {
               />
               <Stack.Screen
                 name="Timer Update"
-                component={TimerUpdateWithLayout}
+                component={TimerUpdatePage}
                 options={{title: 'Timer Update Page'}}
               />
               <Stack.Screen
@@ -101,19 +101,11 @@ const FolderPageWithLayout = () => (
   </BaseLayout>
 );
 
-const MainWithLayout = () => <MainPage />;
-
 const DetailWithLayout = () => (
   <BaseLayout>
     <DetailPage />
   </BaseLayout>
 );
-
-const TimerCreateWithLayout = () => <TimerCreatePage />;
-
-const TimerUpdateWithLayout = () => <TimerUpdatePage />;
-
-const FolderCreateWithLayout = () => <FolderCreatePage />;
 
 export default App;
 
