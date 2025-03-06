@@ -18,7 +18,7 @@ const FolderDeleteButton = ({style, onDelete, id}) => {
     <Container style={style}>
       <TouchableWithoutFeedback onPress={() => onClick(onDelete, id)}>
         <ButtonWrapper>
-          <Icon name="close" size={scale(20)} color="white" />
+          <Icon name="close" size={scale(20)} color="black" />
         </ButtonWrapper>
       </TouchableWithoutFeedback>
     </Container>
@@ -30,14 +30,14 @@ const Container = styled.View``;
 const ButtonWrapper = styled.View`
   z-index: 1;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   border-radius: ${scale(30)}px;
   position: absolute;
   top: ${scale(-5)}px;
   right: ${scale(-5)}px;
-  background-color: red;
-  width: ${scale(20)}px;
-  height: ${scale(20)}px;
+  background-color: #d9d9d9;
+  width: ${scale(25)}px;
+  height: ${scale(25)}px;
 `;
 
 export default FolderDeleteButton;
