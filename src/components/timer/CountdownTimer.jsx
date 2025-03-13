@@ -7,6 +7,15 @@ import useTimerStore from '../../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect} from 'react';
 import FolderDeleteButton from './FolderDeleteButton';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  Easing,
+  withRepeat,
+  withSequence,
+  cancelAnimation,
+} from 'react-native-reanimated';
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -25,6 +34,7 @@ const CountdownTimer = ({
   const navigation = useNavigation();
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
+  const rotation = useSharedValue(0);
 
   useEffect(() => {
     if (!currentTimer) {
@@ -37,6 +47,37 @@ const CountdownTimer = ({
       );
     }
   }, [timer.id]);
+
+  useEffect(() => {
+    if (isDeleteMode) {
+      rotation.value = withRepeat(
+        withSequence(
+          withTiming(-1.5, {
+            duration: 500,
+            easing: Easing.linear,
+          }),
+          withTiming(1.5, {
+            duration: 500,
+            easing: Easing.linear,
+          }),
+        ),
+        -1,
+        true,
+      );
+    } else {
+      cancelAnimation(rotation);
+      rotation.value = withTiming(0, {
+        duration: 150,
+        easing: Easing.linear,
+      });
+    }
+  }, [isDeleteMode]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{rotate: `${rotation.value}deg`}],
+    };
+  });
 
   const calculateProgress = () => {
     if (!currentTimer) return 0;
@@ -92,39 +133,46 @@ const CountdownTimer = ({
       <TouchableWithoutFeedback
         onPress={isDeleteMode ? () => {} : handlePress}
         onLongPress={handleLongPress}>
-        <TimerContainer>
-          <BackgroundView color={timer.timerColor} />
-          <ProgressView
-            color={darkerColor}
-            style={{
-              position: 'absolute',
-              right: 0,
-              width: `${progress * 100}%`,
-              height: '100%',
-              borderTopRightRadius: scale(13),
-              borderBottomRightRadius: scale(13),
-            }}
-          />
-          <ContentWrapper>
-            <TimerHeaderWrapper>
-              <IconboxWrapper>
-                <IconView>{timer.icon}</IconView>
-              </IconboxWrapper>
-              <EnterImage
-                source={require('../../assets/images/timerBox/enter-arrow.png')}
-              />
-            </TimerHeaderWrapper>
-            <FoodTitleText weight="semi-bold">{timer.timerName}</FoodTitleText>
-            <TimerText weight="bold">
-              {currentTimer
-                ? `${String(currentTimer.totalTime.minutes).padStart(
-                    2,
-                    '0',
-                  )}:${String(currentTimer.totalTime.seconds).padStart(2, '0')}`
-                : '00:00'}
-            </TimerText>
-          </ContentWrapper>
-        </TimerContainer>
+        <Animated.View style={animatedStyle}>
+          <TimerContainer>
+            <BackgroundView color={timer.timerColor} />
+            <ProgressView
+              color={darkerColor}
+              style={{
+                position: 'absolute',
+                right: 0,
+                width: `${progress * 100}%`,
+                height: '100%',
+                borderTopRightRadius: scale(13),
+                borderBottomRightRadius: scale(13),
+              }}
+            />
+            <ContentWrapper>
+              <TimerHeaderWrapper>
+                <IconboxWrapper>
+                  <IconView>{timer.icon}</IconView>
+                </IconboxWrapper>
+                <EnterImage
+                  source={require('../../assets/images/timerBox/enter-arrow.png')}
+                />
+              </TimerHeaderWrapper>
+              <FoodTitleText weight="semi-bold">
+                {timer.timerName}
+              </FoodTitleText>
+              <TimerText weight="bold">
+                {currentTimer
+                  ? `${String(currentTimer.totalTime.minutes).padStart(
+                      2,
+                      '0',
+                    )}:${String(currentTimer.totalTime.seconds).padStart(
+                      2,
+                      '0',
+                    )}`
+                  : '00:00'}
+              </TimerText>
+            </ContentWrapper>
+          </TimerContainer>
+        </Animated.View>
       </TouchableWithoutFeedback>
     </Container>
   );
