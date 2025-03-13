@@ -6,7 +6,6 @@ import {useNavigation} from '@react-navigation/native';
 import useTimerStore from '../../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect} from 'react';
-import FolderDeleteButton from './FolderDeleteButton';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -16,6 +15,7 @@ import Animated, {
   withSequence,
   cancelAnimation,
 } from 'react-native-reanimated';
+import DeleteButton from './DeleteButton';
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -97,7 +97,10 @@ const CountdownTimer = ({
 
       await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
       Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
-      navigation.replace('Main', {animation: 'none'});
+      await navigation.replace('Main', {
+        animation: 'none',
+        deleteMode: true,
+      });
     } catch (error) {
       console.error('타이머 삭제 실패:', error);
       Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
@@ -125,7 +128,7 @@ const CountdownTimer = ({
   return (
     <Container>
       {isDeleteMode && (
-        <FolderDeleteButton
+        <DeleteButton
           onDelete={() => deleteTimerData(timer.id)}
           id={timer.id}
         />

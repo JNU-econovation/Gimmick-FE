@@ -8,13 +8,12 @@ import CountdownFolder from '../components/timer/CountdownFolder';
 import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
 import {checkFirstUser} from '../utils/checkFirstUser';
-import {useNavigation} from '@react-navigation/native';
-import {TouchableWithoutFeedback} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MainPage = () => {
+const MainPage = ({route}) => {
+  const deleteMode = route.params.deleteMode ? route.params.deleteMode : false;
   const [items, setItems] = useState([]);
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isDeleteMode, setIsDeleteMode] = useState(deleteMode);
 
   const loadData = async () => {
     try {
