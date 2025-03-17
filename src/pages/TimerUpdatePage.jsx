@@ -109,6 +109,7 @@ const TimerUpdatePage = () => {
         timerColor: timerColor,
         icon: selectedIcon,
         detailTimerData: detailTimers,
+        updatedAt: Date.now(),
       };
 
       // 데이터 수정 완료되면 확인해야 할 부분
