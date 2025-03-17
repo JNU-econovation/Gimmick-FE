@@ -11,7 +11,8 @@ import {checkFirstUser} from '../utils/checkFirstUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainPage = ({route}) => {
-  const deleteMode = route.params.deleteMode ? route.params.deleteMode : false;
+  const deleteMode = route.params?.deleteMode ? route.params.deleteMode : false;
+
   const [items, setItems] = useState([]);
   const [isDeleteMode, setIsDeleteMode] = useState(deleteMode);
 
