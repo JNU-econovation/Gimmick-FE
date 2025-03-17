@@ -13,10 +13,12 @@ import Header from '../components/common/Header';
 import IconPickerModal from '../components/modal/iconPickerModal/IconPickerModal';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useTimerStore from '../store.js';
 
 const TimerUpdatePage = () => {
   const route = useRoute();
   const {timer} = route.params || {};
+  const timerStore = useTimerStore();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState(timer.icon);
   const [timerName, setTimerName] = useState(timer.timerName);
@@ -114,6 +116,14 @@ const TimerUpdatePage = () => {
       // 현재 id가 없어서인지 타이머를 수정하면 전체 타이머에 적용되는 오류가 발생하고 있음
       const updatedTimers = (storedTimers ? JSON.parse(storedTimers) : []).map(
         t => (t.id === timer.id ? newTimer : t),
+      );
+
+      timerStore.initTimer(
+        timer.id,
+        totalMinutes,
+        totalSeconds,
+        detailTimers,
+        timerName,
       );
 
       await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
