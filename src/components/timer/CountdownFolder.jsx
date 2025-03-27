@@ -4,6 +4,7 @@ import CustomText from '../CustomText';
 import {Platform, TouchableWithoutFeedback} from 'react-native';
 import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -14,6 +15,7 @@ import Animated, {
   cancelAnimation,
 } from 'react-native-reanimated';
 import DeleteButton from '../common/DeleteButton';
+import {Alert} from 'react-native';
 
 const getLighterColor = color => {
   if (color === '#FBDF60') return '#ffea8d';
@@ -68,29 +70,38 @@ const CountdownFolder = ({
     };
   });
 
-  // const deleteFolderData = async id => {
-  //   try {
-  //     console.log(id);
-  //     const storedTimers = await AsyncStorage.getItem('timers');
-  //     const updatedTimers = (
-  //       storedTimers ? JSON.parse(storedTimers) : []
-  //     ).filter(parsedTimer => parsedTimer.id !== id);
+  const deleteFolderData = async id => {
+    try {
+      const storedTimers = await AsyncStorage.getItem('timers');
+      const storedFolders = await AsyncStorage.getItem('folders');
+      console.log('storedTimers', storedTimers);
+      console.log('storedFolders', storedFolders);
+      // 폴더 내부 데이터 삭제
+      const updatedTimers = (
+        storedTimers ? JSON.parse(storedTimers) : []
+      ).filter(parsedTimer => parsedTimer.detailTimerData.folderId !== id);
 
-  //     await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
-  //     Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
-  //     await navigation.replace('Main', {
-  //       animation: 'none',
-  //       deleteMode: true,
-  //     });
-  //   } catch (error) {
-  //     console.error('타이머 삭제 실패:', error);
-  //     Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
-  //   }
-  // };
+      // 폴더 삭제
+      const updatedFolders = (
+        storedFolders ? JSON.parse(storedFolders) : []
+      ).filter(parsedFolder => parsedFolder.id !== id);
 
-  // const handleLongPress = () => {
-  //   setIsDeleteMode(true);
-  // };
+      await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
+      await AsyncStorage.setItem('folders', JSON.stringify(updatedFolders));
+      Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
+      await navigation.replace('Main', {
+        animation: 'none',
+        deleteMode: true,
+      });
+    } catch (error) {
+      console.error('타이머 삭제 실패:', error);
+      Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
+    }
+  };
+
+  const handleLongPress = () => {
+    setIsDeleteMode(true);
+  };
 
   const handlePress = () => {
     if (onFolderClick) {
@@ -107,12 +118,15 @@ const CountdownFolder = ({
       <DeleteButtonWrapper>
         {isDeleteMode && (
           <DeleteButton
-          // onDelete={() => deleteTimerData(timer.id)}
-          // id={timer.id}
+            onDelete={() => deleteFolderData(folder.id)}
+            id={folder.id}
+            isFolder={true}
           />
         )}
       </DeleteButtonWrapper>
-      <TouchableWithoutFeedback onPress={handlePress}>
+      <TouchableWithoutFeedback
+        onPress={handlePress}
+        onLongPress={handleLongPress}>
         <Animated.View style={animatedStyle}>
           <CountdownFolderContainer>
             <TopLeftSectionView color={lighterColor} />
