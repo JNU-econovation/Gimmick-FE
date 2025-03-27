@@ -131,6 +131,7 @@ const CountdownTimer = ({
         <DeleteButton
           onDelete={() => deleteTimerData(timer.id)}
           id={timer.id}
+          isFolder={false}
         />
       )}
       <TouchableWithoutFeedback
