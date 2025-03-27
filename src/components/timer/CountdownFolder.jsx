@@ -2,7 +2,18 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../CustomText';
 import {Platform, TouchableWithoutFeedback} from 'react-native';
+import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  Easing,
+  withRepeat,
+  withSequence,
+  cancelAnimation,
+} from 'react-native-reanimated';
+import DeleteButton from '../common/DeleteButton';
 
 const getLighterColor = color => {
   if (color === '#FBDF60') return '#ffea8d';
@@ -13,12 +24,73 @@ const getLighterColor = color => {
   return '#FCC4C4';
 };
 
-const CountdownFolder = ({folder, onFolderClick}) => {
+const CountdownFolder = ({
+  folder,
+  onFolderClick,
+  setIsDeleteMode,
+  isDeleteMode,
+}) => {
   const navigation = useNavigation();
   const icon = folder?.icon || '🍔';
   const folderName = folder?.folderName || '쉬림프 타코';
   const folderColor = folder?.folderColor || '#F4A7A3';
   const lighterColor = getLighterColor(folderColor);
+  const rotation = useSharedValue(0);
+
+  useEffect(() => {
+    if (isDeleteMode) {
+      rotation.value = withRepeat(
+        withSequence(
+          withTiming(-1.5, {
+            duration: 200,
+            easing: Easing.linear,
+          }),
+          withTiming(1.5, {
+            duration: 200,
+            easing: Easing.linear,
+          }),
+        ),
+        -1,
+        true,
+      );
+    } else {
+      cancelAnimation(rotation);
+      rotation.value = withTiming(0, {
+        duration: 150,
+        easing: Easing.linear,
+      });
+    }
+  }, [isDeleteMode]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{rotate: `${rotation.value}deg`}],
+    };
+  });
+
+  // const deleteFolderData = async id => {
+  //   try {
+  //     console.log(id);
+  //     const storedTimers = await AsyncStorage.getItem('timers');
+  //     const updatedTimers = (
+  //       storedTimers ? JSON.parse(storedTimers) : []
+  //     ).filter(parsedTimer => parsedTimer.id !== id);
+
+  //     await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
+  //     Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
+  //     await navigation.replace('Main', {
+  //       animation: 'none',
+  //       deleteMode: true,
+  //     });
+  //   } catch (error) {
+  //     console.error('타이머 삭제 실패:', error);
+  //     Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
+  //   }
+  // };
+
+  // const handleLongPress = () => {
+  //   setIsDeleteMode(true);
+  // };
 
   const handlePress = () => {
     if (onFolderClick) {
@@ -31,26 +103,44 @@ const CountdownFolder = ({folder, onFolderClick}) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handlePress}>
-      <CountdownFolderContainer>
-        <TopLeftSectionView color={lighterColor} />
-        <TopRightSectionView color={lighterColor} />
-        <BottomSectionWrapper color={folderColor}>
-          <IconboxWrapper>
-            <IconView>{icon}</IconView>
-          </IconboxWrapper>
-          <FoodTitleText weight="medium">{folderName}</FoodTitleText>
-        </BottomSectionWrapper>
-      </CountdownFolderContainer>
-    </TouchableWithoutFeedback>
+    <FolderContainer>
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <>
+          <DeleteButtonWrapper>
+            {isDeleteMode && (
+              <DeleteButton
+              // onDelete={() => deleteTimerData(timer.id)}
+              // id={timer.id}
+              />
+            )}
+          </DeleteButtonWrapper>
+          <Animated.View style={animatedStyle}>
+            <CountdownFolderContainer>
+              <TopLeftSectionView color={lighterColor} />
+              <TopRightSectionView color={lighterColor} />
+              <BottomSectionWrapper color={folderColor}>
+                <IconboxWrapper>
+                  <IconView>{icon}</IconView>
+                </IconboxWrapper>
+                <FoodTitleText weight="medium">{folderName}</FoodTitleText>
+              </BottomSectionWrapper>
+            </CountdownFolderContainer>
+          </Animated.View>
+        </>
+      </TouchableWithoutFeedback>
+    </FolderContainer>
   );
 };
 
 export default CountdownFolder;
 
+const FolderContainer = styled.View``;
 const CountdownFolderContainer = styled.View`
   width: ${scale(140)}px;
   height: ${scale(134.7)}px;
+`;
+const DeleteButtonWrapper = styled.View`
+  top: ${scale(15)}px;
 `;
 
 const TopLeftSectionView = styled.View`

@@ -15,7 +15,7 @@ import Animated, {
   withSequence,
   cancelAnimation,
 } from 'react-native-reanimated';
-import DeleteButton from './DeleteButton';
+import DeleteButton from '../common/DeleteButton';
 
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
@@ -53,11 +53,11 @@ const CountdownTimer = ({
       rotation.value = withRepeat(
         withSequence(
           withTiming(-1.5, {
-            duration: 500,
+            duration: 200,
             easing: Easing.linear,
           }),
           withTiming(1.5, {
-            duration: 500,
+            duration: 200,
             easing: Easing.linear,
           }),
         ),
