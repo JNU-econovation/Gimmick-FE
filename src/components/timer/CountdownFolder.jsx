@@ -104,29 +104,27 @@ const CountdownFolder = ({
 
   return (
     <FolderContainer>
+      <DeleteButtonWrapper>
+        {isDeleteMode && (
+          <DeleteButton
+          // onDelete={() => deleteTimerData(timer.id)}
+          // id={timer.id}
+          />
+        )}
+      </DeleteButtonWrapper>
       <TouchableWithoutFeedback onPress={handlePress}>
-        <>
-          <DeleteButtonWrapper>
-            {isDeleteMode && (
-              <DeleteButton
-              // onDelete={() => deleteTimerData(timer.id)}
-              // id={timer.id}
-              />
-            )}
-          </DeleteButtonWrapper>
-          <Animated.View style={animatedStyle}>
-            <CountdownFolderContainer>
-              <TopLeftSectionView color={lighterColor} />
-              <TopRightSectionView color={lighterColor} />
-              <BottomSectionWrapper color={folderColor}>
-                <IconboxWrapper>
-                  <IconView>{icon}</IconView>
-                </IconboxWrapper>
-                <FoodTitleText weight="medium">{folderName}</FoodTitleText>
-              </BottomSectionWrapper>
-            </CountdownFolderContainer>
-          </Animated.View>
-        </>
+        <Animated.View style={animatedStyle}>
+          <CountdownFolderContainer>
+            <TopLeftSectionView color={lighterColor} />
+            <TopRightSectionView color={lighterColor} />
+            <BottomSectionWrapper color={folderColor}>
+              <IconboxWrapper>
+                <IconView>{icon}</IconView>
+              </IconboxWrapper>
+              <FoodTitleText weight="medium">{folderName}</FoodTitleText>
+            </BottomSectionWrapper>
+          </CountdownFolderContainer>
+        </Animated.View>
       </TouchableWithoutFeedback>
     </FolderContainer>
   );
