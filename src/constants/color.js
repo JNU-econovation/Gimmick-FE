@@ -1,5 +1,5 @@
 export const fireColor = {
-  strong: '#FBDF60',
-  medium: '#F6DBB7',
-  light: '#BAE2FF',
+  strong: '#FB4216',
+  medium: '#F69375',
+  light: '#FFC15B',
 };
