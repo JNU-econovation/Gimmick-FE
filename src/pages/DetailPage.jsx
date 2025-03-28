@@ -11,6 +11,7 @@ import useTimerStore from '../store';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
+import ProgressBar from '../components/detail/ProgressBar';
 import Animated, {
   useSharedValue,
   withSpring,
@@ -119,8 +120,6 @@ const DetailPage = () => {
     transform: [{translateY: translateY.value}],
   }));
 
-  const screenWidth = Dimensions.get('window').width;
-
   const swifeOpen = () => {
     setSwifeOpen(true);
     translateY.value = withSpring(-350, {damping: 40, stiffness: 150});
@@ -220,11 +219,7 @@ const DetailPage = () => {
                   source={require('../assets/images/detail/progress-icon.png')}
                 />
               </ProgressIconContainer>
-              <ProgressLine
-                color={detailColor}
-                width={`${screenWidth - scale(48)}px`}
-              />
-
+              <ProgressBar timer={timer} />
               <MemoContainer>
                 <MemoText weight="semi-bold">메모 사항</MemoText>
                 <CurrentMemo memoData={getCurrentMemoData()} />
@@ -350,14 +345,6 @@ const ProgressIconImage = styled.Image`
 `;
 
 const ProgressView = styled.View``;
-
-const ProgressLine = styled.View`
-  width: ${props => props.width};
-  height: ${scale(10)}px;
-  justify-content: center;
-  border-radius: ${scale(10)}px;
-  background-color: ${props => props.color};
-`;
 
 const MemoContainer = styled.View`
   margin-top: ${scale(10)}px;
