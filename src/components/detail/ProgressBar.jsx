@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import {View} from 'react-native';
-import {fireColor} from '../../constants/Color';
+import {FIRE_COLOR} from '../../constants/Color';
 const screenWidth = Dimensions.get('window').width;
 
 const ProgressBar = ({timer}) => {
@@ -17,11 +17,11 @@ const ProgressBar = ({timer}) => {
         // 색상 지정
         let detailProgressBarColor;
         if (item.fireData == '강불') {
-          detailProgressBarColor = fireColor.strong;
+          detailProgressBarColor = FIRE_COLOR.strong;
         } else if (item.fireData == '중불') {
-          detailProgressBarColor = fireColor.medium;
+          detailProgressBarColor = FIRE_COLOR.medium;
         } else {
-          detailProgressBarColor = fireColor.light;
+          detailProgressBarColor = FIRE_COLOR.light;
         }
 
         return (
