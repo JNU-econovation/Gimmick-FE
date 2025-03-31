@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import {View} from 'react-native';
-import {FIRE_COLOR} from '../../constants/Color';
+import {FIRE_COLOR} from '../../constants/color';
 const screenWidth = Dimensions.get('window').width;
 
 const ProgressBar = ({timer}) => {
