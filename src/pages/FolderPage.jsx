@@ -76,6 +76,7 @@ const FolderPage = () => {
           title={folder?.folderName}
           icon={folder?.icon}
           folderId={folder?.id}
+          folder={folder}
         />
         <TimersContainer>
           {timers.length > 0 ? (
