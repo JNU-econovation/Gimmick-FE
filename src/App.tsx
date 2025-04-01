@@ -15,6 +15,7 @@ import Refresh from './pages/Refresh';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FolderPage from './pages/FolderPage';
 import {useAppStateMonitor} from './hooks/useAppStateMonitor';
+import FolderUpdatePage from './pages/FolderUpdatePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,11 @@ function App(): React.JSX.Element {
                 name="Refresh"
                 component={Refresh}
                 options={{title: 'Refresh Page'}}
+              />
+              <Stack.Screen
+                name="Folder Update"
+                component={FolderUpdatePage}
+                options={{title: 'Folder Update Page'}}
               />
             </Stack.Group>
 
