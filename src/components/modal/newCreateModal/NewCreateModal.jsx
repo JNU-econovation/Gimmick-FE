@@ -11,7 +11,8 @@ import {Alert} from 'react-native';
 import folderIcon from '../../../assets/images/NewCreateModal/folderIcon.png';
 import timerIcon from '../../../assets/images/NewCreateModal/timerIcon.png';
 
-const NewCreateModal = () => {
+const NewCreateModal = ({route}) => {
+  const {folder} = route.params;
   const [isModalVisible, setIsModalVisible] = useState(true);
   const navigation = useNavigation();
 
@@ -32,6 +33,12 @@ const NewCreateModal = () => {
     navigation.navigate('Create Folder');
   };
 
+  const handleUpdateFolder = () => {
+    setIsModalVisible(false);
+    navigation.goBack();
+    navigation.navigate('Folder Update', {folder: folder});
+  };
+
   return (
     <CustomModal visible={isModalVisible} onClose={onPressModalClose}>
       <ModalContainer>
@@ -40,11 +47,19 @@ const NewCreateModal = () => {
           <StyledCloseButton onClose={onPressModalClose} />
         </TitletContainer>
         <ButtonsContainer>
-          <CreateButton
-            onPress={handleCreateFolder}
-            text="폴더 생성"
-            icon={folderIcon}
-          />
+          {folder ? (
+            <CreateButton
+              onPress={handleUpdateFolder}
+              text="폴더 수정"
+              icon={folderIcon}
+            />
+          ) : (
+            <CreateButton
+              onPress={handleCreateFolder}
+              text="폴더 생성"
+              icon={folderIcon}
+            />
+          )}
           <CreateButton
             onPress={handleCreateTimer}
             text="타이머 생성"
