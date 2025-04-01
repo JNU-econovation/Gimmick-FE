@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import {useRoute} from '@react-navigation/native';
 
-const Header = ({type, title, onPressComplete, timer}) => {
+const Header = ({type, title, onPressComplete, timer, folder}) => {
   const navigation = useNavigation();
   const route = useRoute();
   const titleWeight = Platform.select({
@@ -19,7 +19,8 @@ const Header = ({type, title, onPressComplete, timer}) => {
       <HeaderContainer>
         <Logo source={require('../../assets/images/header/logo.png')} />
         <IconContainer>
-          <RightTextButton onPress={() => navigation.navigate('Create Modal')}>
+          <RightTextButton
+            onPress={() => navigation.navigate('Create Modal', {})}>
             <IconButton>
               <StyledIcon
                 source={require('../../assets/images/header/plus.png')}
@@ -60,8 +61,8 @@ const Header = ({type, title, onPressComplete, timer}) => {
         <IconContainer>
           <RightTextButton
             onPress={() =>
-              navigation.navigate('Create Timer', {
-                folderId: route.params?.folder?.id,
+              navigation.navigate('Create Modal', {
+                folder: folder,
               })
             }>
             <IconButton>
