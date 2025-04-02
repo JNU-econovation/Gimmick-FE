@@ -190,7 +190,7 @@ const TimerUpdatePage = () => {
             title="타이머 생성"
             onPressComplete={saveTimerData}
           />
-          <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
+          <IconPicker icon={selectedIcon} onSelectIcon={handleIconSelect} />
           <InsertContainer>
             <TimerCreateText weight="semi-bold">타이머 이름</TimerCreateText>
             <InputWrapper value={timerName} onChangeText={setTimerName} />
@@ -237,13 +237,6 @@ const TimerUpdatePage = () => {
           <TotalTimerContainer>
             <TotalTimer totalTime={[totalMinutes, totalSeconds]} />
           </TotalTimerContainer>
-
-          {isModalVisible && (
-            <IconPickerModal
-              onSelectIcon={handleIconSelect}
-              onClose={handleModalClose}
-            />
-          )}
         </BaseLayout>
       </TimerUpdateContainer>
     </KeyboardAvoidingView>

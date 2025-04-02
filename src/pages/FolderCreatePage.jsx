@@ -76,20 +76,13 @@ const FolderCreatePage = () => {
           title="폴더 생성"
           onPressComplete={saveFolderData}
         />
-        <IconPicker icon={selectedIcon} onPress={onPressModalOpen} />
+        <IconPicker icon={selectedIcon} onSelectIcon={handleIconSelect} />
         <InsertContainer>
           <FolderCreateText weight="semi-bold">폴더 이름</FolderCreateText>
           <InputWrapper value={folderName} onChangeText={setFolderName} />
           <FolderCreateText weight="semi-bold">폴더 색상</FolderCreateText>
           <ColorPicker color={folderColor} onChangeColor={setFolderColor} />
         </InsertContainer>
-
-        {isModalVisible && (
-          <IconPickerModal
-            onSelectIcon={handleIconSelect}
-            onClose={handleModalClose}
-          />
-        )}
       </BaseLayout>
     </FolderCreateContainer>
   );
