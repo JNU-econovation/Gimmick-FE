@@ -1,34 +1,28 @@
 import {useState} from 'react';
-import {Modal} from 'react-native';
+import React, {useCallback} from 'react';
+
+import {Pressable} from 'react-native';
 import {scale} from 'react-native-size-matters';
-import CustomModal from '../CustomModal';
 import CustomText from '../../CustomText';
 import styled from 'styled-components/native';
-import CloseButton from '../../common/CloseButton';
-import CreateButton from './CreateButton';
 import {useNavigation} from '@react-navigation/native';
-import {Alert} from 'react-native';
 import folderIcon from '../../../assets/images/NewCreateModal/folderIcon.png';
 import timerIcon from '../../../assets/images/NewCreateModal/timerIcon.png';
+import CreateButton from './CreateButton';
 
-const NewCreateModal = ({route}) => {
-  const {folder} = route.params;
-  const [isModalVisible, setIsModalVisible] = useState(true);
+import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
+
+const CreateModal = ({bottomSheetRef}) => {
   const navigation = useNavigation();
 
-  const onPressModalClose = () => {
-    setIsModalVisible(false);
-    navigation.goBack();
-  };
-
   const handleCreateTimer = () => {
-    setIsModalVisible(false);
+    bottomSheetRef.current?.close();
     navigation.goBack();
     navigation.navigate('Create Timer');
   };
 
   const handleCreateFolder = () => {
-    setIsModalVisible(false);
+    bottomSheetRef.current?.close();
     navigation.goBack();
     navigation.navigate('Create Folder');
   };
@@ -40,11 +34,27 @@ const NewCreateModal = ({route}) => {
   };
 
   return (
-    <CustomModal visible={isModalVisible} onClose={onPressModalClose}>
-      <ModalContainer>
+    <BottomSheetModal
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      backgroundStyle={{backgroundColor: '#FFF'}}
+      onDismiss={() => bottomSheetRef.current?.dismiss()}
+      backdropComponent={props => (
+        <Pressable
+          onPress={() => bottomSheetRef.current?.dismiss()}
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        />
+      )}>
+      <BottomSheetContainer>
         <TitletContainer>
           <TitleText weight="semi-bold">새로 만들기</TitleText>
-          <StyledCloseButton onClose={onPressModalClose} />
         </TitletContainer>
         <ButtonsContainer>
           {folder ? (
@@ -66,24 +76,19 @@ const NewCreateModal = ({route}) => {
             icon={timerIcon}
           />
         </ButtonsContainer>
-      </ModalContainer>
-    </CustomModal>
+      </BottomSheetContainer>
+    </BottomSheetModal>
   );
 };
 
-const ModalContainer = styled.View`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top-left-radius: ${scale(10)}px;
-  border-top-right-radius: ${scale(10)}px;
+const BottomSheetContainer = styled(BottomSheetView)`
+  flex: 1;
   background-color: white;
 `;
 
 const TitletContainer = styled.View`
   justify-content: center;
-  margin: ${scale(25)}px 0 ${scale(15)}px 0;
+  margin: ${scale(15)}px 0 ${scale(20)}px 0;
 `;
 
 const TitleText = styled(CustomText)`
@@ -91,14 +96,9 @@ const TitleText = styled(CustomText)`
   font-size: ${scale(18)}px;
 `;
 
-const StyledCloseButton = styled(CloseButton)`
-  position: absolute;
-  right: ${scale(22)}px;
-`;
-
 const ButtonsContainer = styled.View`
   justify-content: center;
   margin: 0 0 ${scale(40)}px;
 `;
 
-export default NewCreateModal;
+export default CreateModal;
