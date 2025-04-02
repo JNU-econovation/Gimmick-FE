@@ -5,7 +5,6 @@ import {TouchableWithoutFeedback, Image, Text, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import {useRoute} from '@react-navigation/native';
-import BottomSheetTest from '../modal/BottomSheetTest';
 import CreateModal from '../modal/createModal/CreateModal';
 
 const Header = ({type, title, onPressComplete, timer, folder}) => {
