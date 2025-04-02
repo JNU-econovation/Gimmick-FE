@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
-import CustomModal from '../CustomModal';
 import CustomText from '../../CustomText';
 import CloseButton from '../../common/CloseButton';
 import {Button} from 'react-native';
 import {Picker} from 'react-native-wheel-pick';
+import {Pressable} from 'react-native';
+import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 
-const TimeSelectModal = ({isVisible, onClose, onHandleTimeSelect}) => {
+const TimeSelectModal = ({bottomSheetRef, onHandleTimeSelect}) => {
   const [hour, setHour] = useState('00');
   const [minute, setMinute] = useState('00');
 
@@ -18,15 +19,35 @@ const TimeSelectModal = ({isVisible, onClose, onHandleTimeSelect}) => {
 
   const handleConfirm = () => {
     onHandleTimeSelect(hour, minute);
-    onClose();
+    bottomSheetRef.current?.close();
   };
 
+  const handleSheetChanges = useCallback(index => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
   return (
-    <CustomModal visible={isVisible} onClose={onClose}>
-      <ModalContainer>
+    <BottomSheetModal
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      backgroundStyle={{backgroundColor: '#FFFFFF'}}
+      onDismiss={() => bottomSheetRef.current?.dismiss()}
+      backdropComponent={props => (
+        <Pressable
+          onPress={() => bottomSheetRef.current?.dismiss()}
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        />
+      )}>
+      <BottomSheetView>
         <HeaderContainer>
           <TitleText weight="semi-bold">시간 설정</TitleText>
-          <StyledCloseButton onClose={onClose} />
         </HeaderContainer>
         <PickerContainer>
           <PickerWrapper>
@@ -58,29 +79,18 @@ const TimeSelectModal = ({isVisible, onClose, onHandleTimeSelect}) => {
         <ButtonContainer>
           <Button title="확인" onPress={handleConfirm} />
         </ButtonContainer>
-      </ModalContainer>
-    </CustomModal>
+      </BottomSheetView>
+    </BottomSheetModal>
   );
 };
 
-const ModalContainer = styled.View`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top-left-radius: ${scale(10)}px;
-  border-top-right-radius: ${scale(10)}px;
-  background-color: white;
-  padding: ${scale(20)}px;
-`;
-
 const HeaderContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  margin: ${scale(15)}px 0 0 0;
 `;
 
 const TitleText = styled(CustomText)`
+  margin-left: ${scale(30)}px;
   font-size: ${scale(18)}px;
 `;
 
@@ -104,6 +114,7 @@ const ColonText = styled(CustomText)`
 
 const ButtonContainer = styled.View`
   justify-content: center;
+  margin: 0 0 ${scale(20)}px 0;
 `;
 
 export default TimeSelectModal;
