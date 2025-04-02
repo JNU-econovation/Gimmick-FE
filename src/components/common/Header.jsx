@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {TouchableWithoutFeedback, Image, Text, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import {useRoute} from '@react-navigation/native';
+import BottomSheetTest from '../modal/BottomSheetTest';
+import CreateModal from '../modal/createModal/CreateModal';
 
 const Header = ({type, title, onPressComplete, timer, folder}) => {
   const navigation = useNavigation();
@@ -13,22 +15,25 @@ const Header = ({type, title, onPressComplete, timer, folder}) => {
     ios: 'bold',
     android: 'medium',
   });
+  const bottomSheetRef = useRef(null);
 
   if (type === 'main') {
     return (
-      <HeaderContainer>
-        <Logo source={require('../../assets/images/header/logo.png')} />
-        <IconContainer>
-          <RightTextButton
-            onPress={() => navigation.navigate('Create Modal', {})}>
-            <IconButton>
-              <StyledIcon
-                source={require('../../assets/images/header/plus.png')}
-              />
-            </IconButton>
-          </RightTextButton>
-        </IconContainer>
-      </HeaderContainer>
+      <>
+        <HeaderContainer>
+          <Logo source={require('../../assets/images/header/logo.png')} />
+          <IconContainer>
+            <RightTextButton onPress={() => bottomSheetRef.current?.present()}>
+              <IconButton>
+                <StyledIcon
+                  source={require('../../assets/images/header/plus.png')}
+                />
+              </IconButton>
+            </RightTextButton>
+          </IconContainer>
+        </HeaderContainer>
+        <CreateModal bottomSheetRef={bottomSheetRef} />
+      </>
     );
   } else if (type === 'detail') {
     return (

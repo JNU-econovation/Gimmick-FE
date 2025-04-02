@@ -1,21 +1,27 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {scale} from 'react-native-size-matters';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import IconPickerModal from '../modal/iconPickerModal/IconPickerModal';
 
 const IconPicker = ({icon, onPress}) => {
+  const bottomSheetRef = useRef(null);
+
   return (
     <Container>
       <IconContainer>
         <IconText>{icon}</IconText>
-        <PlusIcon onPress={onPress} activeOpacity={1}>
+        <PlusIcon
+          onPress={() => bottomSheetRef.current?.present()}
+          activeOpacity={1}>
           <PlusText>
             <Icon name="plus" color="white" size={scale(9)} />
           </PlusText>
         </PlusIcon>
       </IconContainer>
+      <IconPickerModal bottomSheetRef={bottomSheetRef} />
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import CustomText from '../CustomText';
@@ -17,6 +17,7 @@ const DetailTimer = ({
   onFireChange,
   onMemoChange,
 }) => {
+  const bottomSheetRef = useRef(null);
   const [activeButton, setActiveButton] = useState(fireData);
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -44,7 +45,9 @@ const DetailTimer = ({
           <CloseButton onClose={onDelete} />
         </CloseButtonWrapper>
         <TimerSetContainer>
-          <TouchableOpacity onPress={openTimeSelectModal} activeOpacity={1}>
+          <TouchableOpacity
+            onPress={() => bottomSheetRef.current?.present()}
+            activeOpacity={1}>
             <TimerText weight="bold">
               {minutes}:{seconds}
             </TimerText>
@@ -82,13 +85,11 @@ const DetailTimer = ({
         </MemoWrapper>
       </BaseLayout>
 
-      {isModalVisible && (
-        <TimeSelectModal
-          isVisible={isModalVisible}
-          onClose={handleModalClose}
-          onHandleTimeSelect={handleTimeSelect}
-        />
-      )}
+      <TimeSelectModal
+        bottomSheetRef={bottomSheetRef}
+        onClose={handleModalClose}
+        onHandleTimeSelect={handleTimeSelect}
+      />
     </DetailTimerContainer>
   );
 };
