@@ -1,74 +1,67 @@
-import {useState} from 'react';
-import {Modal} from 'react-native';
+import {Pressable} from 'react-native';
 import {scale} from 'react-native-size-matters';
-import CustomModal from '../CustomModal';
-import styled from 'styled-components/native';
-import IconGrid from './IconGrid';
 import CustomText from '../../CustomText';
-import CloseButton from '../../common/CloseButton';
+import styled from 'styled-components/native';
+import {useNavigation} from '@react-navigation/native';
+import IconGrid from './IconGrid';
+import {useCallback} from 'react';
+import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 
-const IconPickerModal = ({onSelectIcon, onClose}) => {
-  const [isModalVisible, setIsModalVisible] = useState(true);
-
-  const onPressModalClose = () => {
-    setIsModalVisible(false);
-    onClose();
-  };
-
+const IconPickerModal = ({bottomSheetRef}) => {
   const handleIconSelect = icon => {
     onSelectIcon(icon); // 선택된 아이콘으로 업데이트
     setIsModalVisible(false); // 모달 닫기
   };
 
+  const handleSheetChanges = useCallback(index => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
   return (
-    <CustomModal visible={isModalVisible} onClose={onPressModalClose}>
-      <ModalContainer>
-        <ModalView>
-          <TitletContainer>
-            <TitleText weight="semi-bold">아이콘 선택</TitleText>
-            <StyledCloseButton onClose={onPressModalClose} />
-          </TitletContainer>
-          <IconWrapper>
-            <IconGrid onSelectIcon={handleIconSelect} />
-          </IconWrapper>
-        </ModalView>
-      </ModalContainer>
-    </CustomModal>
+    <BottomSheetModal
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      backgroundStyle={{backgroundColor: '#FFF'}}
+      snapPoints={['50%', '80%']}
+      maxDynamicContentSize={scale(400)}
+      backdropComponent={props => (
+        <Pressable
+          onPress={() => bottomSheetRef.current?.dismiss()}
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        />
+      )}>
+      <BottomSheetContainer>
+        <TitletContainer>
+          <TitleText weight="semi-bold">아이콘 선택</TitleText>
+        </TitletContainer>
+        <IconWrapper>
+          <IconGrid onSelectIcon={handleIconSelect} />
+        </IconWrapper>
+      </BottomSheetContainer>
+    </BottomSheetModal>
   );
 };
 
-const ModalContainer = styled.View`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top-left-radius: ${scale(10)}px;
-  border-top-right-radius: ${scale(10)}px;
-  height: 40%;
+const BottomSheetContainer = styled(BottomSheetView)`
+  flex: 1;
   background-color: white;
-`;
-
-const ModalView = styled.View`
-  border-radius: ${scale(10)}px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
 `;
 
 const TitletContainer = styled.View`
   justify-content: center;
-  width: 100%;
-  margin: ${scale(25)}px 0;
+  margin: ${scale(15)}px 0 ${scale(20)}px 0;
 `;
 
 const TitleText = styled(CustomText)`
   margin-left: ${scale(40)}px;
   font-size: ${scale(18)}px;
-`;
-
-const StyledCloseButton = styled(CloseButton)`
-  position: absolute;
-  right: ${scale(22)}px;
 `;
 
 const IconWrapper = styled.ScrollView``;

@@ -31,11 +31,10 @@ const IconComponent = ({emoji, onPress}) => {
 };
 
 const Container = styled.View`
-  margin-bottom: ${scale(80)}px;
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 0 ${scale(10)}px 0;
+  padding: 0 ${scale(10)}px;
 `;
 
 const Grid = styled.View`
