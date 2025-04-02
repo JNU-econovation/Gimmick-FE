@@ -6,9 +6,9 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import IconPickerModal from '../modal/iconPickerModal/IconPickerModal';
 
-const IconPicker = ({icon, onPress}) => {
+const IconPicker = ({icon, onSelectIcon}) => {
   const bottomSheetRef = useRef(null);
-
+  console.log(onSelectIcon);
   return (
     <Container>
       <IconContainer>
@@ -21,7 +21,10 @@ const IconPicker = ({icon, onPress}) => {
           </PlusText>
         </PlusIcon>
       </IconContainer>
-      <IconPickerModal bottomSheetRef={bottomSheetRef} />
+      <IconPickerModal
+        bottomSheetRef={bottomSheetRef}
+        onSelectIcon={onSelectIcon}
+      />
     </Container>
   );
 };
