@@ -31,7 +31,7 @@ const Header = ({type, title, onPressComplete, timer, folder}) => {
             </RightTextButton>
           </IconContainer>
         </HeaderContainer>
-        <CreateModal bottomSheetRef={bottomSheetRef} />
+        <CreateModal bottomSheetRef={bottomSheetRef} folder={folder} />
       </>
     );
   } else if (type === 'detail') {
@@ -63,12 +63,7 @@ const Header = ({type, title, onPressComplete, timer, folder}) => {
         </TouchableWithoutFeedback>
         <TitleText weight={titleWeight}>{title}</TitleText>
         <IconContainer>
-          <RightTextButton
-            onPress={() =>
-              navigation.navigate('Create Modal', {
-                folder: folder,
-              })
-            }>
+          <RightTextButton onPress={() => bottomSheetRef.current?.present()}>
             <IconButton>
               <StyledIcon
                 source={require('../../assets/images/header/plus.png')}
@@ -76,6 +71,7 @@ const Header = ({type, title, onPressComplete, timer, folder}) => {
             </IconButton>
           </RightTextButton>
         </IconContainer>
+        <CreateModal bottomSheetRef={bottomSheetRef} folder={folder} />
       </HeaderContainer>
     );
   } else if (['timerCreate', 'folderCreate'].includes(type)) {

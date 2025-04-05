@@ -12,7 +12,7 @@ import CreateButton from './CreateButton';
 
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 
-const CreateModal = ({bottomSheetRef}) => {
+const CreateModal = ({bottomSheetRef, folder}) => {
   const navigation = useNavigation();
 
   const handleCreateTimer = () => {
@@ -28,7 +28,7 @@ const CreateModal = ({bottomSheetRef}) => {
   };
 
   const handleUpdateFolder = () => {
-    setIsModalVisible(false);
+    bottomSheetRef.current?.close();
     navigation.goBack();
     navigation.navigate('Folder Update', {folder: folder});
   };
@@ -36,7 +36,6 @@ const CreateModal = ({bottomSheetRef}) => {
   return (
     <BottomSheetModal
       ref={bottomSheetRef}
-      onChange={handleSheetChanges}
       backgroundStyle={{backgroundColor: '#FFF'}}
       onDismiss={() => bottomSheetRef.current?.dismiss()}
       backdropComponent={props => (

@@ -13,14 +13,9 @@ const IconPickerModal = ({bottomSheetRef}) => {
     setIsModalVisible(false); // 모달 닫기
   };
 
-  const handleSheetChanges = useCallback(index => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   return (
     <BottomSheetModal
       ref={bottomSheetRef}
-      onChange={handleSheetChanges}
       backgroundStyle={{backgroundColor: '#FFF'}}
       snapPoints={['50%', '80%']}
       maxDynamicContentSize={scale(400)}
