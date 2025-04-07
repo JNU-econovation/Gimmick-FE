@@ -81,7 +81,6 @@ const CreateModal = ({bottomSheetRef, folder}) => {
 };
 
 const BottomSheetContainer = styled(BottomSheetView)`
-  flex: 1;
   background-color: white;
 `;
 
