@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
-import {Platform} from 'react-native';
+import {Platform, PermissionsAndroid} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TimerCreatePage from './pages/TimerCreatePage';
@@ -16,6 +16,7 @@ import FolderPage from './pages/FolderPage';
 import {useAppStateMonitor} from './hooks/useAppStateMonitor';
 import FolderUpdatePage from './pages/FolderUpdatePage';
 import CreateModal from './components/modal/createModal/CreateModal';
+import PushNotification from 'react-native-push-notification';
 
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 const Stack = createNativeStackNavigator();
@@ -23,12 +24,53 @@ const Stack = createNativeStackNavigator();
 function App(): React.JSX.Element {
   useAppStateMonitor();
 
+  // 안드로이드 알림 권한 요청을 위한 코드
+  useEffect(() => {
+    const requestNotificationPermission = async () => {
+      try {
+        if (Platform.OS === 'android' && Platform.Version >= 33) {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+            {
+              title: 'COOKTIME 알림 권한',
+              message: '타이머 알림을 받기 위해서는 알림 권한이 필요합니다.',
+              buttonNeutral: '나중에 결정',
+              buttonNegative: '거부',
+              buttonPositive: '허용',
+            },
+          );
+
+          console.log('알림 권한 요청 결과:', granted);
+
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            PushNotification.createChannel(
+              {
+                channelId: 'default',
+                channelName: 'Default Channel',
+                channelDescription: 'A default channel for notifications',
+                importance: 4,
+                vibrate: true,
+                soundName: 'default',
+              },
+              (created: boolean) =>
+                console.log(`createChannel returned '${created}'`),
+            );
+          }
+        }
+      } catch (err) {
+        console.warn('알림 권한 요청 실패:', err);
+      }
+    };
+
+    requestNotificationPermission();
+  }, []);
+
   return (
     <>
       <StatusBar
-        barStyle="dark-content" // 상태 표시줄 텍스트 색상 설정
-        backgroundColor="transparent" // 상태 표시줄 배경색 투명하게 설정
-        translucent={true} // 상태 표시줄을 투명하게 설정
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent={true}
       />
       <GestureHandlerRootView style={{flex: 1}}>
         <BottomSheetModalProvider>
