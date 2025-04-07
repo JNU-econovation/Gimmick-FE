@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049242367638",
+    "project_id": "cooktime-6da34",
+    "storage_bucket": "cooktime-6da34.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049242367638:android:3fa5553baacb7cd04e34b7",
+        "android_client_info": {
+          "package_name": "com.cooktime"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxuzKTr87W4w3EdylD-np-zK7_9BfdmRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

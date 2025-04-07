@@ -1,5 +1,8 @@
 buildscript {
     ext {
+        googlePlayServicesVersion = "+"
+        firebaseMessagingVersion = "21.1.0"
+
         buildToolsVersion = "35.0.0"
         minSdkVersion = 24
         compileSdkVersion = 35
@@ -15,6 +18,8 @@ buildscript {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath('com.google.gms:google-services:4.3.3')
+
         // implementation 'androidx.core:core:1.9.0'
 
     }
