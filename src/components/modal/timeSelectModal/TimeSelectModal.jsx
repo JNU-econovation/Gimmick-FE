@@ -22,14 +22,9 @@ const TimeSelectModal = ({bottomSheetRef, onHandleTimeSelect}) => {
     bottomSheetRef.current?.close();
   };
 
-  const handleSheetChanges = useCallback(index => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   return (
     <BottomSheetModal
       ref={bottomSheetRef}
-      onChange={handleSheetChanges}
       backgroundStyle={{backgroundColor: '#FFFFFF'}}
       onDismiss={() => bottomSheetRef.current?.dismiss()}
       backdropComponent={props => (
@@ -92,11 +87,6 @@ const HeaderContainer = styled.View`
 const TitleText = styled(CustomText)`
   margin-left: ${scale(30)}px;
   font-size: ${scale(18)}px;
-`;
-
-const StyledCloseButton = styled(CloseButton)`
-  position: absolute;
-  right: ${scale(10)}px;
 `;
 
 const PickerContainer = styled.View`
