@@ -33,7 +33,6 @@ const DetailPage = () => {
   const {timer} = route.params || {};
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
-
   const detailColor = DetailColor(timer.timerColor);
 
   useEffect(() => {

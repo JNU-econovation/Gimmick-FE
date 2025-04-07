@@ -2,14 +2,7 @@ import {create} from 'zustand';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 
-PushNotification.configure({
-  onRegister: function (token) {
-    console.log('TOKEN:', token);
-  },
-  onNotification: function (notification) {
-    console.log('NOTIFICATION:', notification);
-  },
-});
+PushNotification.clo;
 
 const useTimerStore = create(set => ({
   timers: {},
@@ -34,9 +27,10 @@ const useTimerStore = create(set => ({
             ...state.timers,
             [timerId]: {
               ...state.timers[timerId],
+              detailTimerData: detailTimerData,
               time: {
-                minutes: parseInt(initialMinutes),
-                seconds: parseInt(initialSeconds),
+                minutes: parseInt(detailTimerData[0].minutes),
+                seconds: parseInt(detailTimerData[0].seconds),
               },
               totalTime: {
                 minutes: parseInt(initialMinutes),
@@ -126,7 +120,6 @@ const useTimerStore = create(set => ({
             }
 
             if (Platform.OS === 'android') {
-              console.log('android');
               PushNotification.localNotification({
                 channelId: 'default',
                 title: 'COOKTIME',
@@ -135,6 +128,7 @@ const useTimerStore = create(set => ({
                 }번째 타이머가 완료되었습니다!`,
                 soundName: 'default',
               });
+              console.log('android');
             }
 
             if (
