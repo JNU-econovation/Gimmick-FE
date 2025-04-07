@@ -2,8 +2,6 @@ import React, {useState, useCallback} from 'react';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import CustomText from '../../CustomText';
-import CloseButton from '../../common/CloseButton';
-import {Button} from 'react-native';
 import {Picker} from 'react-native-wheel-pick';
 import {Pressable} from 'react-native';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
@@ -72,7 +70,13 @@ const TimeSelectModal = ({bottomSheetRef, onHandleTimeSelect}) => {
           </PickerWrapper>
         </PickerContainer>
         <ButtonContainer>
-          <Button title="확인" onPress={handleConfirm} />
+          <ButtonWrapper onPress={handleConfirm}>
+            <CustomText
+              style={{color: 'black', fontSize: scale(14)}}
+              weight="semi-bold">
+              확인
+            </CustomText>
+          </ButtonWrapper>
         </ButtonContainer>
       </BottomSheetView>
     </BottomSheetModal>
@@ -105,6 +109,14 @@ const ColonText = styled(CustomText)`
 const ButtonContainer = styled.View`
   justify-content: center;
   margin: 0 0 ${scale(20)}px 0;
+  align-items: center;
+`;
+
+const ButtonWrapper = styled.TouchableOpacity`
+  width: 20%;
+  height: ${scale(30)}px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default TimeSelectModal;
