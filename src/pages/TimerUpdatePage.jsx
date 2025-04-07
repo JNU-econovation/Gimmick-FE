@@ -123,7 +123,7 @@ const TimerUpdatePage = () => {
         timer.id,
         totalMinutes,
         totalSeconds,
-        detailTimers,
+        updatedTimers,
         timerName,
       );
 
