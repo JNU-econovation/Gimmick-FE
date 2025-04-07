@@ -119,11 +119,12 @@ const TimerUpdatePage = () => {
         t => (t.id === timer.id ? newTimer : t),
       );
 
+      console.log('newTimer', newTimer.detailTimerData);
       timerStore.initTimer(
         timer.id,
         totalMinutes,
         totalSeconds,
-        updatedTimers,
+        newTimer.detailTimerData,
         timerName,
       );
 
