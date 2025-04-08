@@ -8,7 +8,6 @@ import IconPickerModal from '../modal/iconPickerModal/IconPickerModal';
 
 const IconPicker = ({icon, onSelectIcon}) => {
   const bottomSheetRef = useRef(null);
-  console.log(onSelectIcon);
   return (
     <Container>
       <IconContainer>

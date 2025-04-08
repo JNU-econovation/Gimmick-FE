@@ -5,7 +5,6 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {Alert} from 'react-native';
 
 const onClick = (onDelete, id, isFolder) => {
-  console.log('isFolder', isFolder);
   if (isFolder) {
     Alert.alert(
       '폴더 삭제',

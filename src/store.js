@@ -128,7 +128,6 @@ const useTimerStore = create(set => ({
                 }번째 타이머가 완료되었습니다!`,
                 soundName: 'default',
               });
-              console.log('android');
             }
 
             if (
