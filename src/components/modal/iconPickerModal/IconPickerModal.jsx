@@ -7,10 +7,10 @@ import IconGrid from './IconGrid';
 import {useCallback} from 'react';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 
-const IconPickerModal = ({bottomSheetRef}) => {
+const IconPickerModal = ({bottomSheetRef, onSelectIcon}) => {
   const handleIconSelect = icon => {
     onSelectIcon(icon); // 선택된 아이콘으로 업데이트
-    setIsModalVisible(false); // 모달 닫기
+    bottomSheetRef.current?.dismiss();
   };
 
   return (
