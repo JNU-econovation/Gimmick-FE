@@ -19,7 +19,6 @@ const FolderCreatePage = () => {
 
   const handleIconSelect = icon => {
     setSelectedIcon(icon);
-    setIsModalVisible(false);
   };
 
   const saveFolderData = async () => {

@@ -22,13 +22,11 @@ const CreateModal = ({bottomSheetRef, folder}) => {
 
   const handleCreateFolder = () => {
     bottomSheetRef.current?.close();
-    navigation.goBack();
     navigation.navigate('Create Folder');
   };
 
   const handleUpdateFolder = () => {
     bottomSheetRef.current?.close();
-    navigation.goBack();
     navigation.navigate('Folder Update', {folder: folder});
   };
 
