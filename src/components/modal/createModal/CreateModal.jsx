@@ -17,8 +17,7 @@ const CreateModal = ({bottomSheetRef, folder}) => {
 
   const handleCreateTimer = () => {
     bottomSheetRef.current?.close();
-    navigation.goBack();
-    navigation.navigate('Create Timer', {folderId: folder.id});
+    navigation.navigate('Create Timer', {folderId: folder ? folder.id : null});
   };
 
   const handleCreateFolder = () => {
