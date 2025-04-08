@@ -10,13 +10,6 @@ const useUiStore = create(set => ({
     set({isDeleteMode: value});
   },
 
-  deleteTimer: id => {
-    set(state => ({
-      isDeleteMode: false,
-      deleteId: id,
-    }));
-  },
-
   deleteTimer: async id => {
     try {
       console.log(id);
@@ -51,10 +44,11 @@ const useUiStore = create(set => ({
 
       await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
       await AsyncStorage.setItem('folders', JSON.stringify(updatedFolders));
-      Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
+
+      return true;
     } catch (error) {
       console.error('타이머 삭제 실패:', error);
-      Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
+      return false;
     }
   },
 }));
