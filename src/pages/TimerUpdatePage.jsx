@@ -110,6 +110,7 @@ const TimerUpdatePage = () => {
         icon: selectedIcon,
         detailTimerData: detailTimers,
         updatedAt: Date.now(),
+        folderId: timer.folderId,
       };
 
       // 데이터 수정 완료되면 확인해야 할 부분
@@ -119,7 +120,6 @@ const TimerUpdatePage = () => {
         t => (t.id === timer.id ? newTimer : t),
       );
 
-      console.log('newTimer', newTimer.detailTimerData);
       timerStore.initTimer(
         timer.id,
         totalMinutes,

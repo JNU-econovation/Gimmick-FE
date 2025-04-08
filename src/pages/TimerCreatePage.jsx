@@ -32,6 +32,7 @@ const TimerCreatePage = () => {
   const [totalSeconds, setTotalSeconds] = useState('00');
   const folderId = route.params?.folderId;
 
+  console.log('folderId', folderId);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
