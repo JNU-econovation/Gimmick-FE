@@ -12,7 +12,6 @@ import {useNavigation} from '@react-navigation/native';
 import {Alert, Platform} from 'react-native';
 
 const FolderCreatePage = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState('🌮');
   const [folderName, setFolderName] = useState('');
   const [folderColor, setFolderColor] = useState('#FBDF60');
