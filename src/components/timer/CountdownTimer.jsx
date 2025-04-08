@@ -16,7 +16,7 @@ import Animated, {
   cancelAnimation,
 } from 'react-native-reanimated';
 import DeleteButton from '../common/DeleteButton';
-
+import useUiStore from '../../store/uiStore';
 const DetailColor = color => {
   if (color === '#FBDF60') return '#FFC15B';
   if (color === '#F6DBB7') return '#E9B97E';
@@ -25,16 +25,13 @@ const DetailColor = color => {
   if (color === '#FCC4C4') return '#F4A7A3';
 };
 
-const CountdownTimer = ({
-  timer,
-  onTimerClick,
-  setIsDeleteMode,
-  isDeleteMode,
-}) => {
+const CountdownTimer = ({timer, onTimerClick}) => {
   const navigation = useNavigation();
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
   const rotation = useSharedValue(0);
+  const isDeleteMode = useUiStore(state => state.isDeleteMode);
+  const setDeleteMode = useUiStore(state => state.setDeleteMode);
 
   useEffect(() => {
     if (!currentTimer) {
@@ -111,12 +108,12 @@ const CountdownTimer = ({
   };
 
   const handleLongPress = () => {
-    setIsDeleteMode(true);
+    setDeleteMode(true);
   };
 
   const handlePress = () => {
     if (isDeleteMode) {
-      setIsDeleteMode(false);
+      setDeleteMode(false);
       return;
     }
     navigation.navigate('Detail', {timer});

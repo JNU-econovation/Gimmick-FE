@@ -16,6 +16,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import DeleteButton from '../common/DeleteButton';
 import {Alert} from 'react-native';
+import useUiStore from '../../store/uiStore';
 
 const getLighterColor = color => {
   if (color === '#FBDF60') return '#ffea8d';
@@ -26,13 +27,11 @@ const getLighterColor = color => {
   return '#FCC4C4';
 };
 
-const CountdownFolder = ({
-  folder,
-  onFolderClick,
-  setIsDeleteMode,
-  isDeleteMode,
-}) => {
+const CountdownFolder = ({folder, onFolderClick}) => {
   const navigation = useNavigation();
+  const isDeleteMode = useUiStore(state => state.isDeleteMode);
+  const setDeleteMode = useUiStore(state => state.setDeleteMode);
+
   const icon = folder?.icon || '🍔';
   const folderName = folder?.folderName || '쉬림프 타코';
   const folderColor = folder?.folderColor || '#F4A7A3';
@@ -103,7 +102,7 @@ const CountdownFolder = ({
   };
 
   const handleLongPress = () => {
-    setIsDeleteMode(true);
+    setDeleteMode(true);
   };
 
   const handlePress = () => {

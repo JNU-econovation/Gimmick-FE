@@ -9,12 +9,12 @@ import {useFocusEffect} from '@react-navigation/native';
 import initialMockData from '../data/initialMockData';
 import {checkFirstUser} from '../utils/checkFirstUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useUiStore from '../store/uiStore';
 
 const MainPage = ({route}) => {
-  const deleteMode = route.params?.deleteMode ? route.params.deleteMode : false;
-
+  const isDeleteMode = useUiStore(state => state.isDeleteMode);
+  const setDeleteMode = useUiStore(state => state.setDeleteMode);
   const [items, setItems] = useState([]);
-  const [isDeleteMode, setIsDeleteMode] = useState(deleteMode);
 
   const loadData = async () => {
     try {
@@ -185,7 +185,7 @@ const MainPage = ({route}) => {
         <CountdownTimerWrapper
           contentContainerStyle={{flexGrow: 1}}
           onPress={() => {
-            isDeleteMode && setIsDeleteMode(false);
+            isDeleteMode && setDeleteMode(false);
           }}>
           <TimersAndFoldersContainer>
             {items.map(item => (
@@ -194,15 +194,11 @@ const MainPage = ({route}) => {
                   <CountdownTimer
                     timer={item}
                     onTimerClick={handleTimerClick}
-                    isDeleteMode={isDeleteMode}
-                    setIsDeleteMode={setIsDeleteMode}
                   />
                 ) : (
                   <CountdownFolder
                     folder={item}
                     onFolderClick={handleFolderClick}
-                    isDeleteMode={isDeleteMode}
-                    setIsDeleteMode={setIsDeleteMode}
                   />
                 )}
               </React.Fragment>
