@@ -2,30 +2,23 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {scale} from 'react-native-size-matters';
 import {TouchableWithoutFeedback} from 'react-native';
-import {Alert} from 'react-native';
+import useDeleteData from '../../hooks/useDeleteData';
 
-const onClick = (onDelete, id, isFolder) => {
-  if (isFolder) {
-    Alert.alert(
-      '폴더 삭제',
-      '폴더 내부의 데이터도 모두 삭제됩니다. \n정말 삭제하시겠습니까?',
-      [
-        {text: '취소', style: 'cancel'},
-        {text: '삭제', onPress: () => onDelete(id)},
-      ],
-    );
-  } else {
-    Alert.alert('타이머 삭제', '정말 삭제하시겠습니까?', [
-      {text: '취소', style: 'cancel'},
-      {text: '삭제', onPress: () => onDelete(id)},
-    ]);
-  }
-};
+const DeleteButton = ({style, id, isFolder}) => {
+  const {handleDeleteFolder, handleDeleteTimer} = useDeleteData();
 
-const DeleteButton = ({style, onDelete, id, isFolder}) => {
+  const onClick = async (id, isFolder) => {
+    console.log('isFolder', isFolder);
+    if (isFolder) {
+      await handleDeleteFolder(id);
+    } else {
+      await handleDeleteTimer(id);
+    }
+  };
+
   return (
     <Container style={style}>
-      <TouchableWithoutFeedback onPress={() => onClick(onDelete, id, isFolder)}>
+      <TouchableWithoutFeedback onPress={() => onClick(id, isFolder)}>
         <ButtonWrapper>
           <Icon name="close" size={scale(20)} color="black" />
         </ButtonWrapper>
