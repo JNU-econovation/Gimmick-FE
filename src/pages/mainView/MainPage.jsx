@@ -2,16 +2,16 @@ import styled from 'styled-components/native';
 import React, {useState, useEffect} from 'react';
 import {scale} from 'react-native-size-matters';
 import {ScrollView} from 'react-native';
-import Header from '../components/common/Header';
-import CountdownTimer from '../components/timer/CountdownTimer';
-import CountdownFolder from '../components/timer/CountdownFolder';
+import Header from '../../components/common/Header';
+import CountdownTimer from '../../components/timer/CountdownTimer';
+import CountdownFolder from '../../components/timer/CountdownFolder';
 import {useFocusEffect} from '@react-navigation/native';
-import initialMockData from '../data/initialMockData';
-import {checkFirstUser} from '../utils/checkFirstUser';
+import initialMockData from '../../data/initialMockData';
+import {checkFirstUser} from '../../utils/checkFirstUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useUiStore from '../store/uiStore';
+import useUiStore from '../../store/uiStore';
 
-const MainPage = ({route}) => {
+const MainPage = ({width}) => {
   const isDeleteMode = useUiStore(state => state.isDeleteMode);
   const setDeleteMode = useUiStore(state => state.setDeleteMode);
   const [items, setItems] = useState([]);
@@ -175,7 +175,7 @@ const MainPage = ({route}) => {
   );
 
   return (
-    <MainContainer>
+    <MainContainer width={width}>
       <HeaderWrapper>
         <Header type="main" />
       </HeaderWrapper>
@@ -214,6 +214,7 @@ export default MainPage;
 
 const MainContainer = styled.View`
   flex-direction: column;
+  width: ${props => props.width}px;
   padding-top: ${Platform.select({ios: scale(25), android: scale(12)})}px;
   height: 100%;
 `;
