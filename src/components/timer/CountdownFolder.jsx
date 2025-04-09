@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../CustomText';
-import {Platform, TouchableWithoutFeedback} from 'react-native';
+import {Platform, Pressable} from 'react-native';
 import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useDeleteData from '../../hooks/useDeleteData';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -15,8 +15,8 @@ import Animated, {
   cancelAnimation,
 } from 'react-native-reanimated';
 import DeleteButton from '../common/DeleteButton';
-import {Alert} from 'react-native';
 import useUiStore from '../../store/uiStore';
+import ContextMenu from 'react-native-context-menu-view';
 
 const getLighterColor = color => {
   if (color === '#FBDF60') return '#ffea8d';
@@ -31,7 +31,7 @@ const CountdownFolder = ({folder, onFolderClick}) => {
   const navigation = useNavigation();
   const isDeleteMode = useUiStore(state => state.isDeleteMode);
   const setDeleteMode = useUiStore(state => state.setDeleteMode);
-
+  const {handleDeleteFolder} = useDeleteData();
   const icon = folder?.icon || '🍔';
   const folderName = folder?.folderName || '쉬림프 타코';
   const folderColor = folder?.folderColor || '#F4A7A3';
@@ -72,39 +72,6 @@ const CountdownFolder = ({folder, onFolderClick}) => {
     };
   });
 
-  const deleteFolderData = async id => {
-    try {
-      const storedTimers = await AsyncStorage.getItem('timers');
-      const storedFolders = await AsyncStorage.getItem('folders');
-      console.log('storedTimers', storedTimers);
-      console.log('storedFolders', storedFolders);
-      // 폴더 내부 데이터 삭제
-      const updatedTimers = (
-        storedTimers ? JSON.parse(storedTimers) : []
-      ).filter(parsedTimer => parsedTimer.detailTimerData.folderId !== id);
-
-      // 폴더 삭제
-      const updatedFolders = (
-        storedFolders ? JSON.parse(storedFolders) : []
-      ).filter(parsedFolder => parsedFolder.id !== id);
-
-      await AsyncStorage.setItem('timers', JSON.stringify(updatedTimers));
-      await AsyncStorage.setItem('folders', JSON.stringify(updatedFolders));
-      Alert.alert('삭제 완료', '타이머가 성공적으로 삭제되었습니다.');
-      await navigation.replace('Main', {
-        animation: 'none',
-        deleteMode: true,
-      });
-    } catch (error) {
-      console.error('타이머 삭제 실패:', error);
-      Alert.alert('삭제 실패', '타이머를 삭제하는 데 실패했습니다.');
-    }
-  };
-
-  const handleLongPress = () => {
-    setDeleteMode(true);
-  };
-
   const handlePress = () => {
     if (onFolderClick) {
       setTimeout(() => {
@@ -126,22 +93,51 @@ const CountdownFolder = ({folder, onFolderClick}) => {
           />
         )}
       </DeleteButtonWrapper>
-      <TouchableWithoutFeedback
+      <Pressable
         onPress={handlePress}
-        onLongPress={handleLongPress}>
-        <Animated.View style={animatedStyle}>
-          <CountdownFolderContainer>
-            <TopLeftSectionView color={lighterColor} />
-            <TopRightSectionView color={lighterColor} />
-            <BottomSectionWrapper color={folderColor}>
-              <IconboxWrapper>
-                <IconView>{icon}</IconView>
-              </IconboxWrapper>
-              <FoodTitleText weight="medium">{folderName}</FoodTitleText>
-            </BottomSectionWrapper>
-          </CountdownFolderContainer>
-        </Animated.View>
-      </TouchableWithoutFeedback>
+        onLongPress={() => {}}
+        delayLongPress={200}>
+        <ContextMenu
+          previewBackgroundColor="transparent"
+          disableShadow={true}
+          actions={[
+            {
+              title: '폴더 수정',
+            },
+            {
+              title: '폴더 삭제',
+            },
+            {
+              title: '화면 편집 모드',
+            },
+          ]}
+          onPress={async ({nativeEvent}) => {
+            if (nativeEvent.index === 0) {
+              navigation.navigate('Folder Update', {folder});
+            }
+            if (nativeEvent.index === 1) {
+              await handleDeleteFolder(folder.id);
+            }
+            if (nativeEvent.index === 2) {
+              setTimeout(() => {
+                setDeleteMode(true);
+              }, 605.5);
+            }
+          }}>
+          <Animated.View style={animatedStyle}>
+            <CountdownFolderContainer>
+              <TopLeftSectionView color={lighterColor} />
+              <TopRightSectionView color={lighterColor} />
+              <BottomSectionWrapper color={folderColor}>
+                <IconboxWrapper>
+                  <IconView>{icon}</IconView>
+                </IconboxWrapper>
+                <FoodTitleText weight="medium">{folderName}</FoodTitleText>
+              </BottomSectionWrapper>
+            </CountdownFolderContainer>
+          </Animated.View>
+        </ContextMenu>
+      </Pressable>
     </FolderContainer>
   );
 };
