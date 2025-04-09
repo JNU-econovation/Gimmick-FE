@@ -127,7 +127,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
               title: '타이머 삭제',
             },
             {
-              title: '화면 편집 모드',
+              title: '식제 모드',
             },
           ]}
           se

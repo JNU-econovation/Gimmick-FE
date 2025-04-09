@@ -108,7 +108,7 @@ const CountdownFolder = ({folder, onFolderClick}) => {
               title: '폴더 삭제',
             },
             {
-              title: '화면 편집 모드',
+              title: '식제 모드',
             },
           ]}
           onPress={async ({nativeEvent}) => {
