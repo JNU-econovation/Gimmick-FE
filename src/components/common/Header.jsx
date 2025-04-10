@@ -1,7 +1,13 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {TouchableWithoutFeedback, Image, Text, Platform} from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  Image,
+  Text,
+  Platform,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import {useRoute} from '@react-navigation/native';
@@ -10,7 +16,6 @@ import {SafeAreaView} from 'react-native';
 
 const Header = ({type, title, onPressComplete, timer, folder}) => {
   const navigation = useNavigation();
-  const route = useRoute();
   const titleWeight = Platform.select({
     ios: 'bold',
     android: 'medium',
@@ -100,15 +105,39 @@ const Header = ({type, title, onPressComplete, timer, folder}) => {
         </HeaderContainer>
       </SafeAreaView>
     );
+  } else if (type === 'webView') {
+    return (
+      <SafeAreaView>
+        <HeaderContainer alignItems={'center'} justifyContent={'flex-start'}>
+          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+            <IconButton>
+              <BackButtonIcon
+                style={{width: scale(18), height: scale(18)}}
+                source={require('../../assets/images/header/back-icon.png')}
+              />
+            </IconButton>
+          </TouchableWithoutFeedback>
+          <CustomText style={{fontSize: scale(15)}}>{title}</CustomText>
+        </HeaderContainer>
+      </SafeAreaView>
+    );
   }
+  return (
+    <SafeAreaView>
+      <HeaderContainer alignItems={'center'}>
+        <TitleText weight={titleWeight}>{title}</TitleText>
+      </HeaderContainer>
+    </SafeAreaView>
+  );
 };
 
 export default Header;
 
 const HeaderContainer = styled.View`
+  height: ${scale(30)}px;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: ${props => props.justifyContent || 'space-between'};
+  align-items: ${props => props.alignItems || 'center'};
   margin-bottom: ${scale(10)}px;
 `;
 
