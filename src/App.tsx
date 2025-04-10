@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import MainPage from './pages/MainPage';
+import MainView from './pages/mainView/MainView';
 import DetailPage from './pages/DetailPage';
 import {Platform, PermissionsAndroid} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
@@ -15,7 +15,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FolderPage from './pages/FolderPage';
 import {useAppStateMonitor} from './hooks/useAppStateMonitor';
 import FolderUpdatePage from './pages/FolderUpdatePage';
-import CreateModal from './components/modal/createModal/CreateModal';
 import PushNotification from 'react-native-push-notification';
 
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -85,7 +84,7 @@ function App(): React.JSX.Element {
                 }}>
                 <Stack.Screen
                   name="Main"
-                  component={MainPage}
+                  component={MainView}
                   options={{title: 'Main Page', animation: 'none'}}
                 />
                 <Stack.Screen
