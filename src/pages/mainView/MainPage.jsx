@@ -179,33 +179,39 @@ const MainPage = ({width}) => {
       <HeaderWrapper>
         <Header type="main" />
       </HeaderWrapper>
-      <ScrollView
-        contentContainerStyle={{flexGrow: 1}}
-        showsVerticalScrollIndicator={false}>
-        <CountdownTimerWrapper
+      {items.length === 0 ? (
+        <EmptyView>
+          <EmptyText>생성된 타이머가 없습니다.</EmptyText>
+        </EmptyView>
+      ) : (
+        <ScrollView
           contentContainerStyle={{flexGrow: 1}}
-          onPress={() => {
-            isDeleteMode && setDeleteMode(false);
-          }}>
-          <TimersAndFoldersContainer>
-            {items.map(item => (
-              <React.Fragment key={item.id}>
-                {item.type === 'timer' ? (
-                  <CountdownTimer
-                    timer={item}
-                    onTimerClick={handleTimerClick}
-                  />
-                ) : (
-                  <CountdownFolder
-                    folder={item}
-                    onFolderClick={handleFolderClick}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </TimersAndFoldersContainer>
-        </CountdownTimerWrapper>
-      </ScrollView>
+          showsVerticalScrollIndicator={false}>
+          <CountdownTimerWrapper
+            contentContainerStyle={{flexGrow: 1}}
+            onPress={() => {
+              isDeleteMode && setDeleteMode(false);
+            }}>
+            <TimersAndFoldersContainer>
+              {items.map(item => (
+                <React.Fragment key={item.id}>
+                  {item.type === 'timer' ? (
+                    <CountdownTimer
+                      timer={item}
+                      onTimerClick={handleTimerClick}
+                    />
+                  ) : (
+                    <CountdownFolder
+                      folder={item}
+                      onFolderClick={handleFolderClick}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
+            </TimersAndFoldersContainer>
+          </CountdownTimerWrapper>
+        </ScrollView>
+      )}
     </MainContainer>
   );
 };
@@ -236,4 +242,16 @@ const TimersAndFoldersContainer = styled.View`
 
 const HeaderWrapper = styled.View`
   padding: 0 ${scale(21)}px;
+`;
+
+const EmptyView = styled.View`
+  flex: 1;
+  align-items: center;
+  width: 100%;
+  padding-top: ${scale(100)}px;
+`;
+
+const EmptyText = styled.Text`
+  font-size: ${scale(16)}px;
+  color: #888;
 `;
