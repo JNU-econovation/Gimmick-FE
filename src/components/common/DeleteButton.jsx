@@ -8,7 +8,6 @@ const DeleteButton = ({style, id, isFolder}) => {
   const {handleDeleteFolder, handleDeleteTimer} = useDeleteData();
 
   const onClick = async (id, isFolder) => {
-    console.log('isFolder', isFolder);
     if (isFolder) {
       await handleDeleteFolder(id);
     } else {

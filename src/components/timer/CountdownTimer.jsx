@@ -92,7 +92,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
   const handlePress = () => {
     if (isDeleteMode) {
       setDeleteMode(false);
-      return;
+      return 0;
     }
     navigation.navigate('Detail', {timer});
     setTimeout(() => {

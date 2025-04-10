@@ -10,10 +10,9 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import CustomText from '../CustomText';
-import {useRoute} from '@react-navigation/native';
 import CreateModal from '../modal/createModal/CreateModal';
 import {SafeAreaView} from 'react-native';
-
+import useUiStore from '../../store/uiStore';
 const Header = ({
   type,
   title,
@@ -28,6 +27,7 @@ const Header = ({
     android: 'medium',
   });
   const bottomSheetRef = useRef(null);
+  const {isDeleteMode, setDeleteMode} = useUiStore();
 
   if (type === 'main') {
     return (
@@ -37,7 +37,11 @@ const Header = ({
             <Logo source={require('../../assets/images/header/logo.png')} />
             <IconContainer>
               <RightTextButton
-                onPress={() => bottomSheetRef.current?.present()}>
+                onPress={() =>
+                  isDeleteMode
+                    ? setDeleteMode(false)
+                    : bottomSheetRef.current?.present()
+                }>
                 <IconButton>
                   <StyledIcon
                     source={require('../../assets/images/header/plus.png')}
