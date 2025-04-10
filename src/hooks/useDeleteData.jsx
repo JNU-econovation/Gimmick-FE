@@ -1,10 +1,11 @@
 import useUiStore from '../store/uiStore';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import {Alert} from 'react-native';
 
 const useDeleteData = () => {
   const deleteFolder = useUiStore(state => state.deleteFolderData);
   const deleteTimer = useUiStore(state => state.deleteTimerData);
+  const resetData = useUiStore(state => state.resetData);
   const navigation = useNavigation();
 
   const handleDeleteFolder = async id => {
@@ -54,7 +55,25 @@ const useDeleteData = () => {
     ]);
   };
 
-  return {handleDeleteFolder, handleDeleteTimer};
+  const handleResetData = () => {
+    Alert.alert(
+      '앱 초기화',
+      '초기화 시 되돌릴 수 없습니다. 정말 초기화하시겠습니까?',
+      [
+        {text: '취소', style: 'cancel'},
+        {
+          text: '초기화',
+          onPress: async () => {
+            resetData();
+            navigation.replace('Mypage');
+            Alert.alert('초기화 완료', '모든 데이터가 초기화되었습니다.');
+          },
+        },
+      ],
+    );
+  };
+
+  return {handleDeleteFolder, handleDeleteTimer, handleResetData};
 };
 
 export default useDeleteData;

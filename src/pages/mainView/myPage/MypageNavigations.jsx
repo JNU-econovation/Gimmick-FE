@@ -5,6 +5,7 @@ import {
   NavigationIndependentTree,
 } from '@react-navigation/native';
 import Mypage from './Mypage';
+import MainView from '../../mainView/MainView';
 import WebViewScreen from '../../webView/WebView';
 
 const MypageNavigations = ({width}) => {
@@ -15,7 +16,11 @@ const MypageNavigations = ({width}) => {
       <NavigationContainer>
         <View width={width}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Mypage" component={Mypage} />
+            <Stack.Screen
+              name="Mypage"
+              component={Mypage}
+              options={{animation: 'none'}}
+            />
             <Stack.Screen name="WebView" component={WebViewScreen} />
           </Stack.Navigator>
         </View>

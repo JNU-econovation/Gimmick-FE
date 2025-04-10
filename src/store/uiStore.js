@@ -48,6 +48,11 @@ const useUiStore = create(set => ({
       return false;
     }
   },
+
+  resetData: () => {
+    AsyncStorage.setItem('timers', JSON.stringify([]));
+    AsyncStorage.setItem('folders', JSON.stringify([]));
+  },
 }));
 
 export default useUiStore;

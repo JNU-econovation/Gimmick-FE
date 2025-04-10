@@ -3,40 +3,44 @@ import Header from '../../../components/common/Header';
 import CustomText from '../../../components/CustomText';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {openWebView} from '../../../utils/openURL';
 import MyPageList from '../../../components/myPage/MyPageList';
 import {useNavigation} from '@react-navigation/native';
-
-const appInfoList = [
-  {
-    type: 'webView',
-    title: '피드백 보내기',
-    url: 'https://forms.gle/STa86LzVXKLyX2mT7',
-  },
-  {
-    type: 'webView',
-    title: 'FAQ',
-    url: 'https://cobalt-actress-321.notion.site/FAQ-1d11ab2758ff80c29595dc48d6cf0f30?pvs=4',
-  },
-  {
-    type: 'webView',
-    title: '버전',
-    url: 'https://cobalt-actress-321.notion.site/Version-1d11ab2758ff8003a403fb0c9ed74db8?pvs=4',
-  },
-];
-
-const manageList = [
-  {
-    type: 'function',
-    title: '초기화',
-    function: () => {
-      console.log('초기화');
-    },
-  },
-];
+import useDeleteData from '../../../hooks/useDeleteData';
 
 const Mypage = ({width}) => {
   const navigation = useNavigation();
+  const {handleResetData} = useDeleteData();
+
+  // 앱 정보 리스트
+  const appInfoList = [
+    {
+      type: 'webView',
+      title: '피드백 보내기',
+      url: 'https://forms.gle/STa86LzVXKLyX2mT7',
+    },
+    {
+      type: 'webView',
+      title: 'FAQ',
+      url: 'https://cobalt-actress-321.notion.site/FAQ-1d11ab2758ff80c29595dc48d6cf0f30?pvs=4',
+    },
+    {
+      type: 'webView',
+      title: '버전',
+      url: 'https://cobalt-actress-321.notion.site/Version-1d11ab2758ff8003a403fb0c9ed74db8?pvs=4',
+    },
+  ];
+
+  // 관리 리스트
+  const manageList = [
+    {
+      type: 'function',
+      title: '데이터 초기화',
+      function: () => {
+        handleResetData();
+      },
+    },
+  ];
+
   return (
     <MypageContainer width={width}>
       <HeaderWrapper>
