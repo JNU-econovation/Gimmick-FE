@@ -102,7 +102,7 @@ const CountdownFolder = ({folder, onFolderClick}) => {
           disableShadow={true}
           actions={[
             {
-              title: '폴더 수정',
+              title: '폴더 편집',
             },
             {
               title: '폴더 삭제',

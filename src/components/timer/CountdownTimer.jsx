@@ -120,7 +120,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
           disableShadow={true}
           actions={[
             {
-              title: '타이머 수정',
+              title: '타이머 편집',
             },
             {
               title: '타이머 삭제',
