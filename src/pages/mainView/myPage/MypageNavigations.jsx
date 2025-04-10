@@ -5,15 +5,18 @@ import {
   NavigationIndependentTree,
 } from '@react-navigation/native';
 import Mypage from './Mypage';
+import WebViewScreen from '../../webView/WebView';
 
 const MypageNavigations = ({width}) => {
   const Stack = createNativeStackNavigator();
+
   return (
     <NavigationIndependentTree>
       <NavigationContainer>
         <View width={width}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Mypage" component={Mypage} />
+            <Stack.Screen name="WebView" component={WebViewScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
