@@ -9,12 +9,12 @@ import IconPickerModal from '../modal/iconPickerModal/IconPickerModal';
 const IconPicker = ({icon, onSelectIcon}) => {
   const bottomSheetRef = useRef(null);
   return (
-    <Container>
+    <Container
+      activeOpacity={1}
+      onPress={() => bottomSheetRef.current?.present()}>
       <IconContainer>
         <IconText>{icon}</IconText>
-        <PlusIcon
-          onPress={() => bottomSheetRef.current?.present()}
-          activeOpacity={1}>
+        <PlusIcon activeOpacity={1}>
           <PlusText>
             <Icon name="plus" color="white" size={scale(9)} />
           </PlusText>
@@ -28,7 +28,7 @@ const IconPicker = ({icon, onSelectIcon}) => {
   );
 };
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   align-items: center;
 `;
 
@@ -46,7 +46,7 @@ const IconText = styled.Text`
   font-size: ${scale(60)}px;
 `;
 
-const PlusIcon = styled.TouchableOpacity`
+const PlusIcon = styled.View`
   position: absolute;
   bottom: ${scale(5)}px;
   right: ${scale(5)}px;
