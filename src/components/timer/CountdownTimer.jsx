@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../CustomText';
-import {Platform, Pressable} from 'react-native';
+import {Platform, Pressable, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import useTimerStore from '../../store';
 import {useEffect} from 'react';
@@ -31,8 +31,7 @@ const CountdownTimer = ({timer, onTimerClick}) => {
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
   const rotation = useSharedValue(0);
-  const isDeleteMode = useUiStore(state => state.isDeleteMode);
-  const setDeleteMode = useUiStore(state => state.setDeleteMode);
+  const {isDeleteMode, setDeleteMode} = useUiStore(state => state);
   const {handleDeleteTimer} = useDeleteData();
 
   useEffect(() => {
@@ -130,10 +129,13 @@ const CountdownTimer = ({timer, onTimerClick}) => {
               title: '식제 모드',
             },
           ]}
-          se
           onPress={async ({nativeEvent}) => {
             if (nativeEvent.index === 0) {
-              navigation.navigate('Timer Update', {timer});
+              currentTimer?.isRunning
+                ? setTimeout(() => {
+                    Alert.alert('타이머가 실행중입니다.');
+                  }, 700)
+                : navigation.navigate('Timer Update', {timer});
             }
             if (nativeEvent.index === 1) {
               await handleDeleteTimer(timer.id);
@@ -142,9 +144,6 @@ const CountdownTimer = ({timer, onTimerClick}) => {
               setTimeout(() => {
                 setDeleteMode(true);
               }, 605.5);
-            }
-            if (nativeEvent.index === 3) {
-              console.log('test');
             }
           }}>
           <Animated.View style={animatedStyle}>
