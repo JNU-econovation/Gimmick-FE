@@ -103,7 +103,7 @@ function App(): React.JSX.Element {
                   options={{title: 'Create Folder Page'}}
                 />
                 <Stack.Screen
-                  name="FolderPage"
+                  name="Folder Page"
                   component={FolderPageWithLayout}
                   options={{title: 'Folder Page'}}
                 />

@@ -10,6 +10,7 @@ import initialMockData from '../../data/initialMockData';
 import {checkFirstUser} from '../../utils/checkFirstUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useUiStore from '../../store/uiStore';
+import TimerView from '../../components/timer/TimerView';
 
 const MainPage = ({width}) => {
   const isDeleteMode = useUiStore(state => state.isDeleteMode);
@@ -195,17 +196,12 @@ const MainPage = ({width}) => {
             <TimersAndFoldersContainer>
               {items.map(item => (
                 <React.Fragment key={item.id}>
-                  {item.type === 'timer' ? (
-                    <CountdownTimer
-                      timer={item}
-                      onTimerClick={handleTimerClick}
-                    />
-                  ) : (
-                    <CountdownFolder
-                      folder={item}
-                      onFolderClick={handleFolderClick}
-                    />
-                  )}
+                  <TimerView
+                    item={item}
+                    isFolder={item.type === 'folder'}
+                    onTimerClick={handleTimerClick}
+                    onFolderClick={handleFolderClick}
+                  />
                 </React.Fragment>
               ))}
             </TimersAndFoldersContainer>
