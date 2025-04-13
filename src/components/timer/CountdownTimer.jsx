@@ -30,7 +30,6 @@ const CountdownTimer = ({timer, onTimerClick}) => {
   const navigation = useNavigation();
   const timerStore = useTimerStore();
   const currentTimer = useTimerStore(state => state.timers[timer.id]);
-  const rotation = useSharedValue(0);
   const {isDeleteMode, setDeleteMode} = useUiStore(state => state);
   const {handleDeleteTimer} = useDeleteData();
 
@@ -45,40 +44,6 @@ const CountdownTimer = ({timer, onTimerClick}) => {
       );
     }
   }, [timer.id]);
-
-  useEffect(() => {
-    const delay = Math.random() * 250;
-    setTimeout(() => {
-      if (isDeleteMode) {
-        rotation.value = withRepeat(
-          withSequence(
-            withTiming(-1.5, {
-              duration: 200,
-              easing: Easing.linear,
-            }),
-            withTiming(1.5, {
-              duration: 200,
-              easing: Easing.linear,
-            }),
-          ),
-          -1,
-          true,
-        );
-      } else {
-        cancelAnimation(rotation);
-        rotation.value = withTiming(0, {
-          duration: 150,
-          easing: Easing.linear,
-        });
-      }
-    }, delay);
-  }, [isDeleteMode]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{rotate: `${rotation.value}deg`}],
-    };
-  });
 
   const calculateProgress = () => {
     if (!currentTimer) return 0;
@@ -103,92 +68,39 @@ const CountdownTimer = ({timer, onTimerClick}) => {
   const darkerColor = DetailColor(timer.timerColor);
 
   return (
-    <Container>
-      {isDeleteMode && (
-        <DeleteButton
-          onDelete={() => deleteTimerData(timer.id)}
-          id={timer.id}
-          isFolder={false}
-        />
-      )}
-      <Pressable
-        onPress={handlePress}
-        delayLongPress={200}
-        onLongPress={() => {}}>
-        <ContextMenu
-          previewBackgroundColor="transparent"
-          disableShadow={true}
-          actions={[
-            {
-              title: '타이머 편집',
-            },
-            {
-              title: '타이머 삭제',
-            },
-            {
-              title: '식제 모드',
-            },
-          ]}
-          onPress={async ({nativeEvent}) => {
-            if (nativeEvent.index === 0) {
-              currentTimer?.isRunning
-                ? setTimeout(() => {
-                    Alert.alert('타이머가 실행중입니다.');
-                  }, 700)
-                : navigation.navigate('Timer Update', {timer});
-            }
-            if (nativeEvent.index === 1) {
-              await handleDeleteTimer(timer.id);
-            }
-            if (nativeEvent.index === 2) {
-              setTimeout(() => {
-                setDeleteMode(true);
-              }, 605.5);
-            }
-          }}>
-          <Animated.View style={animatedStyle}>
-            <TimerContainer>
-              <BackgroundView color={timer.timerColor} />
-              <ProgressView
-                color={darkerColor}
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  width: `${progress * 100}%`,
-                  height: '100%',
-                  borderTopRightRadius: scale(13),
-                  borderBottomRightRadius: scale(13),
-                }}
-              />
-              <ContentWrapper>
-                <TimerHeaderWrapper>
-                  <IconboxWrapper>
-                    <IconView>{timer.icon}</IconView>
-                  </IconboxWrapper>
-                  <EnterImage
-                    source={require('../../assets/images/timerBox/enter-arrow.png')}
-                  />
-                </TimerHeaderWrapper>
-                <FoodTitleText weight="semi-bold">
-                  {timer.timerName}
-                </FoodTitleText>
-                <TimerText weight="bold">
-                  {currentTimer
-                    ? `${String(currentTimer.totalTime.minutes).padStart(
-                        2,
-                        '0',
-                      )}:${String(currentTimer.totalTime.seconds).padStart(
-                        2,
-                        '0',
-                      )}`
-                    : '00:00'}
-                </TimerText>
-              </ContentWrapper>
-            </TimerContainer>
-          </Animated.View>
-        </ContextMenu>
-      </Pressable>
-    </Container>
+    <TimerContainer>
+      <BackgroundView color={timer.timerColor} />
+      <ProgressView
+        color={darkerColor}
+        style={{
+          position: 'absolute',
+          right: 0,
+          width: `${progress * 100}%`,
+          height: '100%',
+          borderTopRightRadius: scale(13),
+          borderBottomRightRadius: scale(13),
+        }}
+      />
+      <ContentWrapper>
+        <TimerHeaderWrapper>
+          <IconboxWrapper>
+            <IconView>{timer.icon}</IconView>
+          </IconboxWrapper>
+          <EnterImage
+            source={require('../../assets/images/timerBox/enter-arrow.png')}
+          />
+        </TimerHeaderWrapper>
+        <FoodTitleText weight="semi-bold">{timer.timerName}</FoodTitleText>
+        <TimerText weight="bold">
+          {currentTimer
+            ? `${String(currentTimer.totalTime.minutes).padStart(
+                2,
+                '0',
+              )}:${String(currentTimer.totalTime.seconds).padStart(2, '0')}`
+            : '00:00'}
+        </TimerText>
+      </ContentWrapper>
+    </TimerContainer>
   );
 };
 
